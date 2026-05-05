@@ -3,7 +3,7 @@ import cors from 'cors';
 const app = express();
 const port = 5000;
 const corsOptions= {
-    origin: 'http://localhost:5173', // React app's URL
+    origin: 'http://127.0.0.1:5500', // React app's URL
 }
 
 app.use(cors(corsOptions));

@@ -31,7 +31,7 @@ function App() {
 
   return (
       <div className='min-h-screen w-full bg-gray-100 flex items-center justify-center flex-col gap-10'>
-        <h2 className=' text-2xl font-bold italic text-green-800'>F1 from static:</h2>
+        <h2 className=' text-2xl font-bold italic text-green-800'>F1 from static with Vite 8.0</h2>
         <ul className='text-gray-600 text-2xl font-semibold'>
           {fakedata.map((person, index) => (
             <li key={index} className='hover:text-blue-300'>
@@ -39,6 +39,18 @@ function App() {
             </li>
           ))}
         </ul>
+
+        <button onClick={fetchApi} className='px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600'>
+          Fetch API Data
+        </button>
+        <ul className='text-gray-600 text-2xl font-semibold'>
+          {apiData.map((fruit, index) => (
+            <li key={index} className='hover:text-blue-300'>
+              {fruit}
+            </li>
+          ))}
+        </ul>
+
       </div>
   )
 }
