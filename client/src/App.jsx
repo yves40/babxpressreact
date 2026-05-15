@@ -44,6 +44,7 @@ function App() {
           Fetch API Data
         </button>
         <h2 className=' text-2xl font-bold italic text-green-800'>Fruits dynamic with Vite 8.0.10</h2>
+        <img src="images/tools.jpg" alt=""  className='w-64 h-64 object-cover rounded-md border-2 border-gray-300'/>
         <ul className='text-gray-600 text-2xl font-semibold'>
           {apiData.map((fruit, index) => (
             <li key={index} className='hover:text-blue-300'>
