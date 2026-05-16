@@ -3,7 +3,7 @@
 #---------------------------------------------------------------------------------------
 #   Params
 #---------------------------------------------------------------------------------------
-version="deploy.sh, May 15 207 : 1.02 "
+version="deploy.sh, May 16 207 : 1.04 "
 . deployparams
 #---------------------------------------------------------------------------------------
 #   Some parameters
@@ -48,8 +48,7 @@ menu()
   echo "-------------------------------------------------------------------------------"
   echo " D E P L O Y "
   echo "-------------------------------------------------------------------------------"
-  echo "  60 / Deploy React proto to O2switch"
-  echo
+  echo "  0 / Deploy React proto to O2switch"
   echo "-------------------------------------------------------------------------------"
   echo " L O G S"
   echo "-------------------------------------------------------------------------------"
@@ -64,7 +63,7 @@ menu()
 parsecommand() {
   command=`echo $1 | tr A-Z a-z`
   case "$command" in 
-    '60')       deployTarFile
+    '0')        deployTarFile
                 ;;
     'log')      echo
                 less $LOCALO2LOGS
@@ -84,77 +83,29 @@ parsecommand() {
 #   S U B   R O U T I N E S
 #---------------------------------------------------------------------------------------
 deployTarFile() {
-  tar cv -f babook.zip -C .. client/dist server/server.js server/services/
-  tar tvf babook.zip
-#   log "TOSWITCH: Deploy $1 to O2switch DEV"
-#   scp $1 $O2USER@$O2HOST:BACKUP/$DATESIGNATURE-FROM-LOCAL-ALLIMAGES.tar.gz
-#   log "TOSWITCH: Deploy $1 to O2switch DEV: Done"
-#   log "ONSWITCH: Extract PROD images on O2switch DEV"
-#   ssh -x "$O2USER@$O2HOST" <<-EOF
-#   ls -l ~/BACKUP/*FROM*.gz
-#   cd $REMOTEDEV/public
-#   tar xvf ~/BACKUP/$DATESIGNATURE-FROM-LOCAL-ALLIMAGES.tar.gz
-# EOF
-#   log "ONSWITCH: Extract PROD images on O2switch DEV: Done: $1"
-}
-#---------------------------------------------------------------------------------------
-pushREACTAPPTOO2SWITCH() {
-  echo
-  if [ -z $1 ]
-  then
-    ANSWER=`./ask.sh "Proceed to copy local PROD images backup on O2switch DEV ? Y/N <CR> " "N"`
-  else
-    ANSWER='Y'
-  fi
-  if [ `echo $ANSWER | tr A-Z a-z` == "y" ] 
-  then
-    echo; ls -l $LOCALBACKUPDIR/*.gz; echo; echo
-    # Choose the compressed archive
-    GZFILE=""
-    while [ "$GZFILE" = "" ]
-    do
-      echo; GZFILE=`./ask.sh "Which archive file ? "`
-      if ! [ -f $GZFILE ]
-      then
-        echo "Please provide a valid file location "
-        echo $GZFILE
-        GZFILE=""
-      fi
-    done
-    # Now proceed
-    initdir=$(pwd)
-    log "TOSWITCH: Copy PROD images backup to O2switch DEV"
-    DATESIGNATURE=`date +"%Y-%m-%d"`
-    scp $GZFILE $O2USER@$O2HOST:BACKUP/$DATESIGNATURE-FROM-LOCAL-ALLIMAGES.tar.gz
-    log "TOSWITCH: Copy PROD images backup to O2switch DEV: Done"
-    log "ONSWITCH: Extract PROD images on O2switch DEV"
-    ssh -x "$O2USER@$O2HOST" <<-EOF
-    ls -l ~/BACKUP/*FROM*.gz
-    cd $REMOTEDEV/public
-    tar xvf ~/BACKUP/$DATESIGNATURE-FROM-LOCAL-ALLIMAGES.tar.gz
+  tar cv -f $DATESIGNATURE-babook.zip -C .. client/dist server/server.js server/services/
+  tar tvf $DATESIGNATURE-babook.zip
+  scp $DATESIGNATURE-babook.zip $O2USER@$O2HOST:$REMOTEPROD/$DATESIGNATURE-babook.zip
+  ssh -x "$O2USER@$O2HOST" <<-EOF
+    ls -l ~/BAB/baboulebook/babweb/*.zip
+    cd ~/BAB/baboulebook/babweb
+    tar xvf $DATESIGNATURE-babook.zip
+    cd $REMOTEPROD/client
+    npm install
+    cd $REMOTEPROD/server
+    npm install
+    exit
 EOF
-    echo;
-    log "ONSWITCH: Extract PROD images on O2switch DEV: Done: $GZFILE"
-    cd $initdir
-  fi
 }
 #---------------------------------------------------------------------------------------
 #   C H E C K   A L L   R E Q U I R E D   V A R I A B L E S    A R E    S E T 
 #---------------------------------------------------------------------------------------
 checkEnvironmentVariables()
 {
-  log 'ADMIN: Check environment variables'
-  echo;echo;
   if [ -z $LOCALWEBDIR ]; then
     log "ERR: \$LOCALWEBDIR not set"
     log "INF: Set it to the location of your web project."
     log "INF: For example, \$HOME/yourporjectroot"
-    exit 1
-  fi
-  if [ -z $LOCALPROCSDIR ]; then
-    log "ERR: \$LOCALPROCSDIR not set"
-    log "INF: Set it to the location of the admin shell script."
-    log "INF: For example, \$HOME/bomerleprocs/local"
     exit 1
   fi
   if [ -z $LOCALO2LOGS ]; then
@@ -181,12 +132,10 @@ checkEnvironmentVariables()
 #---------------------------------------------------------------------------------------
 reportEnvironmentVariables()
 {
-  echo;echo;
   log 'ADMIN: Current environment variables:'
   echo;echo;
   log "  \$LOCALWEBDIR = $LOCALWEBDIR"
   log "  \$LOCALBACKUPDIR = $LOCALBACKUPDIR"
-  log "  \$LOCALPROCSDIR = $LOCALPROCSDIR"
   log "  \$LOCALO2LOGS = $LOCALO2LOGS"
   log "  \$REMOTEPROD = $REMOTEPROD"
   echo;echo;
@@ -202,7 +151,7 @@ echo ""
 checkEnvironmentVariables
 reportEnvironmentVariables
 #---------------------------------------------------------------------------------------
-#   menu input
+#   M E N U    L O O P
 #---------------------------------------------------------------------------------------
 while [ 1 ]
 do
