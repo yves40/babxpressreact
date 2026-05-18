@@ -2,10 +2,14 @@ import express from 'express';
 import cors from 'cors';
 import path from 'path';
 import responseheader from './services/responseheader.js';
+import datetime from './services/datetime.js';
 
 const app = express();
 const port = 5000;
 const __dirname = path.resolve();
+const today = new Date();
+const thedate = datetime.getDateTime();
+const version = 'server.js:1.12, May 18 2026 ';
 
 app.use(express.static(path.join(__dirname, '../client/dist')));
 //---------------------------------------------------------------------------------------------------------
@@ -14,7 +18,7 @@ app.use(express.static(path.join(__dirname, '../client/dist')));
 app.use(responseheader);
 
 app.get('/', (req, res) => {
-  res.send('Hello, World!');
+  res.send(`Node server is OK.... ${version} (Today is: ${thedate})`);
 });
 
 app.get('/api', (req, res) => {

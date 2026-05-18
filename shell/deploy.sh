@@ -3,7 +3,7 @@
 #---------------------------------------------------------------------------------------
 #   Params
 #---------------------------------------------------------------------------------------
-version="deploy.sh, May 16 207 : 1.04 "
+version="deploy.sh, May 17 207 : 1.07 "
 . deployparams
 #---------------------------------------------------------------------------------------
 #   Some parameters
@@ -48,7 +48,9 @@ menu()
   echo "-------------------------------------------------------------------------------"
   echo " D E P L O Y "
   echo "-------------------------------------------------------------------------------"
-  echo "  0 / Deploy React proto to O2switch"
+  echo "  0 / Deploy Full React proto to O2switch"
+  echo "  1 / Deploy Server React proto to O2switch"
+  echo "  2 / Deploy Client React proto to O2switch"
   echo "-------------------------------------------------------------------------------"
   echo " L O G S"
   echo "-------------------------------------------------------------------------------"
@@ -63,7 +65,11 @@ menu()
 parsecommand() {
   command=`echo $1 | tr A-Z a-z`
   case "$command" in 
-    '0')        deployTarFile
+    '0')        deployFull
+                ;;
+    '1')        deployServer
+                ;;
+    '2')        deployClient
                 ;;
     'log')      echo
                 less $LOCALO2LOGS
@@ -82,18 +88,38 @@ parsecommand() {
 #---------------------------------------------------------------------------------------
 #   S U B   R O U T I N E S
 #---------------------------------------------------------------------------------------
-deployTarFile() {
-  tar cv -f $DATESIGNATURE-babook.zip -C .. client/dist server/server.js server/services/
+deployFull() {
+  tar cv -f $DATESIGNATURE-babook.zip -C .. client/dist client/vite.config.js client/package*.json server/server.js server/services/ server/package*.json
   tar tvf $DATESIGNATURE-babook.zip
   scp $DATESIGNATURE-babook.zip $O2USER@$O2HOST:$REMOTEPROD/$DATESIGNATURE-babook.zip
   ssh -x "$O2USER@$O2HOST" <<-EOF
     ls -l ~/BAB/baboulebook/babweb/*.zip
     cd ~/BAB/baboulebook/babweb
     tar xvf $DATESIGNATURE-babook.zip
-    cd $REMOTEPROD/client
-    npm install
-    cd $REMOTEPROD/server
-    npm install
+    exit
+EOF
+}
+#---------------------------------------------------------------------------------------
+deployServer() {
+  tar cv -f $DATESIGNATURE-babook-server.zip -C .. server/server.js server/services/ server/package*.json
+  tar tvf $DATESIGNATURE-babook-server.zip
+  scp $DATESIGNATURE-babook-server.zip $O2USER@$O2HOST:$REMOTEPROD/$DATESIGNATURE-babook-server.zip
+  ssh -x "$O2USER@$O2HOST" <<-EOF
+    ls -l ~/BAB/baboulebook/babweb/*.zip
+    cd ~/BAB/baboulebook/babweb
+    tar xvf $DATESIGNATURE-babook-server.zip
+    exit
+EOF
+}
+#---------------------------------------------------------------------------------------
+deployClient() {
+  tar cv -f $DATESIGNATURE-babook-client.zip -C .. client/dist client/vite.config.js client/package*.json client/package*.json
+  tar tvf $DATESIGNATURE-babook-client.zip
+  scp $DATESIGNATURE-babook-client.zip $O2USER@$O2HOST:$REMOTEPROD/$DATESIGNATURE-babook-client.zip
+  ssh -x "$O2USER@$O2HOST" <<-EOF
+    ls -l ~/BAB/baboulebook/babweb/*.zip
+    cd ~/BAB/baboulebook/babweb
+    tar xvf $DATESIGNATURE-babook-client.zip
     exit
 EOF
 }
