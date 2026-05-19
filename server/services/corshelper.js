@@ -18,8 +18,9 @@
 //    Apr 06 2020   Tests for corsclient
 //    Nov 29 2021   RYZEN setup
 //    May 15 2027   Module syntax
+//    May 17 2027   Remove logs
 //----------------------------------------------------------------------------
-const Version = "corshelper:1.33, May 15 2027 ";
+const Version = "corshelper:1.34, May 17 2027 ";
 
 
 // CORS sites enabled for cross server requests
@@ -28,6 +29,7 @@ const origindef = 'http://127.0.0.1:5000';
 const corsclients = [
   { node: 'RYZEN', origin: 'http://localhost:8080' },
   { node: 'ASUSP7', origin: 'http://127.0.0.1:5000' },
+  { node: 'bab', origin: 'http://127.0.0.1:5000' },
 ];
 
 import logger from './logger.js';
@@ -41,12 +43,10 @@ function getClientSite(nodename) {
       break;
     }
   }
-  logger.debug(Version + 'nodename ' + nodename + ' origin ' +   origin ) ;
   return origin;
 }
 
 function checkOrigin(origin, callback) {
-  logger.debug(Version + (origin === undefined ? 'Local node': origin) + ' CORS check');
   if (origin === undefined) { // Do not want to block REST tools or server-to-server requests
     callback(null, true);
   }
