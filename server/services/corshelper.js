@@ -29,12 +29,13 @@ const origindef = 'http://127.0.0.1:5000';
 const corsclients = [
   { node: 'RYZEN', origin: 'http://localhost:8080' },
   { node: 'ASUSP7', origin: 'http://127.0.0.1:5000' },
-  { node: 'bab', origin: 'http://127.0.0.1:5000' },
+  { node: 'localhost', origin: 'https://bab.couteaux-dart.fr' },
 ];
 
 import logger from './logger.js';
 
 function getClientSite(nodename) {
+  logger.debug(Version + `getClientSite called with nodename ${nodename}`);
   let origin = origindef; // In case no match is found
   // const nodename = process.env.COMPUTERNAME;
   for (let i=0; i < corsclients.length; ++i) {
