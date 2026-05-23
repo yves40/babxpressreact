@@ -3,7 +3,7 @@
 #---------------------------------------------------------------------------------------
 #   Params
 #---------------------------------------------------------------------------------------
-version="deploy.sh, May 19 2026 : 1.09 "
+version="deploy.sh, May 232026 : 1.10 "
 . deployparams
 #---------------------------------------------------------------------------------------
 #   Some parameters
@@ -90,7 +90,8 @@ parsecommand() {
 #---------------------------------------------------------------------------------------
 deployFull() {
   tar cv -f $DATESIGNATURE-babook.zip -C .. client/dist client/vite.config.js client/package.json \
-                                          server/server.js server/services/ server/package.json
+                                          server/server.js server/services/ server/package.json \
+                                          server/.env.local
   tar tvf $DATESIGNATURE-babook.zip
   scp $DATESIGNATURE-babook.zip $O2USER@$O2HOST:$REMOTEPROD/$DATESIGNATURE-babook.zip
   ssh -x "$O2USER@$O2HOST" <<-EOF
@@ -102,7 +103,8 @@ EOF
 }
 #---------------------------------------------------------------------------------------
 deployServer() {
-  tar cv -f $DATESIGNATURE-babook-server.zip -C .. server/server.js server/services/ server/package.json
+  tar cv -f $DATESIGNATURE-babook-server.zip -C .. server/server.js server/services/ server/package.json \
+                                          server/.env.local
   tar tvf $DATESIGNATURE-babook-server.zip
   scp $DATESIGNATURE-babook-server.zip $O2USER@$O2HOST:$REMOTEPROD/$DATESIGNATURE-babook-server.zip
   ssh -x "$O2USER@$O2HOST" <<-EOF
@@ -118,8 +120,8 @@ deployClient() {
   tar tvf $DATESIGNATURE-babook-client.zip
   scp $DATESIGNATURE-babook-client.zip $O2USER@$O2HOST:$REMOTEPROD/$DATESIGNATURE-babook-client.zip
   ssh -x "$O2USER@$O2HOST" <<-EOF
-    ls -l ~/BAB/baboulebook/babweb/*.zip
-    cd ~/BAB/baboulebook/babweb
+    ls -l ~/BAB/baboulebook/*.zip
+    cd ~/BAB/baboulebook
     tar xvf $DATESIGNATURE-babook-client.zip
     exit
 EOF
