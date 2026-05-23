@@ -4,11 +4,13 @@ import path from 'path';
 import responseheader from './services/responseheader.js';
 import datetime from './services/datetime.js';
 import process from 'process';
+import { getBooksCount } from './services/books.js';
 
 const app = express();
 const port = 5000;
 const thedate = datetime.getDateTime();
-const version = 'server.js:1.12, May 18 2026 ';
+let db = null;
+const version = 'server.js:1.13, May 21 2026 ';
 
 //---------------------------------------------------------------------------------------------------------
 // Install middleware responsible for response header settings
@@ -23,8 +25,7 @@ app.get('/', (req, res) => {
   if(serverpath.endsWith('server')) {
     serverpath = path.dirname(serverpath);
   }
-  console.log(`***************** ${serverpath}`);
-   
+  // Server static files from the client/dist directory and serve index.html for the root path
   app.use(express.static(path.join(serverpath, '/client/dist')));
   res.sendFile(path.join(serverpath, '/client/dist/index.html'));
 });
@@ -34,6 +35,17 @@ app.get('/api', (req, res) => {
   console.log(`Data request from client served with ${data.fruits.length} fruits`);
   res.json(data);
 });
+
+app.get('/api/books/count', async (req, res) => {
+  try {
+    const count = await getBooksCount();  
+    res.json({ count });
+  } catch (error) {
+    console.error('Error fetching books count:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+}); 
+
 
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);

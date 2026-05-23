@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react'
 
 function App() {
   const [apiData, setApiData] = useState([])
+  const [booksCount, setBooksCount] = useState(0)
   const [fakedata, setFakedata] = useState(
     [
       { name: 'Ken Tyrell', age: 30, email: 'ken.tyrell@example.com' },
@@ -25,7 +26,19 @@ function App() {
     }
   }
 
-  useEffect(() => {
+
+  const fetchBooksCount = async () => {
+    try {
+      const response = await fetch('http://localhost:5000/api/books/count')
+      const data = await response.json()
+      console.log('Books count from server:', data.count)
+      setBooksCount(data.count)
+    } catch (error) {
+      console.error('Error fetching books count:', error)
+    }
+  }
+
+  useEffect(() => {     
   }, [])  // initial render
 
   return (
@@ -42,6 +55,10 @@ function App() {
         <button onClick={fetchApi} className='px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600'>
           Fetch API Data
         </button>
+        <button onClick={fetchBooksCount} className='px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600'>
+          How many books
+        </button>
+        <p className='text-xl font-bold text-gray-800'>Books Count: {booksCount}</p>
         <h2 className=' text-2xl font-bold italic text-green-800'>Fruits dynamic with Vite 8.0.10</h2>
         <img src="images/tools.jpg" alt=""  className='w-64 h-64 object-cover rounded-r-3xl border-2 border-gray-300'/>
         <ul className='text-gray-600 text-2xl font-semibold'>
