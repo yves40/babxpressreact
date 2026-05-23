@@ -2,3 +2,5 @@
 dist
 shell/deployparams
 **/*.zip
+.env.local
+
