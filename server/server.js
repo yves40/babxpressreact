@@ -30,7 +30,7 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(serverpath, '/client/dist/index.html'));
 });
 
-app.get('/api', (req, res) => {
+app.get('/api/fake', (req, res) => {
   const data = { fruits: ['apple', 'banana', 'orange', 'Pomme', 'Fraise', 'Annanas'] }    ;
   console.log(`Data request from client served with ${data.fruits.length} fruits`);
   res.json(data);

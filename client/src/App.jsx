@@ -16,8 +16,15 @@ function App() {
   )  
   
   const fetchApi = async () => {
+    const protocol = location.protocol;
+    if(protocol !== 'http:' && protocol !== 'https:') {
+      console.warn(`Unsupported protocol ${protocol}, API calls may not work as expected`);
+    }
+    const host = location.hostname;
+    const port = location.port;
+    const url = `${protocol}//${host}:${port}/api/fake`; 
     try {
-      const response = await fetch('http://localhost:5000/api')
+      const response = await fetch(url)
       const data = await response.json()
       console.log('Data from server:', data)
       setApiData(data.fruits)
@@ -28,8 +35,16 @@ function App() {
 
 
   const fetchBooksCount = async () => {
+    const protocol = location.protocol;
+    if(protocol !== 'http:' && protocol !== 'https:') {
+      console.warn(`Unsupported protocol ${protocol}, API calls may not work as expected`);
+    }
+    const host = location.hostname;
+    const port = location.port;
+    const url = `${protocol}//${host}:${port}/api/books/count`; 
+    console.log(`Fetching books count from ${url}`);
     try {
-      const response = await fetch('http://localhost:5000/api/books/count')
+      const response = await fetch(url)
       const data = await response.json()
       console.log('Books count from server:', data.count)
       setBooksCount(data.count)
