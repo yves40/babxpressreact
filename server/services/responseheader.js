@@ -15,7 +15,7 @@ import logger from './logger.js';
 const responseheader = (req, res, next ) => {
   // Set the client address for the server  to inform the client browser that he will 
   // accept requests from him : can only specify one URI
-  logger.debug(corshelper.getClientSite(req.hostname));  
+  // logger.debug(corshelper.getClientSite(req.hostname));  
   res.set('Access-Control-Allow-Origin', corshelper.getClientSite(req.hostname));   
   res.set('Access-Control-Allow-Credentials', 'true');
   res.set('Access-Control-Allow-Headers', corshelper.getCORSOptions().allowedHeaders);
