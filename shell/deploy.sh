@@ -91,7 +91,7 @@ parsecommand() {
 deployFull() {
   tar cv -f $DATESIGNATURE-babook.zip -C .. client/dist client/vite.config.js client/package.json \
                                           server/server.js server/services/ server/package.json \
-                                          server/.env.local
+                                          server/.env
   tar tvf $DATESIGNATURE-babook.zip
   scp $DATESIGNATURE-babook.zip $O2USER@$O2HOST:$REMOTEPROD/$DATESIGNATURE-babook.zip
   ssh -x "$O2USER@$O2HOST" <<-EOF
@@ -104,7 +104,7 @@ EOF
 #---------------------------------------------------------------------------------------
 deployServer() {
   tar cv -f $DATESIGNATURE-babook-server.zip -C .. server/server.js server/services/ server/package.json \
-                                          server/.env.local
+                                          server/.env
   tar tvf $DATESIGNATURE-babook-server.zip
   scp $DATESIGNATURE-babook-server.zip $O2USER@$O2HOST:$REMOTEPROD/$DATESIGNATURE-babook-server.zip
   ssh -x "$O2USER@$O2HOST" <<-EOF
