@@ -5,12 +5,14 @@ import responseheader from './services/responseheader.js';
 import datetime from './services/datetime.js';
 import process from 'process';
 import { getBooksCount } from './services/books.js';
+import fileHelper from './services/filehelper.js';
+import { log } from 'console';
 
 const app = express();
 const port = 5000;
 const thedate = datetime.getDateTime();
 let db = null;
-const version = 'server.js:1.13, May 21 2026 ';
+const version = 'server.js:1.14, May 22 2026 ';
 
 //---------------------------------------------------------------------------------------------------------
 // Install middleware responsible for response header settings
@@ -29,19 +31,32 @@ app.get('/', (req, res) => {
   app.use(express.static(path.join(serverpath, '/client/dist')));
   res.sendFile(path.join(serverpath, '/client/dist/index.html'));
 });
-
+// -----------------------------------
+// API endpoints
+// -----------------------------------
 app.get('/api/fake', (req, res) => {
   const data = { fruits: ['apple', 'banana', 'orange', 'Pomme', 'Fraise', 'Annanas'] }    ;
   console.log(`Data request from client served with ${data.fruits.length} fruits`);
   res.json(data);
 });
-
+// -----------------------------------
 app.get('/api/books/count', async (req, res) => {
   try {
     const count = await getBooksCount();  
     res.json({ count });
   } catch (error) {
     console.error('Error fetching books count:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+}); 
+// -----------------------------------
+app.get('/api/tech/env', async (req, res) => {
+  try {
+    const serverenv = await fileHelper.getEnvContent();  
+    res.json({ serverenv });
+  } 
+  catch (error) {
+    console.error('Error fetching environment variables:', error);
     res.status(500).json({ error: 'Internal server error' });
   }
 }); 

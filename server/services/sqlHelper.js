@@ -3,10 +3,10 @@
 import mysqlPromise from "mysql2/promise.js";
 import dotenv from 'dotenv';
 import path from 'path';
+import fs from 'fs';
 import logger from "./logger.js";
 import AppError from "./customError.js";
-
-// TODO study singleton, check instance
+import fileHelper from "./filehelper.js";
 
 export default class sqlHelper {
 
@@ -18,14 +18,26 @@ export default class sqlHelper {
   
   constructor(tracer = null) {
     
-    this.Version = "sqlHelper.js May 23 2026, 1.62";
+    this.Version = "sqlHelper.js May 25 2026, 1.63";
     const __dirname = path.dirname('.');
-    
-    dotenv.config({ 
-      path: path.resolve('./', '.env.local'),
-      // debug: true,
-      quiet: true 
-    });
+
+    if(fileHelper.fileExists('./.env.local')) {
+      // console.log('Loading .env.local configuration file');
+      this.getEnv('.env.local');
+    }
+    else if(fileExists('./.env')) {
+      // console.log('Loading .env configuration file');
+      this.getEnv('.env');
+    }
+    else {
+      if(fileHelper.fileExists(path.resolve(__dirname, '../.env'))) {
+        this.getEnv(path.resolve(__dirname, '../.env'));
+      }
+      else {
+        throw new AppError('No .env configuration file found on O2 server');
+      }
+    }
+
 
     /**
      * Implement singleton pattern
@@ -37,8 +49,6 @@ export default class sqlHelper {
     dotenv.config({ quiet: true });
     this.#dbhost = process.env.DBHOST; 
     this.#dbport = process.env.DBPORT;
-    console.log(`PORT : ${this.#dbport}`);
-
     this.#dbname = process.env.DBNAME;
     this.#dbuser = process.env.DBUSER;
     this.#dbpass = process.env.DBPASS;
@@ -213,6 +223,15 @@ export default class sqlHelper {
   // ------------------------------------------------------------------------
   //      P R I V A T E 
   // ------------------------------------------------------------------------
+  getEnv(envFile) {
+    dotenv.config({ 
+      path: path.resolve('./', envFile),
+      // debug: true,
+      quiet: true 
+    });
+    return process.env[envFile];
+  }
+
   #createPool() {
       try {
         const pool = mysqlPromise.createPool({
