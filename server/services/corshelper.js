@@ -35,7 +35,7 @@ const corsclients = [
 import logger from './logger.js';
 
 function getClientSite(nodename) {
-  logger.debug(Version + `getClientSite called with nodename ${nodename}`);
+  // logger.debug(Version + `getClientSite called with nodename ${nodename}`);
   let origin = origindef; // In case no match is found
   // const nodename = process.env.COMPUTERNAME;
   for (let i=0; i < corsclients.length; ++i) {
