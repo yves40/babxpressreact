@@ -11,26 +11,29 @@ async function fileExists(filePath) {
 }
 
 
-async function getEnvContent() {
-  const envFilePath = path.resolve('./.env');
+async function findEnvFile() {
   let message = 'Environment file not found';
-
-    if(fileExists('./.env.local')) {
+  let fp = '';
+  if(fileExists('./.env.local')) {
       message = 'Found .env.local configuration file';
+      fp = './.env.local';
   }
   else if(fileExists('./.env')) {
     message = 'Found .env configuration file';
+    fp = './.env';
   }
   else {
+    const __dirname = path.dirname('.');
     if(fileExists(path.resolve(__dirname, '../.env'))) {
       message = 'Found .env configuration file in parent directory';
+      fp = path.resolve(__dirname, '../.env');
     }
   }
-  return message;
+  return { message: message, filepath: fp};
 }
     
 const fileHelper = {
   fileExists,
-  getEnvContent
+  findEnvFile
 }
 export default fileHelper;

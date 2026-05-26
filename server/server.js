@@ -6,7 +6,7 @@ import datetime from './services/datetime.js';
 import process from 'process';
 import { getBooksCount } from './services/books.js';
 import fileHelper from './services/filehelper.js';
-import { log } from 'console';
+import console, { log } from 'console';
 
 const app = express();
 const port = 5000;
@@ -52,7 +52,7 @@ app.get('/api/books/count', async (req, res) => {
 // -----------------------------------
 app.get('/api/tech/env', async (req, res) => {
   try {
-    const serverenv = await fileHelper.getEnvContent();  
+    const serverenv = await fileHelper.findEnvFile();  
     res.json({ serverenv });
   } 
   catch (error) {

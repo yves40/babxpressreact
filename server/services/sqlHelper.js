@@ -18,48 +18,35 @@ export default class sqlHelper {
   
   constructor(tracer = null) {
     
-    this.Version = "sqlHelper.js May 25 2026, 1.63";
-    const __dirname = path.dirname('.');
+    this.Version = "sqlHelper.js May 26 2026, 1.65";
 
-    if(fileHelper.fileExists('./.env.local')) {
-      // console.log('Loading .env.local configuration file');
-      this.getEnv('.env.local');
-    }
-    else if(fileExists('./.env')) {
-      // console.log('Loading .env configuration file');
-      this.getEnv('.env');
-    }
-    else {
-      if(fileHelper.fileExists(path.resolve(__dirname, '../.env'))) {
-        this.getEnv(path.resolve(__dirname, '../.env'));
-      }
-      else {
-        throw new AppError('No .env configuration file found on O2 server');
-      }
-    }
-
-
-    /**
-     * Implement singleton pattern
-     */
+    /** Implement singleton pattern */
     if(!!sqlHelper.instance) {
       return sqlHelper.instance;
     }
-    
-    dotenv.config({ quiet: true });
-    this.#dbhost = process.env.DBHOST; 
-    this.#dbport = process.env.DBPORT;
-    this.#dbname = process.env.DBNAME;
-    this.#dbuser = process.env.DBUSER;
-    this.#dbpass = process.env.DBPASS;
-    this.logger = logger;
-    
-    (async () => {
+    // 1st call to constructor, initialize the instance
+    // Get environment variables and log the result
+    let serverenv = { message: 'No env file searched yet', filepath: '' };
+    async function getEnvAndLog() {
+      serverenv = await fileHelper.findEnvFile();
+      return serverenv;
+    }
+    getEnvAndLog().then(env => {
+      this.getEnv(env.filepath);      
+      this.#dbhost = process.env.DBHOST; 
+      this.#dbport = process.env.DBPORT;
+      this.#dbname = process.env.DBNAME;
+      this.#dbuser = process.env.DBUSER;
+      this.#dbpass = process.env.DBPASS;
+      this.logger = logger;
+      
       this.pool = this.#createPool();
-    })();
-    
-    sqlHelper.instance = this;
-    return this;
+      
+      sqlHelper.instance = this;
+      return this;
+    }).catch(error => {
+      console.error(`Error fetching environment variables: ${error}`);
+    });
   }
   // ------------------------------------------------------------------------
   //      P U B L I C 
@@ -226,13 +213,14 @@ export default class sqlHelper {
   getEnv(envFile) {
     dotenv.config({ 
       path: path.resolve('./', envFile),
-      // debug: true,
-      quiet: true 
+      debug: true,
+      // quiet: true 
     });
     return process.env[envFile];
   }
 
   #createPool() {
+      console.log(`createPool : host=${this.#dbhost}, port=${this.#dbport}, database=${this.#dbname}, user=${this.#dbuser}`);
       try {
         const pool = mysqlPromise.createPool({
             host: this.#dbhost, 
