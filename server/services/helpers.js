@@ -11,7 +11,7 @@
 
 import filehelper  from './filehelper.js';
 import path from 'path';
-
+const module = 'HELPERS'
 const Version = "helpers:1.04, May 28 2026 ";
 //----------------------------------------------------------------------------
 // Check for .env file existence
@@ -21,19 +21,19 @@ const Version = "helpers:1.04, May 28 2026 ";
 async function findEnvFile() {
   let message = 'Environment file not found';
   let fp = '';
-  console.log(`HELPERS ************************* search for ./.env.local file`);
+  console.log(`${module} ************************* search for ./.env.local file`);
   if(await filehelper.fileExists('./.env.local')) {
       message = 'Found .env.local configuration file';
       fp = './.env.local';
       return { message: message, filepath: fp};
   }
-  console.log(`HELPERS ************************* search for ./.env file`);
+  console.log(`${module} ************************* search for ./.env file`);
   if(await filehelper.fileExists('./.env')) {
     message = 'Found .env configuration file';
     fp = './.env';
       return { message: message, filepath: fp};
   }
-  console.log(`HELPERS ************************* search for ./.env  with resolve()  `);
+  console.log(`${module} ************************* search for ./.env  with resolve()  `);
   const __dirname = path.dirname('.');
   if(await filehelper.fileExists(path.resolve(__dirname, '../.env'))) {
     message = 'Found .env configuration file in parent directory';
