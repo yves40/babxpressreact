@@ -5,9 +5,42 @@
 //    Oct 31 2019   basic syntax error
 //    Nov 20 2019   Async call function
 //    Jan 19 2020   Debounce function
+//    May 28 2026   Search for .env file
 //----------------------------------------------------------------------------
 // eslint-disable-next-line no-unused-vars
-const Version = "helpers:1.03, jan 19 2020 ";
+
+import filehelper  from './filehelper.js';
+import path from 'path';
+
+const Version = "helpers:1.04, May 28 2026 ";
+//----------------------------------------------------------------------------
+// Check for .env file existence
+//----------------------------------------------------------------------------
+// Must be called from an ASYNC function
+//----------------------------------------------------------------------------
+async function findEnvFile() {
+  let message = 'Environment file not found';
+  let fp = '';
+  console.log(`HELPERS ************************* search for ./.env.local file`);
+  if(await filehelper.fileExists('./.env.local')) {
+      message = 'Found .env.local configuration file';
+      fp = './.env.local';
+      return { message: message, filepath: fp};
+  }
+  console.log(`HELPERS ************************* search for ./.env file`);
+  if(await filehelper.fileExists('./.env')) {
+    message = 'Found .env configuration file';
+    fp = './.env';
+      return { message: message, filepath: fp};
+  }
+  console.log(`HELPERS ************************* search for ./.env  with resolve()  `);
+  const __dirname = path.dirname('.');
+  if(await filehelper.fileExists(path.resolve(__dirname, '../.env'))) {
+    message = 'Found .env configuration file in parent directory';
+    fp = path.resolve(__dirname, '../.env');
+  }
+  return { message: message, filepath: fp};
+}
 
 
 //----------------------------------------------------------------------------
@@ -47,9 +80,13 @@ function debounce (fn, delay) {
     }
 }
 
-module.exports = {
+const helpers = {
+    sleep,
+    getIP,
     sleep,
     getIP,
     asyncMiddleware,
     debounce,
+    findEnvFile,
 }
+export default helpers;

@@ -1,39 +1,22 @@
-import path from 'path';
-import fs from 'fs/promises';
+import { exists, access, constants } from 'node:fs';
 
-async function fileExists(filePath) {
-  try {
-    await fs.access(filePath, fs.constants.F_OK)
-    return true
-  } catch (error) {
-    return false
-  }
+async function fileExists(filepath) {
+
+    return new Promise((resolve, reject) => {
+        access(filepath, constants.F_OK, (err) => {
+            if(err) {
+                console.log(`FILEHELPER *************** ${filepath} does not exist`);
+                resolve(false);
+            } else {
+                console.log(`FILEHELPER *************** ${filepath} exists`);
+                resolve(true);
+            }
+        });
+    });
+
 }
 
-
-async function findEnvFile() {
-  let message = 'Environment file not found';
-  let fp = '';
-  if(fileExists('./.env.local')) {
-      message = 'Found .env.local configuration file';
-      fp = './.env.local';
-  }
-  else if(fileExists('./.env')) {
-    message = 'Found .env configuration file';
-    fp = './.env';
-  }
-  else {
-    const __dirname = path.dirname('.');
-    if(fileExists(path.resolve(__dirname, '../.env'))) {
-      message = 'Found .env configuration file in parent directory';
-      fp = path.resolve(__dirname, '../.env');
-    }
-  }
-  return { message: message, filepath: fp};
+const filehelper = {
+    fileExists,
 }
-    
-const fileHelper = {
-  fileExists,
-  findEnvFile
-}
-export default fileHelper;
+export default filehelper;

@@ -5,7 +5,8 @@ import responseheader from './services/responseheader.js';
 import datetime from './services/datetime.js';
 import process from 'process';
 import { getBooksCount } from './services/books.js';
-import fileHelper from './services/filehelper.js';
+import helpers from './services/helpers.js';
+import sqlHelper from './services/sqlHelper.js';
 import console, { log } from 'console';
 
 const app = express();
@@ -46,13 +47,13 @@ app.get('/api/books/count', async (req, res) => {
     res.json({ count });
   } catch (error) {
     console.error('Error fetching books count:', error);
-    res.status(500).json({ error: 'Internal server error' });
+    res.json({ count: 0, error: 'Error fetching books count' });
   }
 }); 
 // -----------------------------------
 app.get('/api/tech/env', async (req, res) => {
   try {
-    const serverenv = await fileHelper.findEnvFile();  
+    const serverenv = await helpers.findEnvFile();  
     res.json({ serverenv });
   } 
   catch (error) {

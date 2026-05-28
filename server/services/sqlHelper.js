@@ -6,7 +6,7 @@ import path from 'path';
 import fs from 'fs';
 import logger from "./logger.js";
 import AppError from "./customError.js";
-import fileHelper from "./filehelper.js";
+import helpers from "./helpers.js";
 
 export default class sqlHelper {
 
@@ -18,7 +18,7 @@ export default class sqlHelper {
   
   constructor(tracer = null) {
     
-    this.Version = "sqlHelper.js May 26 2026, 1.65";
+    this.Version = "sqlHelper.js May 28 2026, 1.66";
 
     /** Implement singleton pattern */
     if(!!sqlHelper.instance) {
@@ -28,7 +28,8 @@ export default class sqlHelper {
     // Get environment variables and log the result
     let serverenv = { message: 'No env file searched yet', filepath: '' };
     async function getEnvAndLog() {
-      serverenv = await fileHelper.findEnvFile();
+      serverenv = await helpers.findEnvFile();
+      console.log(`************************* serverenv search result: ${serverenv.message}, file path: ${serverenv.filepath}  `);
       return serverenv;
     }
     getEnvAndLog().then(env => {
@@ -41,7 +42,6 @@ export default class sqlHelper {
       this.logger = logger;
       
       this.pool = this.#createPool();
-      
       sqlHelper.instance = this;
       return this;
     }).catch(error => {
