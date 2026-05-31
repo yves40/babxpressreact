@@ -9,10 +9,8 @@ async function fileExists(filepath) {
     return new Promise((resolve, reject) => {
         access(filepath, constants.F_OK, (err) => {
             if(err) {
-                console.log(`${module} *************** ${filepath} does not exist`);
                 resolve(false);
             } else {
-                console.log(`${module} *************** ${filepath} exists`);
                 resolve(true);
             }
         });

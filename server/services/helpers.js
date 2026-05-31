@@ -23,19 +23,23 @@ async function findEnvFile() {
 
   let message = 'Environment file not found';
   let fp = '';
-  console.log(`${module} ************************* search for ./.env.local file`);
+  // Search for .env.local file first, then .env file in the process current directory
+  // This works in DEV
   if(await filehelper.fileExists('./.env.local')) {
       message = 'Found .env.local configuration file';
       fp = './.env.local';
       return { message: message, filepath: fp};
   }
-  console.log(`${module} ************************* search for ./.env file`);
+  // Search for .env file in the process current directory
+  // In case we have a .env file in the project root directory and the node process is launched 
+  // from the server directory, we need to search for ../.env file as well
   if(await filehelper.fileExists('./.env')) {
     message = 'Found .env configuration file';
     fp = './.env';
       return { message: message, filepath: fp};
   }
-  console.log(`${module} ************************* search for server/.env  with resolve()  `);
+  // Search for server/.env file  in case the node process is launched from the server directory 
+  // instead of the project root directory
   if(await filehelper.fileExists('server/.env')) {
     message = 'Found server/.env configuration file';
     fp = 'server/.env';
