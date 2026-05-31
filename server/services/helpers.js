@@ -8,7 +8,7 @@
 //    May 28 2026   Search for .env file
 //----------------------------------------------------------------------------
 // eslint-disable-next-line no-unused-vars
-
+import process from 'process';
 import filehelper  from './filehelper.js';
 import path from 'path';
 const module = 'HELPERS'
@@ -19,6 +19,8 @@ const Version = "helpers:1.04, May 28 2026 ";
 // Must be called from an ASYNC function
 //----------------------------------------------------------------------------
 async function findEnvFile() {
+  console.log(`${module} ************************* Process directory is : ${process.cwd()} `);
+
   let message = 'Environment file not found';
   let fp = '';
   console.log(`${module} ************************* search for ./.env.local file`);
@@ -33,11 +35,11 @@ async function findEnvFile() {
     fp = './.env';
       return { message: message, filepath: fp};
   }
-  console.log(`${module} ************************* search for ./.env  with resolve()  `);
-  const __dirname = path.dirname('.');
-  if(await filehelper.fileExists(path.resolve(__dirname, '../.env'))) {
-    message = 'Found .env configuration file in parent directory';
-    fp = path.resolve(__dirname, '../.env');
+  console.log(`${module} ************************* search for server/.env  with resolve()  `);
+  if(await filehelper.fileExists('server/.env')) {
+    message = 'Found server/.env configuration file';
+    fp = 'server/.env';
+      return { message: message, filepath: fp};
   }
   return { message: message, filepath: fp};
 }
