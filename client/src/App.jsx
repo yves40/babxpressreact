@@ -97,9 +97,9 @@ function App() {
           How many books
         </button>
         <p className='text-xl font-bold text-gray-800'>Books Count: {booksCount}</p>
-        <h2 ref={serverEnv} className=' text-2xl font-bold italic text-green-800'>
+        {/* <h2 ref={serverEnv} className=' text-2xl font-bold italic text-green-800'>
                   Server env: {serverEnvVariables.message}
-        </h2>
+        </h2> */}
         <img src="images/tools.jpg" alt="" ref={marteau} className='w-40 h-40 object-cover rounded-r-3xl border-2 border-gray-300'/>
         <ul className='text-gray-600 text-2xl font-semibold'>
           {apiData.map((fruit, index) => (
