@@ -12,7 +12,7 @@ import process from 'process';
 import filehelper  from './filehelper.js';
 import path from 'path';
 const module = 'HELPERS'
-const Version = "helpers:1.04, May 28 2026 ";
+const Version = "helpers:1.05, May 31 2026 ";
 //----------------------------------------------------------------------------
 // Check for .env file existence
 //----------------------------------------------------------------------------

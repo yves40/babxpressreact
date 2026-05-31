@@ -12,7 +12,7 @@ export async function getBooksCount() {
     try {
         const sqlh = new sqlHelper();
         let conn = await sqlh.startTransactionRO();
-        const result = await sqlh.Select('select count(*) as bookscount from babouledb.books', 
+        const result = await sqlh.Select('select count(*) as bookscount from books', 
                                         null, 
                                         conn);
         sqlh.commitTransaction(conn);
