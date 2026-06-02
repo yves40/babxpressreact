@@ -19,8 +19,7 @@ const Version = "helpers:1.05, May 31 2026 ";
 // Must be called from an ASYNC function
 //----------------------------------------------------------------------------
 async function findEnvFile() {
-  console.log(`${module} ************************* Process directory is : ${process.cwd()} `);
-
+  // console.log(`${module} ************************* Process directory is : ${process.cwd()} `);
   let message = 'Environment file not found';
   let fp = '';
   // Search for .env.local file first, then .env file in the process current directory
