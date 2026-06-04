@@ -8,7 +8,7 @@ import InputText from '../components/InputText.jsx';
 
 export default function BookSearch() {
   
-  const version = "BookSearch.jsx Jun 4 2026, 1.07";
+  const version = "BookSearch.jsx Jun 4 2026, 1.10";
   const logger = new Logger('BookSearch.jsx');
   logger.debug('BookSearch component rendered');
 
@@ -23,15 +23,16 @@ function checkEditor(value) {
 }
 
   return (
-    <div className=' ml-5 font-bold '>
-      <h1 className=' text-4xl text-center justify-center mb-4'>My Book App</h1>
+    <div className='page__container ml-5 font-bold '>
       <h2 className='my-4 font-light'>{version}</h2>
       <div className=' mt-2 text-center justify-center'>
         <InputText label="Titre" parentHandler={checkTitle} />
         <InputText label="Auteur" parentHandler={checkAuthor} />
         <InputText label="Éditeur" parentHandler={checkEditor} />
       </div>
-      <Link to="/">Home</Link>
+      <div className="navtop">
+        <Link to="/">Home</Link>
+      </div>
     </div>
   )
 }
