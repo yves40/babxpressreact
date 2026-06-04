@@ -1,0 +1,325 @@
+@import "tailwindcss";
+/* Variables */
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+  --menubackground: #1d293d;
+  --menuheight: 6rem;
+  --menutextsize: 1.4rem;
+  --menuemailtextsize: 0.8rem;
+  --footerheight: 4rem;
+  --footertextsize: 1rem;
+  --left100: -100%;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+/* ------------------------------------------------------------------------
+  Main page structure 
+------------------------------------------------------------------------*/
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+}
+.body__container {
+  @apply flex flex-col;
+}
+/* ------------------------------------------------------------------------
+  The menu section  
+------------------------------------------------------------------------*/
+.navtop {
+  @apply 
+    fixed top-0 left-0
+    w-full flex flex-row items-center justify-between
+    z-10
+    h-[calc(var(--menuheight))]
+    bg-(--menubackground)
+    /* Desktop */
+      lg:hidden
+}
+
+.nav {
+  margin-left: -100%;
+  @apply 
+    /* Mobile  */
+    absolute
+    top-0 left-0 
+    w-full h-screen
+    z-10
+    backdrop-blur-xs
+    /* Desktop */
+      lg:fixed 
+      lg:ml-0
+      lg:w-full
+      lg:top-0 
+      lg:left-0 
+      lg:h-[calc(var(--menuheight))]  
+      lg:flex 
+      lg:flex-row
+      ;
+}
+.topmenu {
+  @apply 
+    /* Mobile  */
+    w-full flex flex-row items-center justify-between
+    /* Desktop */
+    lg:fixed 
+    lg:w-full
+    lg:top-0 
+    lg:left-0 
+    lg:flex
+    h-[calc(var(--menuheight))]
+    ;
+}
+.pagemenu {
+  @apply 
+    text-[calc(var(--menutextsize))] font-bold
+    text-left
+}
+.pagemenu li {
+  @apply 
+    mx-4 my-2
+}
+.nav-links {
+  @apply 
+    /* Mobile  */
+    fixed 
+    top-0 left-0 w-full h-screen
+    flex flex-col items-center justify-center
+    /* Desktop */
+      lg:bg-(--menubackground) 
+      lg:fixed
+      lg:top-0
+      lg:left-0
+      lg:w-full
+      lg:flex
+      lg:flex-row
+      lg:justify-start
+      lg:h-[calc(var(--menuheight))]
+      ;
+}
+.nav-links ul {
+  @apply 
+    /* Mobile  */
+    bg-(--menubackground) 
+    items-center justify-center
+    flex flex-col p-5 min-w-fit
+    border-0 rounded-2xl
+    /* Desktop */
+      lg:flex
+      lg:flex-row
+      lg:space-x-4 
+      ;
+}
+.nav-links ul li {
+  @apply  
+    /* Mobile  */
+  text-white text-[calc(var(--menutextsize))] text-left
+    mx-4 my-2
+    /* Desktop */
+    lg:mx-4 lg:my-2;
+} 
+.nav-links ul li a {
+        :hover {
+          color: white; 
+          ::after {
+            width: 100%;
+          }
+        }
+  @apply no-underline;
+}
+.nav-links ul li a::after {
+          content: '';
+          width: 0%;
+          height: 2px;
+          background: white;
+          display: block;
+          margin: auto;
+          transition: 0.5s;                    
+}
+.nav-links ul li a:hover::after {
+  color: white;
+  width: 100%;
+}
+/* ------------------------------------------------------------------------
+  Footer section
+------------------------------------------------------------------------ */
+.footer {
+  @apply 
+      text-center p-4 mt-8 z-20
+      w-full 
+      bg-(--menubackground)
+      fixed
+      bottom-0 left-0
+      h-[calc(var(--footerheight))]
+      flex flex-row items-center 
+      justify-center 
+      text-[calc(var(--footertextsize))];
+}
+.footer ul {
+  @apply 
+   text-white
+    lg:flex 
+    lg:grow 
+    lg:justify-center 
+    lg:items-center 
+    lg:gap-8;
+  }
+.footer__version {
+  @apply 
+    hidden
+    lg:ml-4
+    lg:block
+    lg:italic;
+} 
+.footer__pizzabox {
+  @apply block fixed bottom-0 right-0 mr-4 mb-2
+    ml-auto
+    lg:hidden;
+}
+/* ------------------------------------------------------------------------
+  Les news 
+------------------------------------------------------------------------ */
+.news {
+  @apply w-full;
+}
+.news__div {
+  @apply text-center bg-white p-4 border-t border-t-zinc-300;
+}
+.news__div--left {
+  @apply text-left bg-white p-4 border-t border-t-zinc-300;
+}
+.news__div--right {
+  @apply text-right bg-white p-4 border-t border-t-zinc-300;
+}
+/* ------------------------------------------------------------------------
+  The page container 
+  ------------------------------------------------------------------------*/
+.page__container {
+  margin-top: var(--menuheight);
+  @apply mx-auto text-center w-120
+      sm:w-160
+      md:w-200
+      lg:w-240;
+}
+.form__label {
+  @apply flex mb-2 text-gray-700 font-semibold;
+}
+/* ------------------------------------------------------------------------
+  Register page 
+------------------------------------------------------------------------*/
+.form__div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border:solid 1px #ccc;
+  height: 2.5rem;
+  @apply w-full mb-2 p-2;
+}
+.form__input {
+  @apply px-3 focus:bg-blue-200 w-full h-7;
+}
+.gridcols511 {
+  display: grid;
+  grid-template-columns:5fr 1fr 1fr;
+}
+/* ------------------------------------------------------------------------
+  Animations and transformations 
+------------------------------------------------------------------------*/
+@keyframes slideUp {
+    0% { transform: translateY(-100%);}
+    50%{transform: translateY(-50%);}
+    65%{transform: translateY(-20%);}
+    100% {transform: translateY(0%);}		
+}
+.slide-up {
+    animation: slideUp 1s ease-in-out;
+}
+/* ------------------------------------------------------------------------
+  svg section 
+  ------------------------------------------------------------------------*/
+.svg-green18 { 
+  width: 18px;
+  height: 18px;
+  filter: brightness(0) saturate(100%) invert(75%) sepia(54%) saturate(7355%) hue-rotate(85deg) brightness(124%) contrast(119%);
+}
+.svg-red18 {
+  width: 18px;
+  height: 18px;
+  filter: invert(19%) sepia(96%) saturate(6102%) hue-rotate(357deg) brightness(98%) contrast(117%); 
+}
+
+.svg-blue18 {
+  width: 18px;
+  height: 18px;
+  filter: brightness(0) saturate(100%) invert(18%) sepia(93%) saturate(2790%) hue-rotate(236deg) brightness(86%) contrast(176%);
+}
+.svg-blue24 {
+  width: 24px;
+  height: 24px;
+  filter: brightness(0) saturate(100%) invert(18%) sepia(93%) saturate(2790%) hue-rotate(236deg) brightness(86%) contrast(176%);
+}
+.svg-blue32 {
+  width: 32px;
+  height: 32px;
+  filter: brightness(0) saturate(100%) invert(18%) sepia(93%) saturate(2790%) hue-rotate(236deg) brightness(86%) contrast(176%);
+}
+.svg-white24 {
+  width: 24px;
+  height: 24px;
+  filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(131deg) brightness(102%) contrast(102%);
+}
+.svg-white32 {
+  width: 32px;
+  height: 32px;
+  filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(131deg) brightness(102%) contrast(102%);
+}
+.svg-white48 {
+  width: 48px;
+  height: 48px;
+  filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(131deg) brightness(102%) contrast(102%);
+}
+.svg-gray24 {
+  width: 24px;
+  height: 24px;
+  filter: invert(38%) sepia(4%) saturate(517%) hue-rotate(131deg) brightness(92%) contrast(87%);
+}
+.svg-gray32 {
+  width: 32px;
+  height: 32px;
+  filter: invert(38%) sepia(4%) saturate(517%) hue-rotate(131deg) brightness(92%) contrast(87%);
+}
+.svg-gray48 {
+  width: 48px;
+  height: 48px;
+  filter: invert(38%) sepia(4%) saturate(517%) hue-rotate(131deg) brightness(92%) contrast(87%);
+}
+/* Animations and transformations */
+@keyframes slideRightIn {
+  0% {transform: translateX(-100%);} 
+  100% {transform: translateX(0%);}		
+}
+@keyframes slideRightOut {
+  0% {transform: translateX(0%);} 
+  100% {transform: translateX(-100%);}		
+}
+.slide-right-in {
+  animation: slideRightIn 0.5s ease-in-out;
+  margin-left: 0;
+}
+.slide-right-out {
+  animation: slideRightOut 0.5s ease-in-out;
+  transition: all 0.6s ease-in-out;
+}
