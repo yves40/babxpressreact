@@ -6,14 +6,15 @@ import { Link } from 'react-router'
 import Logger from '../classes/Logger.js';
 import InputText from '../components/InputText.jsx';
 import Navbar from '../components/Navbar.jsx';
-import Header from '../components/Header.jsx';
 import Footer from '../components/Footer.jsx';
+import properties from '../services/properties.js';
 
 export default function BookSearch() {
   
   const version = "BookSearch.jsx Jun 4 2026, 1.11";
   const logger = new Logger('BookSearch.jsx');
   logger.debug('BookSearch component rendered');
+  properties.setActivePage('booksearch');
 
 function checkTitle(value) {
   logger.debug(`checkTitle called with value: ${value}`); 
@@ -30,13 +31,6 @@ function checkEditor(value) {
       <header>
         <Navbar />
       </header>
-      <div className="nav-links">
-        <ul>
-          <li>
-            <Link to="/">Home</Link>
-          </li>
-        </ul>
-      </div>
       <div className='page__container ml-5 font-bold '>
         <div className=' mt-2 text-center justify-center'>
           <InputText label="Titre" parentHandler={checkTitle} />
