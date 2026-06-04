@@ -4,7 +4,7 @@
   --background: #ffffff;
   --foreground: #171717;
   --menubackground: #1d293d;
-  --menuheight: 6rem;
+  --menuheight: 4rem;
   --menutextsize: 1.4rem;
   --menuemailtextsize: 0.8rem;
   --footerheight: 4rem;
@@ -121,6 +121,7 @@ body {
       lg:flex
       lg:flex-row
       lg:space-x-4 
+      lg:h-[calc(var(--menuheight))]
       ;
 }
 .nav-links ul li {
@@ -215,7 +216,7 @@ body {
       lg:w-240;
 }
 .form__label {
-  @apply flex mb-2 text-gray-700 font-semibold;
+  @apply flex mb-2 ml-4 text-gray-700 font-semibold;
 }
 /* ------------------------------------------------------------------------
   Register page 
