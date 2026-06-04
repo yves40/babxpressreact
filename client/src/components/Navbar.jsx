@@ -55,12 +55,16 @@ export default function Navbar() {
         <div className="topmenu">
           <div className="nav-links">
             <ul>
-              <li>
-                <Link to="/">Home</Link>
-              </li>
-              <li>
-                <Link to="/BooksSearch">Search Books</Link>
-              </li>
+              {properties.getMenuStatus() && (properties.getActivePage() === 'booksearch') &&
+                <li>
+                  <Link to="/">Home</Link>
+                </li>
+              }
+              {properties.getMenuStatus() && (properties.getActivePage() === 'home') &&
+                <li>
+                  <Link to="/BooksSearch">Search Books</Link>
+                </li>
+    }
             </ul>
           </div>
         </div>
