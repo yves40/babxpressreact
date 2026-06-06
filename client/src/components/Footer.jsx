@@ -1,13 +1,16 @@
 /* eslint-disable no-unused-vars */
 import { useContext, useState } from "react";
 import properties from "../services/properties";
+import { useDispatch } from 'react-redux'
+import { setMenuState } from "../redux/menustate";
 
-function Footer() {
+function Footer({parentHandler}) {
 
-  let menustatus = false;
-  
-  function toggleMenu(e) {
+  const dispatch = useDispatch();
+
+  function toggleMenu() {
     properties.toggleMenuStatus();
+    dispatch(setMenuState({menuvisible: properties.getMenuStatus()}));
   }
 
   return (
