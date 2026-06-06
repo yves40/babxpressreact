@@ -1,9 +1,9 @@
 import {configureStore} from "@reduxjs/toolkit"
-import menustateReducer from './redux/menustate'
+import UIstateReducer from './redux/menustate'
 
 
 const store = configureStore({
-    reducer: { menustate: menustateReducer },
+    reducer: { UIstate: UIstateReducer },
 });
 
 export {store}

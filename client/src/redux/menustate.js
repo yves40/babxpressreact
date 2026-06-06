@@ -11,7 +11,7 @@ const initialState =
     
     const menuSlice = createSlice(
     {
-        name: "menustate",
+        name: "UIstate",
         initialState,
         reducers: 
         {
