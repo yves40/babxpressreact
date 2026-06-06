@@ -3,7 +3,7 @@
 
 import { useEffect, useEffectEvent, useRef, useState} from 'react'
 import { Link } from 'react-router'
-import Logger from '../classes/Logger.js';
+import { setMenuState } from '../redux/menustate.js';
 import InputText from '../components/InputText.jsx';
 import Navbar from '../components/Navbar.jsx';
 import Footer from '../components/Footer.jsx';
@@ -12,18 +12,14 @@ import properties from '../services/properties.js';
 export default function BookSearch() {
   
   const version = "BookSearch.jsx Jun 4 2026, 1.11";
-  const logger = new Logger('BookSearch.jsx');
-  logger.debug('BookSearch component rendered');
   properties.setActivePage('booksearch');
+  setMenuState(false);
 
 function checkTitle(value) {
-  logger.debug(`checkTitle called with value: ${value}`); 
 }
 function checkAuthor(value) {
-  logger.debug(`checkAuthor called with value: ${value}`); 
 }
 function checkEditor(value) {
-  logger.debug(`checkEditor called with value: ${value}`); 
 }
 
   return (
