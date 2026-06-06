@@ -8,7 +8,7 @@ const Version = 'babxpressreact Jun 06 2026, 1.16 ';
 const modulename = 'properties.js # ';
 const logger = new Logger(modulename);
 let menustate = true;          // Menu is visible or not
-let activeBreakpoint = 'mobile'; // mobile, sm, md, lg, xl
+let activeBreakpoint = ''; // mobile, sm, md, lg, xl
 let activepage = 'home';
 
 const setMenuState = (status) => {menustate = status;}
