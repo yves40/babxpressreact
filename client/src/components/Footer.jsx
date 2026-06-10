@@ -1,16 +1,25 @@
 /* eslint-disable no-unused-vars */
 import { useContext, useState } from "react";
 import properties from "../services/properties";
+import timeHelper from "../classes/timeHelper";
 import { useDispatch } from 'react-redux'
-import { setMenuState } from "../redux/menustate";
+import { toggleMenuState } from "../redux/menustate";
+import { createLocalData, createSessionData } from "../services/browserStorage";
+import { createCookie, deleteCookie, getCookie } from "../services/cookiesHelper";
 
 function Footer({parentHandler}) {
 
   const dispatch = useDispatch();
+  const th = new timeHelper();
 
   function toggleMenu() {
-    properties.toggleMenuStatus();
-    dispatch(setMenuState({menuvisible: properties.getMenuStatus()}));
+    dispatch(toggleMenuState());
+    createSessionData("lastMenuToggle", th.getDateTime());
+    createSessionData("lastMenuState", properties.getMenuStatus());
+    createLocalData("lastMenuToggle", th.getDateTime());
+    createLocalData("lastMenuState", properties.getMenuStatus());
+    createCookie("lastMenuToggle", th.getDateTime());
+    createCookie("lastMenuState", properties.getMenuStatus());
   }
 
   return (

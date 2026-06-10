@@ -12,18 +12,18 @@ export default function Navbar() {
   const modulename = 'Navbar.jsx # ';
   const version = "Navbar.jsx Jun 06 2026, 1.48 ";
   const thenav = useRef(null);    // Manage main menu
-  const menuState = useSelector((state) => state.menustate.menustate);
-  const [menustate, setMenuState] = useState(useSelector((state) => state.menustate.menustate));
   const dispatch = useDispatch();
-  const screenstate = useSelector((state) => state.menustate.screenstate);
+  // Get some UI state from redux store, and set local state for menu visibility
+  const [menustate, setMenuState] = useState(useSelector((state) => state.UIstate.menustate));
+  const screenstate = useSelector((state) => state.UIstate.screenstate);
 
   useEffect(() => {
-    console.log(`${modulename} **************** RENDER ${menustate}/${screenstate}`);
-  })
+    console.log(`${modulename} *** MOUNTING ${version}`);
+  }, [])
 
   useEffect(() => {
-    console.log(`${modulename} **************** MENU OR SCREEN CHANGED ${menustate}/${screenstate}`);
     if(menustate && screenstate !== 'lg') {
+        console.log(`${modulename} *** MENU OR SCREEN CHANGED ${menustate}/${screenstate}`); 
         thenav.current.classList.remove("slide-right-out");
         thenav.current.classList.add("slide-right-in");
       } else {
@@ -63,7 +63,6 @@ export default function Navbar() {
     return () => window.removeEventListener('resize', updateSize);
   });
 
-  
   return (
     // Look in globals.css for classes definitions
     <>
@@ -74,14 +73,14 @@ export default function Navbar() {
             <ul>
               {properties.getMenuStatus() && (properties.getActivePage() === 'booksearch') &&
                 <li>
-                  <Link to="/" >Home</Link>
+                  <Link to="/" onClick={() => dispatch(setMenuState(false))} >Home</Link>
                 </li>
               }
               {properties.getMenuStatus() && (properties.getActivePage() === 'home') &&
                 <li>
-                  <Link to="/BooksSearch" >Search Books</Link>
+                  <Link to="/BooksSearch" onClick={() => dispatch(setMenuState(false))}>Search Books</Link>
                 </li>
-    }
+           }
             </ul>
           </div>
         </div>
