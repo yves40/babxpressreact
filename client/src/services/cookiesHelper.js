@@ -2,30 +2,20 @@
 const modulename = "CookiesHelper # ";
 const Version = "Sessions.js Jun 10 2026, 1.10";
 const CookieExpirationDelay = 1 * 24 * 60 * 60; // One day expiration date for Cookie (sec)
-
-
+// ------------------------------------------------------------------------
+//       httpOnly: true, // No JS access
+//       secure: process.env.NODE_ENV === "production", // If prod, use HTTP for requests
+//       path: '/', // Use cookie for all APP pages. Could be restrained to sensitive pages
+//       maxAge: CookieExpirationDelay,   // One day persistence
+//       sameSite: "Lax" // To block CSRF attacks. Cookie is sent only to our site. Look at https://contentsquare.com/fr-fr/blog/samesite-cookie-attribute/
 // ------------------------------------------------------------------------
 export async function createCookie(cookiename, cookievalue) {
-
-  document.cookie = `${cookiename}=${cookievalue}; max-age=${CookieExpirationDelay}; path=/; SameSite=Lax; HttpOnly; secure`;
-  // cookieStore.set('sessionid', sessionid.toString(), { 
-  //       httpOnly: true, // No JS access
-  //       secure: process.env.NODE_ENV === "production", // If prod, use HTTP for requests
-  //       path: '/', // Use cookie for all APP pages. Could be restrained to sensitive pages
-  //       maxAge: CookieExpirationDelay,   // One day persistence
-  //       sameSite: "Lax" // To block CSRF attacks. Cookie is sent only to our site. Look at https://contentsquare.com/fr-fr/blog/samesite-cookie-attribute/
-  //   });  
+  
+  document.cookie = `${cookiename}=${cookievalue}; max-age=${CookieExpirationDelay}; path=/; SameSite=Lax;`;
   }
 // ------------------------------------------------------------------------
 export async function deleteCookie(cookiename) {
-  document.cookie = `${cookiename}=; max-age=0; path=/; SameSite=strict; HttpOnly; secure`;  
-  // cookieStore.set('sessionid', "", {
-  //     httpOnly: true,
-  //     secure: process.env.NODE_ENV === "production",  // If prod, use HTTP for requests
-  //     path: '/',
-  //     maxAge: 0,  // maxAge set to 0 deletes the cookie
-  //     sameSite: "strict"
-  // });
+  document.cookie = `${cookiename}=; max-age=0; path=/; SameSite=lax; `;  
 }
 // ------------------------------------------------------------------------
 export async function getCookie(cookiename) {

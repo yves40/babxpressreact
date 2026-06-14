@@ -12,14 +12,24 @@ function Footer({parentHandler}) {
   const dispatch = useDispatch();
   const th = new timeHelper();
 
-  function toggleMenu() {
+  async function toggleMenu() {
+    
     dispatch(toggleMenuState());
     createSessionData("lastMenuToggle", th.getDateTime());
     createSessionData("lastMenuState", properties.getMenuStatus());
     createLocalData("lastMenuToggle", th.getDateTime());
     createLocalData("lastMenuState", properties.getMenuStatus());
-    createCookie("lastMenuToggle", th.getDateTime());
-    createCookie("lastMenuState", properties.getMenuStatus());
+    const cookiemenustate = await getCookie("lastMenuState");
+    if(cookiemenustate === '') {
+      console.log(`****** toggleMenu CREATE cookies`);
+      createCookie("lastMenuToggle", th.getDateTime());
+      createCookie("lastMenuState", properties.getMenuStatus());
+    }
+    else {
+      console.log(`****** toggleMenu DELETE cookies`);
+      deleteCookie("lastMenuToggle");
+      deleteCookie("lastMenuState");
+    }
   }
 
   return (
