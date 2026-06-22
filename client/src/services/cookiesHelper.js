@@ -9,16 +9,16 @@ const CookieExpirationDelay = 1 * 24 * 60 * 60; // One day expiration date for C
 //       maxAge: CookieExpirationDelay,   // One day persistence
 //       sameSite: "Lax" // To block CSRF attacks. Cookie is sent only to our site. Look at https://contentsquare.com/fr-fr/blog/samesite-cookie-attribute/
 // ------------------------------------------------------------------------
-export async function createCookie(cookiename, cookievalue) {
+export function setCookie(cookiename, cookievalue) {
   
   document.cookie = `${cookiename}=${cookievalue}; max-age=${CookieExpirationDelay}; path=/; SameSite=Lax;`;
   }
 // ------------------------------------------------------------------------
-export async function deleteCookie(cookiename) {
+export function deleteCookie(cookiename) {
   document.cookie = `${cookiename}=; max-age=0; path=/; SameSite=lax; `;  
 }
 // ------------------------------------------------------------------------
-export async function getCookie(cookiename) {
+export function getCookie(cookiename) {
   const name = `${cookiename}=`;
   const decodedCookie = decodeURIComponent(document.cookie);
   const ca = decodedCookie.split(';');

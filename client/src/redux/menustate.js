@@ -1,14 +1,13 @@
 /* eslint-disable no-unused-vars */
 import { createSlice } from "@reduxjs/toolkit"
 import properties from "../services/properties";
-import { getSessionData, getLocalData } from "../services/browserStorage";
-
+import { setCookie, getCookie } from "../services/cookiesHelper";
 
 const modulename = "menustate.js # ";
 const initialState =      
     {
-        menustate: true,       // Menu is visible or not
-        screenstate: 'mobile'   // mobile, sm, md, lg, xl
+        menustate: getCookie('menustate'),       // Menu is visible or not
+        screenstate: getCookie('screenstate')   // mobile, sm, md, lg, xl
     }
     
     const menuSlice = createSlice(
@@ -19,14 +18,17 @@ const initialState =
         {
             setMenuState: (state, action) => {
                 state.menustate = action.payload.menuvisible;
+                setCookie("menustate", state.menustate);
                 properties.setMenuState(state.menustate);
             },
             toggleMenuState: (state) => {
                 state.menustate = !state.menustate;
+                setCookie("menustate", state.menustate);
                 properties.setMenuState(state.menustate);
             },
             setScreenstate: (state, action) => {
                 state.screenstate = action.payload.screenstate;
+                setCookie("screenstate", state.screenstate);
                 properties.setScreenstate(state.screenstate);
             }
         }

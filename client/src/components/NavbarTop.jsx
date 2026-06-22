@@ -6,7 +6,7 @@ import Home from "../app/Home";
 export default function NavbarTop() {
   
   const modulename = 'NavbarTop.jsx # ';
-  const version = "NavbarTop.jsx May 05 2026, 1.04";  
+  const version = "NavbarTop.jsx Jun 18 2026, 1.05";  
   
   return (
     // Look in globals.css for classes definitions

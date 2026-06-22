@@ -4,7 +4,7 @@
 //----------------------------------------------------------------------------
 import Logger from "../classes/Logger";
 
-const Version = 'babxpressreact Jun 10 2026, 1.17 ';
+const Version = 'babxpressreact Jun 21 2026, 1.18 ';
 const modulename = 'properties.js # ';
 const logger = new Logger(modulename);
 let menustate = true;          // Menu is visible or not

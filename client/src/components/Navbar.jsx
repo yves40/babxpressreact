@@ -5,33 +5,37 @@ import { setMenuState, setScreenstate } from "../redux/menustate";
 import { Link } from "react-router"
 import NavbarTop from './NavbarTop';
 import properties from "../services/properties";
+import { getCookie } from "../services/cookiesHelper";
 
 
 export default function Navbar() {
   
   const modulename = 'Navbar.jsx # ';
-  const version = "Navbar.jsx Jun 06 2026, 1.48 ";
-  const thenav = useRef(null);    // Manage main menu
+  const version = "Navbar.jsx Jun 21 2026, 1.50 ";
   const dispatch = useDispatch();
+  const thenav = useRef(null);    // Manage main menu
   // Get some UI state from redux store, and set local state for menu visibility
-  const [menustate, setMenuState] = useState(useSelector((state) => state.UIstate.menustate));
-  const screenstate = useSelector((state) => state.UIstate.screenstate);
+  const [menuvisible, setMenuvisible ] = useState(useSelector((state) => state.UIstate.menustate));
+  const [screenbreak, setScreenbreak] = useState(useSelector((state) => state.UIstate.screenstate));
 
   useEffect(() => {
     console.log(`${modulename} *** MOUNTING ${version}`);
-  }, [])
-
+  })
   useEffect(() => {
-    if(menustate && screenstate !== 'lg') {
-        console.log(`${modulename} *** MENU OR SCREEN CHANGED ${menustate}/${screenstate}`); 
+    console.log(`${modulename} *** Menu state: ${menuvisible}`);
+  }, [menuvisible])
+
+  function slideInOut() {
+    if((menuvisible === 'true' || menuvisible === undefined) && screenbreak !== 'lg') {
+        console.log(`${modulename} *** MENU OR SCREEN CHANGED ${menuvisible}/${screenbreak}`); 
         thenav.current.classList.remove("slide-right-out");
         thenav.current.classList.add("slide-right-in");
-      } else {
-        thenav.current.classList.remove("slide-right-in");
-        thenav.current.classList.add("slide-right-out");
-      }
-  }, [menustate, screenstate]);
-
+    } 
+    else {
+      thenav.current.classList.remove("slide-right-in");
+      thenav.current.classList.add("slide-right-out");
+    }
+  }
 
   // Determine active breakpoint, based on tailwind standard definitions
   function getActiveBreakpoint() {
@@ -51,6 +55,9 @@ export default function Navbar() {
   };
   // Handle window resize to get current size
   useLayoutEffect(() => {
+    setMenuvisible(getCookie('menustate'));
+    setScreenbreak(getCookie('screenstate'));
+    slideInOut();
     function updateSize() {
       const breakpoint = getActiveBreakpoint();
       dispatch(setScreenstate({screenstate: breakpoint}));
@@ -71,12 +78,12 @@ export default function Navbar() {
         <div className="topmenu">
           <div className="nav-links">
             <ul>
-              {properties.getMenuStatus() && (properties.getActivePage() === 'booksearch') &&
+              {menuvisible && (properties.getActivePage() === 'booksearch') &&
                 <li>
                   <Link to="/" onClick={() => dispatch(setMenuState(false))} >Home</Link>
                 </li>
               }
-              {properties.getMenuStatus() && (properties.getActivePage() === 'home') &&
+              {menuvisible && (properties.getActivePage() === 'home') &&
                 <li>
                   <Link to="/BooksSearch" onClick={() => dispatch(setMenuState(false))}>Search Books</Link>
                 </li>
