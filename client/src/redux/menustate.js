@@ -32,6 +32,9 @@ const initialState =
                 if(state.screenstate === 'xl' || state.screenstate === 'lg') {
                     state.menustate = 'true'
                 }
+                if(state.menustate === undefined) {
+                    state.menustate = true;
+                }
                 setCookie("menustate", state.menustate);
                 properties.setScreenstate(state.screenstate);
             }
