@@ -21,20 +21,37 @@ export default function Navbar() {
   useEffect(() => {
     console.log(`${modulename} *** MOUNTING ${version}`);
   })
-  useEffect(() => {
-    console.log(`${modulename} *** Menu state: ${menuvisible}`);
-  }, [menuvisible])
 
   function slideInOut() {
-    if((menuvisible === 'true' || menuvisible === undefined) && screenbreak !== 'lg') {
-        console.log(`${modulename} *** MENU OR SCREEN CHANGED ${menuvisible}/${screenbreak}`); 
-        thenav.current.classList.remove("slide-right-out");
-        thenav.current.classList.add("slide-right-in");
-    } 
-    else {
-      thenav.current.classList.remove("slide-right-in");
-      thenav.current.classList.add("slide-right-out");
+    console.log(`********* ${menuvisible}/${screenbreak}`);
+    switch(screenbreak) {
+      case 'xl':
+      case 'lg':
+          thenav.current.classList.remove("slide-right-out");
+          thenav.current.classList.remove("slide-right-in");
+        break
+      case 'sm':
+      case 'md':
+        if(menuvisible === 'true') {
+          thenav.current.classList.remove("slide-right-out");
+          thenav.current.classList.add("slide-right-in");
+        }
+        else {
+          thenav.current.classList.remove("slide-right-in");
+          thenav.current.classList.add("slide-right-out");
+        }
+        break;
     }
+    
+    // if((menuvisible === 'true') && (screenbreak !== 'lg' && screenbreak !== 'xl')) {
+    //     console.log(`${modulename} *** MENU OR SCREEN CHANGED ${menuvisible}/${screenbreak}`); 
+    //     thenav.current.classList.remove("slide-right-out");
+    //     thenav.current.classList.add("slide-right-in");
+    // } 
+    // else {
+    //   thenav.current.classList.remove("slide-right-in");
+    //   thenav.current.classList.add("slide-right-out");
+    // }
   }
 
   // Determine active breakpoint, based on tailwind standard definitions
@@ -62,7 +79,7 @@ export default function Navbar() {
       const breakpoint = getActiveBreakpoint();
       dispatch(setScreenstate({screenstate: breakpoint}));
       // Switch menu on in large screen, off in smaller screens
-      properties.setMenuState(breakpoint === 'lg');
+      properties.setMenuState(breakpoint === 'lg' || breakpoint == 'xl');
       properties.setActiveBreakpoint(breakpoint);
     }
     window.addEventListener('resize', updateSize);
