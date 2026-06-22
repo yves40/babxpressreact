@@ -22,7 +22,12 @@ const initialState =
                 properties.setMenuState(state.menustate);
             },
             toggleMenuState: (state) => {
-                state.menustate = !state.menustate;
+                if(state.menustate === 'true') {
+                    state.menustate = 'false';
+                }
+                else {
+                    state.menustate = 'true';
+                }
                 setCookie("menustate", state.menustate);
                 properties.setMenuState(state.menustate);
             },
