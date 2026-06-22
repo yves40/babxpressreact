@@ -15,10 +15,13 @@ export default function BookSearch() {
   properties.setActivePage('booksearch');
 
   function checkTitle(value) {
+    console.log(`********** ${value}`);    
   }
   function checkAuthor(value) {
+    console.log(`********** ${value}`);
   }
   function checkEditor(value) {
+    console.log(`********** ${value}`);
   }
 
   return (
