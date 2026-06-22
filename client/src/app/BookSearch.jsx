@@ -11,16 +11,15 @@ import properties from '../services/properties.js';
 
 export default function BookSearch() {
   
-  const version = "BookSearch.jsx Jun 4 2026, 1.11";
+  const version = "BookSearch.jsx Jun 22 2026, 1.12";
   properties.setActivePage('booksearch');
-  setMenuState(false);
 
-function checkTitle(value) {
-}
-function checkAuthor(value) {
-}
-function checkEditor(value) {
-}
+  function checkTitle(value) {
+  }
+  function checkAuthor(value) {
+  }
+  function checkEditor(value) {
+  }
 
   return (
     <>

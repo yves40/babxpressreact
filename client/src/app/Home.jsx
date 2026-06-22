@@ -16,7 +16,7 @@ function Home() {
   };
 
   properties.setActivePage('home');
-  setMenuState(false);
+
   return (
     <>
       <header>
