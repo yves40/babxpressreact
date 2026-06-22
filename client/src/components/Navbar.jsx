@@ -84,7 +84,7 @@ export default function Navbar() {
       <NavbarTop></NavbarTop>
       <nav className="nav" ref={thenav}>
         <div className="topmenu">
-          <div className="nav-links">
+          <div className="nav-links" onClick={() => dispatch(setMenuState({menuvisible: "false"}))}>
             <ul>
               {menuvisible && (properties.getActivePage() === 'booksearch') &&
                 <li>
