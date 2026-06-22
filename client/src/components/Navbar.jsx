@@ -32,6 +32,7 @@ export default function Navbar() {
         break
       case 'sm':
       case 'md':
+      case 'mobile':
         if(menuvisible === 'true') {
           thenav.current.classList.remove("slide-right-out");
           thenav.current.classList.add("slide-right-in");
@@ -87,12 +88,12 @@ export default function Navbar() {
             <ul>
               {menuvisible && (properties.getActivePage() === 'booksearch') &&
                 <li>
-                  <Link to="/" onClick={() => dispatch(setMenuState(false))} >Home</Link>
+                  <Link to="/" onClick={() => dispatch(setMenuState({menuvisible: "false"}))} >Home</Link>
                 </li>
               }
               {menuvisible && (properties.getActivePage() === 'home') &&
                 <li>
-                  <Link to="/BooksSearch" onClick={() => dispatch(setMenuState(false))}>Search Books</Link>
+                  <Link to="/BooksSearch" onClick={() => dispatch(setMenuState({menuvisible: "false"}))}>Search Books</Link>
                 </li>
            }
             </ul>
