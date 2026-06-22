@@ -42,16 +42,6 @@ export default function Navbar() {
         }
         break;
     }
-    
-    // if((menuvisible === 'true') && (screenbreak !== 'lg' && screenbreak !== 'xl')) {
-    //     console.log(`${modulename} *** MENU OR SCREEN CHANGED ${menuvisible}/${screenbreak}`); 
-    //     thenav.current.classList.remove("slide-right-out");
-    //     thenav.current.classList.add("slide-right-in");
-    // } 
-    // else {
-    //   thenav.current.classList.remove("slide-right-in");
-    //   thenav.current.classList.add("slide-right-out");
-    // }
   }
 
   // Determine active breakpoint, based on tailwind standard definitions
