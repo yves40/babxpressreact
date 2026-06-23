@@ -35,21 +35,11 @@ export default function BookSearch() {
     console.log(`********** Searching now with criterias ${titlesearch}/${authorsearch}/${editorsearch}`);
     console.log(`********** ${buildURLroot()}/api/books/search`);
     let params = { title: titlesearch, author: authorsearch, editor: editorsearch};
-    // try {
-    //   const response = await axios.post(`${buildURLroot()}/api/books/search`, {
-    //       headers: {'Content-Type': 'application/json'},
-    //       params: JSON.stringify(params),
-    //     })
-    //     console.log(response.data);  
-    // }
-    // catch(error) {
-    //   console.log(error);
-    // }
     axios.post(`${buildURLroot()}/api/books/search`, {
-          headers: {'Content-Type': 'application/json',
-            'Accept': 'application/json',
+          headers: {
+            'Content-Type': 'application/json',
           },
-          params: JSON.stringify(params),
+          params: params,
         })
       .then(response => {
           console.log(response.data);

@@ -54,8 +54,9 @@ app.get('/api/books/count', async (req, res) => {
 }); 
 // -----------------------------------
 app.post('/api/books/search', async (req, res) => {  
-
-  const p = JSON.parse(req.body.params);
+  console.log(`******* ${JSON.stringify(req.body.params)}`);
+  
+  const p = req.body.params;
   const title = p["title"];
   const author = p["author"];
   const editor = p["editor"];
