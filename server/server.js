@@ -1,10 +1,11 @@
 import express from 'express';
+import bodyParser from 'body-parser';
 import cors from 'cors';
 import path from 'path';
 import responseheader from './services/responseheader.js';
 import datetime from './services/datetime.js';
 import process from 'process';
-import { getBooksCount } from './services/books.js';
+import { getBooksCount, getSelectedBooks } from './services/books.js';
 import helpers from './services/helpers.js';
 import sqlHelper from './services/sqlHelper.js';
 import console, { log } from 'console';
@@ -13,12 +14,13 @@ const app = express();
 const port = 5000;
 const thedate = datetime.getDateTime();
 let db = null;
-const version = 'server.js:1.14, May 22 2026 ';
+const version = 'server.js:1.15, Jun 23 2026 ';
 
 //---------------------------------------------------------------------------------------------------------
 // Install middleware responsible for response header settings
 //---------------------------------------------------------------------------------------------------------
 app.use(responseheader);
+app.use(bodyParser.json());
 
 app.get('/', (req, res) => {
   let serverpath = path.resolve('./');
@@ -42,14 +44,28 @@ app.get('/api/fake', (req, res) => {
 });
 // -----------------------------------
 app.get('/api/books/count', async (req, res) => {
-  console.log(req);
-
   try {
     const count = await getBooksCount();  
     res.json({ count });
   } catch (error) {
     console.error('Error fetching books count:', error);
     res.json({ count: 0, error: 'Error fetching books count' });
+  }
+}); 
+// -----------------------------------
+app.post('/api/books/search', async (req, res) => {  
+
+  const p = JSON.parse(req.body.params);
+  const title = p["title"];
+  const author = p["author"];
+  const editor = p["editor"];
+  
+  try {
+    const selectedbooks = await getSelectedBooks({title, author, editor});  
+    res.json({ selectedbooks });
+  } catch (error) {
+    console.error('Error searching books:', error);
+    res.json({ count: 0, error: 'Error searching books' });
   }
 }); 
 // -----------------------------------

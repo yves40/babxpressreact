@@ -36,6 +36,8 @@ export async function getSelectedBooks(criteria) {
     if(typeof criteria !== 'object') {
         throw new AppError('Invalid criteria type');
     }
+    console.log('Server books SEARCH : ' + criteria.title);  
+
     // 1st, normalize user inputs
     let title = criteria.title ? criteria.title.trim().toLowerCase() : '';
     // title = title.charAt(0).toUpperCase() + title.slice(1);
