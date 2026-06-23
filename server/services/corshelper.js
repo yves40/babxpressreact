@@ -17,10 +17,11 @@
 //    Mar 28 2020   Trying to solve multi test environments problems
 //    Apr 06 2020   Tests for corsclient
 //    Nov 29 2021   RYZEN setup
-//    May 15 2027   Module syntax
-//    May 17 2027   Remove logs
+//    May 15 2026   Module syntax
+//    May 17 2026   Remove logs
+//    Jun 23 2026   New corsclient on port 5173
 //----------------------------------------------------------------------------
-const Version = "corshelper:1.34, May 17 2027 ";
+const Version = "corshelper:1.35, Jun 23 2026 ";
 
 
 // CORS sites enabled for cross server requests
@@ -29,13 +30,14 @@ const origindef = 'http://127.0.0.1:5000';
 const corsclients = [
   { node: 'RYZEN', origin: 'http://localhost:8080' },
   { node: 'ASUSP7', origin: 'http://127.0.0.1:5000' },
-  { node: 'localhost', origin: 'https://bab.couteaux-dart.fr' },
+  { node: 'localhost', origin: 'http://localhost:5173' },         // Debug session in asusp7
+  { node: 'localhost', origin: 'https://bab.couteaux-dart.fr' },  // PROD O2switch
 ];
 
 import logger from './logger.js';
 
 function getClientSite(nodename) {
-  // logger.debug(Version + `getClientSite called with nodename ${nodename}`);
+  logger.debug(Version + `getClientSite called with nodename ${nodename}`);
   let origin = origindef; // In case no match is found
   // const nodename = process.env.COMPUTERNAME;
   for (let i=0; i < corsclients.length; ++i) {

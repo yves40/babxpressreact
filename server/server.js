@@ -42,6 +42,8 @@ app.get('/api/fake', (req, res) => {
 });
 // -----------------------------------
 app.get('/api/books/count', async (req, res) => {
+  console.log(req);
+
   try {
     const count = await getBooksCount();  
     res.json({ count });
