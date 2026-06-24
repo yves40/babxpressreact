@@ -20,6 +20,9 @@ export default function BookSearch() {
   const [editorsearch, setEditorsearch] = useState('');
   const [selectedbooks, setSelectedbooks] = useState([]);
   const results = useRef('results');
+  let titlekey = 10000;
+  let authorkey= 20000;
+  let editorkey = 30000;
 
   properties.setActivePage('booksearch');
 
@@ -73,6 +76,12 @@ export default function BookSearch() {
     setEditorsearch(value);
   }
 
+  function clearCriterias() {
+    // setTitlesearch('');
+    // setAuthorsearch('');
+    // setEditorsearch('');
+  }
+
 
   return (
     <>
@@ -81,13 +90,17 @@ export default function BookSearch() {
       </header>
       <div className='page__container ml-5 font-bold '>
         <div className=' mt-2 text-center justify-center'>
-          <InputText label="Titre" parentHandler={checkTitle} />
-          <InputText label="Auteur" parentHandler={checkAuthor} />
-          <InputText label="Éditeur" parentHandler={checkEditor} />
+          <InputText componentid={titlekey} label="Titre" parentHandler={checkTitle} key={titlekey} placeholder={titlesearch}/>
+          <InputText componentid={authorkey} label="Auteur" parentHandler={checkAuthor} key={authorkey} placeholder={authorsearch}/>
+          <InputText componentid={editorkey} label="Éditeur" parentHandler={checkEditor} key={editorkey} placeholder={editorsearch}/>
         </div>
+        <button className=' mt-4 border-0 border-r-gray-800 rounded-2xl bg-amber-400 w-20' 
+            onClick={() => {setTitlesearch(' '); setAuthorsearch('');setEditorsearch('');titlekey++; ++editorkey; ++authorkey}}>
+          RAZ
+        </button>
       </div>
-      <div className=' border-t-2 mt-6 pt-4 mx-4 text-gray-500'>
-        <p className=' border-b-2 text-gray-500 pb-6 w-full' ref={results}>Résultats</p>
+      <div className=' border-t-2 mt-6 pt-4 mx-4 text-white bg-gray-600'>
+        <p className=' border-b-2 pb-6 w-full ml-4' ref={results}>Résultats</p>
         <div className=' mb-24'>
           {selectedbooks.length > 0 &&
             <ul className=' mt-4 mx-4'>

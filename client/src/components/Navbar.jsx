@@ -93,7 +93,7 @@ export default function Navbar() {
               }
               {menuvisible && (properties.getActivePage() === 'home') &&
                 <li>
-                  <Link to="/BooksSearch" onClick={() => dispatch(setMenuState({menuvisible: "false"}))}>Search Books</Link>
+                  <Link to="/BooksSearch" onClick={() => dispatch(setMenuState({menuvisible: "false"}))}>Rechercher</Link>
                 </li>
            }
             </ul>

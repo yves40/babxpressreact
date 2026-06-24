@@ -1,7 +1,8 @@
+/* eslint-disable no-unused-vars */
 import { useRef } from 'react'
 
 export default function InputText({componentid, label, parentHandler,
-    timeout=800}) 
+    timeout=800, key=new Date().getTime(), placeholder=""}) 
 {
     const delayedInput = useRef(null);
     const feedback = useRef('feedback');
@@ -29,6 +30,8 @@ export default function InputText({componentid, label, parentHandler,
                     type="text" 
                     name={componentid} 
                     id={componentid}
+                    key={key}
+                    placeholder={placeholder}
                 />
             </div>
             <p ref={feedback} hidden className='mb-2 text-red-600'>Message</p>
