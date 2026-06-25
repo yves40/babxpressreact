@@ -46,7 +46,7 @@ function Home() {
         </ul>
         <p>
           La recherche se déclenche automatiquement lorsque l'un des critères est modifié. 
-          Attention sur un téléphone, le résultat est caché par le clavier.
+          Attention sur un téléphone, le résultat peut être caché par le clavier.
           Evidemment, tu peux aussi utiliser l'appli sur un PC ou sur une tablette.
         </p>
       </div>
