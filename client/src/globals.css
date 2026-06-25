@@ -210,8 +210,7 @@ body {
   The page container 
   ------------------------------------------------------------------------*/
 .page__container {
-  margin-top: var(--menuheight);
-  @apply mx-auto text-center w-[90%] py-3
+  @apply mx-auto text-center w-[90%] py-3 my-[calc(var(--menuheight))]
       sm:w-160
       md:w-200
       lg:w-240;
