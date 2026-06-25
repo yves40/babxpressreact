@@ -99,9 +99,11 @@ export default function BookSearch() {
           RAZ
         </button>
       </div>
-      <div className=' border-t-2 mt-6 pt-4 mx-4 text-white bg-gray-600'>
-        <p className=' border-b-2 pb-6 w-full ml-4' ref={results}>Résultats</p>
-        <div className=' mb-24'>
+      <div className=' mt-6 pt-4 mx-4 '>
+        <div className='border-2 rounded-2xl mx-4 mb-4 text-white bg-gray-600'>
+          <p className=' pb-6 w-full ml-4 py-3'  ref={results}>Résultats</p>
+        </div>
+        <div className=' mb-24 text-white bg-gray-600 py-4 border-2 rounded-2xl'>
           {selectedbooks.length > 0 &&
             <ul className=' mt-4 mx-4'>
               {selectedbooks.map( (book, index) => (
