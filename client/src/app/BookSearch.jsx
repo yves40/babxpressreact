@@ -20,6 +20,7 @@ export default function BookSearch() {
   const [editorsearch, setEditorsearch] = useState('');
   const [selectedbooks, setSelectedbooks] = useState([]);
   const results = useRef('results');
+  const datalist = useRef('datalist');
   let titlekey = 10000;
   let authorkey= 20000;
   let editorkey = 30000;
@@ -52,9 +53,11 @@ export default function BookSearch() {
           setSelectedbooks(response.data.selectedbooks);
           if(response.data.selectedbooks.length === 0) {
             results.current.innerText = `Pas de livre sélectionné.`;
+            datalist.current.style.display = 'none';
           }
           else {
             results.current.innerText = `Résultats - ${response.data.selectedbooks.length} livre(s) trouvé(s)`;
+            datalist.current.style.display = 'flex';
           }
       })
       .catch(error => {
@@ -94,25 +97,26 @@ export default function BookSearch() {
           <InputText componentid={authorkey} label="Auteur" parentHandler={checkAuthor} key={authorkey} placeholder={authorsearch}/>
           <InputText componentid={editorkey} label="Éditeur" parentHandler={checkEditor} key={editorkey} placeholder={editorsearch}/>
         </div>
-        <button className=' mt-4 border-0 border-r-gray-800 rounded-2xl bg-amber-400 w-20' 
+        <button className=' mt-4 border-0 border-r-gray-800 rounded-2xl bg-gray-700 text-white  w-40 py-2' 
             onClick={() => {setTitlesearch(' '); setAuthorsearch('');setEditorsearch('');titlekey++; ++editorkey; ++authorkey}}>
           RAZ
         </button>
-      </div>
-      <div className=' mt-6 pt-4 mx-4 '>
-        <div className='border-2 rounded-2xl mx-4 mb-4 text-white bg-gray-600'>
-          <p className=' pb-6 w-full ml-4 py-3'  ref={results}>Résultats</p>
-        </div>
-        <div className=' mb-24 text-white bg-gray-600 py-4 border-2 rounded-2xl'>
-          {selectedbooks.length > 0 &&
-            <ul className=' mt-4 mx-4'>
-              {selectedbooks.map( (book, index) => (
-                <li key={index} className=' mb-2'>
-                  <span className=' font-bold'>{book.bk_title}</span> - <span>{book.auth_fname} {book.auth_lname}</span> - <span><i>{book.ed_name}</i></span>
-                </li> 
-              ))}
-            </ul>
-          }
+        {/* The results */}
+        <div className='list__container'>
+          <div className="list__header">
+            <p ref={results}>Résultats</p>
+          </div>
+          <div className="list__data" ref={datalist}>
+            {selectedbooks.length > 0 &&
+              <ul className=' mt-4 mx-4'>
+                {selectedbooks.map( (book, index) => (
+                  <li key={index} className=' mb-2'>
+                    <span className=' font-bold'>{book.bk_title}</span> - <span>{book.auth_fname} {book.auth_lname}</span> - <span><i>{book.ed_name}</i></span>
+                  </li> 
+                ))}
+              </ul>
+            }
+          </div>
         </div>
       </div>
       <Footer />
