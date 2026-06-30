@@ -32,7 +32,6 @@ export default function InputText({componentid, label, parentHandler,
                     name={componentid} 
                     id={componentid}
                     key={inputkey}
-                    // value={text}
                 />
             </div>
             <p ref={feedback} hidden className='mb-2 text-red-600'>Message</p>

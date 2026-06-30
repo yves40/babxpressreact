@@ -17,11 +17,11 @@ export default function BookSearch() {
   const [authorsearch, setAuthorsearch] = useState('');
   const [editorsearch, setEditorsearch] = useState('');
   const [selectedbooks, setSelectedbooks] = useState([]);
-  const results = useRef('results');
-  const datalist = useRef('datalist');
-  let titlekey = 10000;
-  let authorkey= 20000;
-  let editorkey = 30000;
+  const results = useRef('results');                  // Search result message
+  const datalist = useRef('datalist');                // Show hide results
+  const [titlekey, setTitlekey ] = useState(10000);   /* Used to reset fields */
+  const [authorkey, setAuthorkey ] = useState(20000);
+  const [editorkey, setEditorkey ] = useState(30000);
 
   properties.setActivePage('booksearch');
 
@@ -33,7 +33,6 @@ export default function BookSearch() {
     }
     return `${winloc.protocol}//${winloc.hostname}:${winloc.port}`;
   }
-
   // -------------------------------------------------------------------------------------------------
   async function  searchBooks() {
     results.current.innerText = `Recherche...`;
@@ -62,9 +61,15 @@ export default function BookSearch() {
   // -------------------------------------------------------------------------------------------------
   useEffect(() => {
     console.log(`************** BOOK SEARCH CRITERIAS ${titlesearch}/${authorsearch}/${editorsearch}`);
+    console.log(`************** BOOK SEARCH CRITERIAS ${titlekey}/${authorkey}/${editorkey}`);
     searchBooks();
   }, [titlesearch, authorsearch, editorsearch])
-
+  // -------------------------------------------------------------------------------------------------
+  function RAZ() {
+    setTitlesearch(' ');setTitlekey(titlekey + 1);
+    setEditorsearch(' ');setAuthorkey(authorkey + 1);
+    setAuthorsearch(' ');setEditorkey(editorkey + 1);
+  }
   function checkTitle(value) {
     setTitlesearch(value);
   }
@@ -82,13 +87,12 @@ export default function BookSearch() {
       </header>
       <div className='page__container ml-5 font-bold '>
         <div className=' mt-2 text-center justify-center'>
-          <p className=' text-black'> ************** {titlesearch}/{authorsearch}/{editorsearch}</p>
           <InputText componentid={titlekey} label="Titre" parentHandler={checkTitle} inputkey={titlekey}  value={titlesearch}/>
           <InputText componentid={authorkey} label="Auteur" parentHandler={checkAuthor} inputkey={authorkey} value={authorsearch}/>
           <InputText componentid={editorkey} label="Éditeur" parentHandler={checkEditor} inputkey={editorkey} value={editorsearch}/>
         </div>
         <button className=' mt-4 border-0 border-r-gray-800 rounded-2xl bg-gray-700 text-white  w-40 py-2' 
-            onClick={() => {setTitlesearch(' '); setAuthorsearch('');setEditorsearch('');titlekey++; ++editorkey; ++authorkey}}>
+            onClick={() => RAZ()}>
           RAZ
         </button>
         {/* The results */}
