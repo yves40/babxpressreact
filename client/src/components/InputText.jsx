@@ -6,18 +6,14 @@ export default function InputText({componentid, label, parentHandler,
 {
     const delayedInput = useRef(null);
     const feedback = useRef('feedback');
-    // const [text, setText] = useState(value);
     
     function checkInput(e) {
-        console.log(`********** ${e.target.value}`);
         e.preventDefault();
-        
         if(delayedInput.current) clearTimeout(delayedInput.current);
         delayedInput.current = setTimeout(() => {
             try {
                 feedback.current.textContent = '';
                 feedback.current.hidden = true;
-                // setText(e.target.value);
                 parentHandler(e.target.value);
             }
             catch(error){ 
