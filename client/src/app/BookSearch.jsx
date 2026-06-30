@@ -25,6 +25,7 @@ export default function BookSearch() {
 
   properties.setActivePage('booksearch');
 
+  // -------------------------------------------------------------------------------------------------
   function buildURLroot() {
     const winloc = document.location;
     if(winloc.port === properties.reactDEVport) {    // DEV on asusp7 ???
@@ -33,13 +34,9 @@ export default function BookSearch() {
     return `${winloc.protocol}//${winloc.hostname}:${winloc.port}`;
   }
 
+  // -------------------------------------------------------------------------------------------------
   async function  searchBooks() {
-    // if(titlesearch.length === 0 && authorsearch.length === 0 && editorsearch.length === 0)
-    //   return;
-    console.log(`********** Searching now with criterias ${titlesearch}/${authorsearch}/${editorsearch}`);
-    console.log(`********** ${buildURLroot()}/api/books/search`);
     results.current.innerText = `Recherche...`;
-
     axios.post(`${buildURLroot()}/api/books/search`, {
           headers: {
             'Content-Type': 'application/json',
@@ -62,8 +59,9 @@ export default function BookSearch() {
         console.error("Axios error:", error);
       });    
   }
-
+  // -------------------------------------------------------------------------------------------------
   useEffect(() => {
+    console.log(`************** BOOK SEARCH CRITERIAS ${titlesearch}/${authorsearch}/${editorsearch}`);
     searchBooks();
   }, [titlesearch, authorsearch, editorsearch])
 
@@ -76,7 +74,7 @@ export default function BookSearch() {
   function checkEditor(value) {
     setEditorsearch(value);
   }
-
+  // -------------------------------------------------------------------------------------------------
   return (
     <>
       <header>
@@ -86,8 +84,8 @@ export default function BookSearch() {
         <div className=' mt-2 text-center justify-center'>
           <p className=' text-black'> ************** {titlesearch}/{authorsearch}/{editorsearch}</p>
           <InputText componentid={titlekey} label="Titre" parentHandler={checkTitle} inputkey={titlekey}  value={titlesearch}/>
-          <InputText componentid={authorkey} label="Auteur" parentHandler={checkAuthor} key={authorkey} value={authorsearch}/>
-          <InputText componentid={editorkey} label="Éditeur" parentHandler={checkEditor} key={editorkey} value={editorsearch}/>
+          <InputText componentid={authorkey} label="Auteur" parentHandler={checkAuthor} inputkey={authorkey} value={authorsearch}/>
+          <InputText componentid={editorkey} label="Éditeur" parentHandler={checkEditor} inputkey={editorkey} value={editorsearch}/>
         </div>
         <button className=' mt-4 border-0 border-r-gray-800 rounded-2xl bg-gray-700 text-white  w-40 py-2' 
             onClick={() => {setTitlesearch(' '); setAuthorsearch('');setEditorsearch('');titlekey++; ++editorkey; ++authorkey}}>
