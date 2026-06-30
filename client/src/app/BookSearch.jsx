@@ -1,7 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
-"use client";
-
 import { useEffect, useEffectEvent, useRef, useState} from 'react'
 import axios from "axios";
 import { Link } from 'react-router'
@@ -14,7 +12,7 @@ import techinfo from '../services/techinfo.js';
 
 export default function BookSearch() {
   
-  const version = "BookSearch.jsx Jun 23 2026, 1.15 ";
+  const version = "BookSearch.jsx Jun 30 2026, 1.17 ";
   const [titlesearch, setTitlesearch] = useState('');
   const [authorsearch, setAuthorsearch] = useState('');
   const [editorsearch, setEditorsearch] = useState('');
@@ -79,13 +77,6 @@ export default function BookSearch() {
     setEditorsearch(value);
   }
 
-  function clearCriterias() {
-    // setTitlesearch('');
-    // setAuthorsearch('');
-    // setEditorsearch('');
-  }
-
-
   return (
     <>
       <header>
@@ -93,9 +84,10 @@ export default function BookSearch() {
       </header>
       <div className='page__container ml-5 font-bold '>
         <div className=' mt-2 text-center justify-center'>
-          <InputText componentid={titlekey} label="Titre" parentHandler={checkTitle} key={titlekey} placeholder={titlesearch}/>
-          <InputText componentid={authorkey} label="Auteur" parentHandler={checkAuthor} key={authorkey} placeholder={authorsearch}/>
-          <InputText componentid={editorkey} label="Éditeur" parentHandler={checkEditor} key={editorkey} placeholder={editorsearch}/>
+          <p className=' text-black'> ************** {titlesearch}/{authorsearch}/{editorsearch}</p>
+          <InputText componentid={titlekey} label="Titre" parentHandler={checkTitle} inputkey={titlekey}  value={titlesearch}/>
+          <InputText componentid={authorkey} label="Auteur" parentHandler={checkAuthor} key={authorkey} value={authorsearch}/>
+          <InputText componentid={editorkey} label="Éditeur" parentHandler={checkEditor} key={editorkey} value={editorsearch}/>
         </div>
         <button className=' mt-4 border-0 border-r-gray-800 rounded-2xl bg-gray-700 text-white  w-40 py-2' 
             onClick={() => {setTitlesearch(' '); setAuthorsearch('');setEditorsearch('');titlekey++; ++editorkey; ++authorkey}}>

@@ -1,18 +1,23 @@
 /* eslint-disable no-unused-vars */
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 
 export default function InputText({componentid, label, parentHandler,
-    timeout=800, key=new Date().getTime(), placeholder=""}) 
+    timeout=800, inputkey=new Date().getTime(), value=""}) 
 {
     const delayedInput = useRef(null);
     const feedback = useRef('feedback');
+    // const [text, setText] = useState(value);
     
     function checkInput(e) {
+        console.log(`********** ${e.target.value}`);
+        e.preventDefault();
+        
         if(delayedInput.current) clearTimeout(delayedInput.current);
         delayedInput.current = setTimeout(() => {
             try {
                 feedback.current.textContent = '';
                 feedback.current.hidden = true;
+                // setText(e.target.value);
                 parentHandler(e.target.value);
             }
             catch(error){ 
@@ -30,8 +35,8 @@ export default function InputText({componentid, label, parentHandler,
                     type="text" 
                     name={componentid} 
                     id={componentid}
-                    key={key}
-                    placeholder={placeholder}
+                    key={inputkey}
+                    // value={text}
                 />
             </div>
             <p ref={feedback} hidden className='mb-2 text-red-600'>Message</p>
