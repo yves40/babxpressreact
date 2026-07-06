@@ -35,6 +35,9 @@ export default function BookSearch() {
   }
   // -------------------------------------------------------------------------------------------------
   async function  searchBooks() {
+    setTitlekey(titlekey + 1);
+    setAuthorkey(authorkey + 1);
+    setEditorkey(editorkey + 1);
     results.current.innerText = `Recherche...`;
     axios.post(`${buildURLroot()}/api/books/search`, {
           headers: {
