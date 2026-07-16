@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-assignment */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
 import { useEffect, useEffectEvent, useRef, useState} from 'react'
@@ -11,20 +12,16 @@ import properties from '../services/properties.js';
 import techinfo from '../services/techinfo.js';
 
 export default function BookSearch() {
-  
-  const version = "BookSearch.jsx Jun 30 2026, 1.17 ";
-  const [titlesearch, setTitlesearch] = useState('');
-  const [authorsearch, setAuthorsearch] = useState('');
-  const [editorsearch, setEditorsearch] = useState('');
-  const [selectedbooks, setSelectedbooks] = useState([]);
-  const results = useRef('results');                  // Search result message
-  const datalist = useRef('datalist');                // Show hide results
-  const [titlekey, setTitlekey ] = useState(10000);   /* Used to reset fields */
-  const [authorkey, setAuthorkey ] = useState(20000);
-  const [editorkey, setEditorkey ] = useState(30000);
 
-  properties.setActivePage('booksearch');
-
+  // -------------------------------------------------------------------------------------------------
+  // Focus hook, to set focus on a specific input field
+  const UseFocus = () => {
+    const htmlElRef = useRef(null)
+    const setFocus = () => {
+      htmlElRef.current &&  htmlElRef.current.focus()
+    }
+  	return [ htmlElRef,  setFocus ] 
+  }
   // -------------------------------------------------------------------------------------------------
   function buildURLroot() {
     const winloc = document.location;
@@ -34,10 +31,25 @@ export default function BookSearch() {
     return `${winloc.protocol}//${winloc.hostname}:${winloc.port}`;
   }
   // -------------------------------------------------------------------------------------------------
+  const version = "BookSearch.jsx Jul 16 2026, 1.18 ";
+
+  const [titlesearch, setTitlesearch] = useState('');
+  const [authorsearch, setAuthorsearch] = useState('');
+  const [editorsearch, setEditorsearch] = useState('');
+  const [selectedbooks, setSelectedbooks] = useState([]);
+  const results = useRef('results');                      // Search result message
+  const datalist = useRef('datalist');                    // Show hide results
+
+  const titlesearchRef = useRef(null);
+  const authsearchRef = useRef(null);
+  const editsearchRef = useRef(null);
+
+  const testmeRef = useRef(null);
+
+  properties.setActivePage('booksearch');
+
+  // -------------------------------------------------------------------------------------------------
   async function  searchBooks() {
-    setTitlekey(titlekey + 1);
-    setAuthorkey(authorkey + 1);
-    setEditorkey(editorkey + 1);
     results.current.innerText = `Recherche...`;
     axios.post(`${buildURLroot()}/api/books/search`, {
           headers: {
@@ -55,6 +67,7 @@ export default function BookSearch() {
           else {
             results.current.innerText = `Résultats - ${response.data.selectedbooks.length} livre(s) trouvé(s)`;
             datalist.current.style.display = 'flex';
+            titlesearchRef.current && titlesearchRef.current.focus();
           }
       })
       .catch(error => {
@@ -64,24 +77,22 @@ export default function BookSearch() {
   // -------------------------------------------------------------------------------------------------
   useEffect(() => {
     console.log(`************** BOOK SEARCH CRITERIAS ${titlesearch}/${authorsearch}/${editorsearch}`);
-    console.log(`************** BOOK SEARCH CRITERIAS ${titlekey}/${authorkey}/${editorkey}`);
     searchBooks();
   }, [titlesearch, authorsearch, editorsearch])
   // -------------------------------------------------------------------------------------------------
   function RAZ() {
-    setTitlesearch(' ');setTitlekey(titlekey + 1);
-    setEditorsearch(' ');setAuthorkey(authorkey + 1);
-    setAuthorsearch(' ');setEditorkey(editorkey + 1);
+    setTitlesearch(' ');
+    setEditorsearch(' ');
+    setAuthorsearch(' ');
+    titlesearchRef.current && titlesearchRef.current.focus();
+    titlesearchRef.current.value = '';
+    authsearchRef.current.value = '';
+    editsearchRef.current.value = '';
   }
-  function checkTitle(value) {
-    setTitlesearch(value);
-  }
-  function checkAuthor(value) {
-    setAuthorsearch(value);
-  }
-  function checkEditor(value) {
-    setEditorsearch(value);
-  }
+  // --------------------------- CHILD HANDLERS ------------------------------------------------------
+  function checkTitle(value) {setTitlesearch(value);}
+  function checkAuthor(value) {setAuthorsearch(value);}
+  function checkEditor(value) {setEditorsearch(value);}
   // -------------------------------------------------------------------------------------------------
   return (
     <>
@@ -90,9 +101,13 @@ export default function BookSearch() {
       </header>
       <div className='page__container ml-5 font-bold '>
         <div className=' mt-2 text-center justify-center'>
-          <InputText componentid={titlekey} label="Titre" parentHandler={checkTitle} inputkey={titlekey}  value={titlesearch}/>
-          <InputText componentid={authorkey} label="Auteur" parentHandler={checkAuthor} inputkey={authorkey} value={authorsearch}/>
-          <InputText componentid={editorkey} label="Éditeur" parentHandler={checkEditor} inputkey={editorkey} value={editorsearch}/>
+          {/* <label className='form__label' htmlFor='testme'>Testme</label>
+          <input className='form__input' id='testme' ref={testmeRef}
+                    type="text" 
+                /> */}
+          <InputText ref={titlesearchRef}  componentid='SEARCH' label="Titre" parentHandler={checkTitle} />
+          <InputText ref={authsearchRef}   componentid='AUTHOR' label="Auteur" parentHandler={checkAuthor} />
+          <InputText ref={editsearchRef}   componentid='EDITOR' label="Éditeur" parentHandler={checkEditor} />
         </div>
         <button className=' mt-4 border-0 border-r-gray-800 rounded-2xl bg-gray-700 text-white  w-40 py-2' 
             onClick={() => RAZ()}>
