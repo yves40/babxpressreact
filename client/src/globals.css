@@ -219,8 +219,8 @@ body {
   Results list container 
   ------------------------------------------------------------------------*/
 .list__container {
-  @apply mx-auto text-center w-[90%] py-3 my-[calc(var(--menuheight))]
-         mt-2 pt-4 border-2 rounded-2xl mb-4 text-white bg-gray-600
+  @apply mx-auto text-center w-full py-3 my-[calc(var(--menuheight))]
+         mt-2 pt-4  mb-4 text-black
          px-3
       sm:w-160
       md:w-200
@@ -230,8 +230,8 @@ body {
   @apply pt-3 pb-4 w-full ml-4 py-3;
 }
 .list__data {
-  @apply mb-12 text-white bg-gray-600 
-      py-2 border-2 rounded-2xl my-2;
+  @apply mb-12 my-2 flex flex-col items-center justify-center text-left
+    w-full;
   
 }
 /* Form style */
