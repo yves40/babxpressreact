@@ -230,7 +230,7 @@ body {
   @apply pt-3 pb-4 w-full ml-4 py-3;
 }
 .list__data {
-  @apply mb-12 my-2 flex flex-col text-left w-full;
+  @apply mb-12 my-2 flex flex-col text-left w-full bg-white;
   
 }
 /* Form style */
