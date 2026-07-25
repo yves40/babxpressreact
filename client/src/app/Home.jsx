@@ -23,18 +23,16 @@ function Home() {
           <Navbar/>
       </header>
       <div className='page__container'>
-        <p className='my-4 mx-4 font-light'>Baboule, je sais que tu attendais avec impatience
+        <p className='my-4 mx-4 font-light text-left'>Baboule, je sais que tu attendais avec impatience
           cette application. J'espère qu'elle te sera utile la prochaine fois que tu iras acheter un livre.
           Les recherches se font par titre, auteur, ou éditeur. Ces critères pouvant être combinés par 2. 
-          <span className=' underline font-bold'>Pas de recherche sur les 3 critères en même temps.</span>
+          <span className=' font-bold'> Il n'y a donc pas de recherche sur 3 critères en même temps. </span>
           La saisie d'un seul mot ou même d'une partie de ce mot dans l'un des critères déclenche une 
           recherche immédiate sur ce dernier.
         </p>
-        <ul className=' text-left my-4 mx-4 list-disc text-blue-700'>
+        <ul className=' text-left my-4 mx-4 list-disc'>
           <li>
-            Pour chercher les livres écrits par Olivier ADAM, tu peux saisir ADAM, AD, ADA, etc.
-            ATTENTION !!!! La recherche d'auteur <span className=' underline font-bold'>ne s'effectue que sur le nom de famille de l'auteur</span> . Si tu 
-            écris Olivier ADAM il ne cherchera que ADAM.
+            La recherche d'auteur <span className=' font-bold'>ne s'effectue que sur le nom de famille de l'auteur</span> . La saisie d'Olivier ADAM ne déclenche une recherche que sur ADAM.
           </li>
           <li>
             Une recherche par titre sélectionne simplement tous les titres contenant la chaine saisie.
@@ -44,7 +42,7 @@ function Home() {
             contient la chaine saisie.
           </li>
         </ul>
-        <p>
+        <p className=' my-4 mx-4 text-left'>
           La recherche se déclenche automatiquement lorsque l'un des critères est modifié. 
           Attention sur un téléphone, le résultat peut être caché par le clavier.
           Evidemment, tu peux aussi utiliser l'appli sur un PC ou sur une tablette.
