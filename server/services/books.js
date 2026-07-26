@@ -28,6 +28,7 @@ export async function getBooksCount() {
         throw new Error('Erreur lors de la récupération du nombre de livres');
     }   
 }
+// -----------------------------------------------------------------------------------------
 export async function getSelectedBooks(criteria) {
 
     if(!criteria) {
@@ -59,7 +60,7 @@ export async function getSelectedBooks(criteria) {
      * 4 : editor only
      * 5 : title + editor
      * 6 : author + editor
-     * 7 : title + author + editor
+     * 7 : title + author + editor (not implemented, will return a message)
      */
     let searchlevel = 0
     if(title.length > 0) {
@@ -96,8 +97,9 @@ export async function getSelectedBooks(criteria) {
     async function searchBooksByTitle(title) {
         let rows = [];
         const conn = await sqlh.startTransactionRO();
-        rows = await sqlh.Select('select b.bk_title, a.auth_lname, a.auth_fname, e.ed_name from books b, authors a, editors e \
-                where bk_title like ? and b.bk_author = a.auth_id and b.bk_editor = e.ed_id',
+        rows = await sqlh.Select('select b.bk_title, a.auth_id, a.auth_lname, a.auth_fname, e.ed_name, l.loc_city \
+                from books b, authors a, editors e, locations l \
+                where bk_title like ? and b.bk_author = a.auth_id and b.bk_editor = e.ed_id and b.bk_location = l.loc_id' ,
                     [`%${title}%`],
                     conn);
         sqlh.commitTransaction(conn);
@@ -109,8 +111,9 @@ export async function getSelectedBooks(criteria) {
     async function searchBooksByAuthor(authorlastname) {
         let rows = [];
         const conn = await sqlh.startTransactionRO();
-        rows = await sqlh.Select('select b.bk_title, a.auth_lname, a.auth_fname, e.ed_name from books b, authors a, editors e \
-                where a.auth_lname like ? and b.bk_author = a.auth_id and b.bk_editor = e.ed_id',
+        rows = await sqlh.Select('select b.bk_title, a.auth_id,a.auth_lname, a.auth_fname, e.ed_name, l.loc_city \
+                from books b, authors a, editors e, locations l \
+                where a.auth_lname like ? and b.bk_author = a.auth_id and b.bk_editor = e.ed_id and b.bk_location = l.loc_id',
                     [`%${authorlastname}%`],
                     conn);
         sqlh.commitTransaction(conn);
@@ -122,8 +125,9 @@ export async function getSelectedBooks(criteria) {
     async function searchBooksByEditor(editorname) {
         let rows = [];
         const conn = await sqlh.startTransactionRO();
-        rows = await sqlh.Select('select b.bk_title, a.auth_lname, a.auth_fname, e.ed_name from books b, authors a, editors e \
-                where e.ed_name like ? and b.bk_author = a.auth_id and b.bk_editor = e.ed_id',
+        rows = await sqlh.Select('select b.bk_title, a.auth_id,  a.auth_lname, a.auth_fname, e.ed_name, l.loc_city \
+                from books b, authors a, editors e, locations l \
+                where e.ed_name like ? and b.bk_author = a.auth_id and b.bk_editor = e.ed_id and b.bk_location = l.loc_id',
                     [`%${editorname}%`],
                     conn);
         sqlh.commitTransaction(conn);
@@ -135,9 +139,10 @@ export async function getSelectedBooks(criteria) {
     async function searchBooksByTitleAuthor(title, authname) {
         let rows = [];
         const conn = await sqlh.startTransactionRO();
-        rows = await sqlh.Select('select b.bk_title, a.auth_lname, a.auth_fname, e.ed_name from books b, authors a, editors e \
+        rows = await sqlh.Select('select b.bk_title, a.auth_id, a.auth_lname, a.auth_fname, e.ed_name, l.loc_city \
+                from books b, authors a, editors e, locations l \
                 where b.bk_title like ? and a.auth_lname like ?\
-                and b.bk_author = a.auth_id and b.bk_editor = e.ed_id',
+                and b.bk_author = a.auth_id and b.bk_editor = e.ed_id and b.bk_location = l.loc_id',
                     [`%${title}%`, `%${authname}%`],
                     conn);
         sqlh.commitTransaction(conn);
@@ -149,9 +154,10 @@ export async function getSelectedBooks(criteria) {
     async function searchBooksByTitleEditor(title, editorname) {
         let rows = [];
         const conn = await sqlh.startTransactionRO();
-        rows = await sqlh.Select('select b.bk_title, a.auth_lname, a.auth_fname, e.ed_name from books b, authors a, editors e \
+        rows = await sqlh.Select('select b.bk_title,a.auth_id,  a.auth_lname, a.auth_fname, e.ed_name, l.loc_city \
+                from books b, authors a, editors e, locations l \
                 where b.bk_title like ? and e.ed_name like ?\
-                and b.bk_author = a.auth_id and b.bk_editor = e.ed_id',
+                and b.bk_author = a.auth_id and b.bk_editor = e.ed_id and b.bk_location = l.loc_id',
                     [`%${title}%`, `%${editorname}%`],
                     conn);
         sqlh.commitTransaction(conn);
@@ -163,9 +169,10 @@ export async function getSelectedBooks(criteria) {
     async function searchBooksByAuthorEditor(authorname, editorname) {
         let rows = [];
         const conn = await sqlh.startTransactionRO();
-        rows = await sqlh.Select('select b.bk_title, a.auth_lname, a.auth_fname, e.ed_name from books b, authors a, editors e \
+        rows = await sqlh.Select('select b.bk_title,a.auth_id,  a.auth_lname, a.auth_fname, e.ed_name, l.loc_city \
+                from books b, authors a, editors e, locations l \
                 where a.auth_lname like ? and e.ed_name like ?\
-                and b.bk_author = a.auth_id and b.bk_editor = e.ed_id',
+                and b.bk_author = a.auth_id and b.bk_editor = e.ed_id and b.bk_location = l.loc_id',
                     [`%${authorname}%`, `%${editorname}%`],
                     conn);
         sqlh.commitTransaction(conn);

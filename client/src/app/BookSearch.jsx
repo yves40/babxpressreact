@@ -125,7 +125,8 @@ export default function BookSearch() {
                   <div key={index} className='list__element'>
                     <span className=' font-bold'>{book.bk_title}</span>
                     <span className='text-gray-600'>{book.auth_fname} {book.auth_lname} </span> 
-                    <span className=' mb-2'><i>{book.ed_name}</i></span>
+                    <span><i>{book.ed_name}</i></span>
+                    <span className='text-gray-600 mb-1'>{book.loc_city}</span>
                   </div>
                 ))}
           </div>
