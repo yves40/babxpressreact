@@ -230,8 +230,10 @@ body {
   @apply pt-3 pb-4 w-full ml-4 py-3;
 }
 .list__data {
-  @apply mb-12 my-2 flex flex-col text-left w-full;
-  
+  @apply mb-12 my-2 flex flex-col text-left w-[60%] mx-auto
+  sm:w-[70%]
+  md:w-[80%]
+  lg:w-[90%];
 }
 .list__element {
   @apply mb-2 flex flex-col text-left w-full;

@@ -179,3 +179,28 @@ export async function getSelectedBooks(criteria) {
         return rows;
     }
 }
+// -----------------------------------------------------------------------------------------
+export async function getAuthorBooks(criteria) {
+
+    if(!criteria) {
+        throw new AppError('No criteria provided');
+    }
+    if(typeof criteria !== 'object') {
+        throw new AppError('Invalid criteria type');
+    }
+    console.log('Author books SEARCH : ' + criteria.authorID);  
+
+    const sqlh = new sqlHelper();
+    let authorid = criteria.authorID;
+    let rows = [];
+    const conn = await sqlh.startTransactionRO();
+    rows = await sqlh.Select('select b.bk_title, a.auth_id,  a.auth_lname, a.auth_fname, e.ed_name, l.loc_city \
+            from books b, authors a, editors e, locations l \
+            where b.bk_author = ?\
+            and b.bk_author = a.auth_id and b.bk_editor = e.ed_id and b.bk_location = l.loc_id',
+                [`%${authorid}%`],
+                conn);
+    sqlh.commitTransaction(conn);
+    return rows;
+}
+

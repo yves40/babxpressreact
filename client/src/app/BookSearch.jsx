@@ -90,6 +90,34 @@ export default function BookSearch() {
     authsearchRef.current.value = '';
     editsearchRef.current.value = '';
   }
+  function handleAuthorClick(event) {
+    const authorId = event.target.getAttribute('data-authorid');
+    console.log(`Author ID clicked: ${authorId}`);
+    axios.post(`${buildURLroot()}/api/books/searchbyauthor`, {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          params: { authorId: authorId },
+        })
+      .then(response => {
+          console.log(response.data);
+          // setSelectedbooks(response.data.selectedbooks);
+          // if(response.data.selectedbooks.length === 0) {
+          //   results.current.innerText = `Pas de livre sélectionné.`;
+          //   datalist.current.style.display = 'none';
+          // }
+          // else {
+          //   results.current.innerText = `Résultats - ${response.data.selectedbooks.length} livre(s) trouvé(s)`;
+          //   datalist.current.style.display = 'flex';
+          //   titlesearchRef.current && titlesearchRef.current.focus();
+          // }
+          // datalist.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      })
+      .catch(error => {
+        console.error("Axios error:", error);
+      });    
+
+  }
   // --------------------------- CHILD HANDLERS ------------------------------------------------------
   function checkTitle(value) {setTitlesearch(value);}
   function checkAuthor(value) {setAuthorsearch(value);}
@@ -124,9 +152,10 @@ export default function BookSearch() {
                 selectedbooks.map( (book, index) => (
                   <div key={index} className='list__element'>
                     <span className=' font-bold'>{book.bk_title}</span>
-                    <span className='text-gray-600'>{book.auth_fname} {book.auth_lname} </span> 
+                    <span className='text-gray-600 flex flex-row items-center '>{book.auth_fname} {book.auth_lname} 
+                      <img className='svg-gray32 ml-auto' src="svg/arrow-forward.svg" alt="" data-authorid={book.auth_id} onClick={handleAuthorClick} /> </span> 
                     <span><i>{book.ed_name}</i></span>
-                    <span className='text-gray-600 mb-1'>{book.loc_city}</span>
+                    <span className='text-gray-600 mb-2'>{book.loc_city}</span>
                   </div>
                 ))}
           </div>

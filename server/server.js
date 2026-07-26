@@ -5,7 +5,7 @@ import path from 'path';
 import responseheader from './services/responseheader.js';
 import datetime from './services/datetime.js';
 import process from 'process';
-import { getBooksCount, getSelectedBooks } from './services/books.js';
+import { getBooksCount, getSelectedBooks, getAuthorBooks } from './services/books.js';
 import helpers from './services/helpers.js';
 import sqlHelper from './services/sqlHelper.js';
 import console, { log } from 'console';
@@ -66,6 +66,21 @@ app.post('/api/books/search', async (req, res) => {
     res.json({ selectedbooks });
   } catch (error) {
     console.error('Error searching books:', error);
+    res.json({ count: 0, error: 'Error searching books' });
+  }
+}); 
+// -----------------------------------
+app.post('/api/books/searchbyauthor', async (req, res) => {  
+  console.log(`******* ${JSON.stringify(req.body.params)}`);
+
+  const p = req.body.params;
+  const authorID = p["authorId"];
+
+  try {
+    const selectedbooks = await getAuthorBooks({authorID});  
+    res.json({ selectedbooks });
+  } catch (error) {
+    console.error('Error searching books by author:', error);
     res.json({ count: 0, error: 'Error searching books' });
   }
 }); 
