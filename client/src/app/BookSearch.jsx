@@ -122,11 +122,11 @@ export default function BookSearch() {
           <div className="list__data" ref={datalist}>
               {selectedbooks.length > 0 &&
                 selectedbooks.map( (book, index) => (
-                  <>
-                    <span key={index} className=' font-bold'>{book.bk_title}</span>
+                  <div key={index} className='list__element'>
+                    <span className=' font-bold'>{book.bk_title}</span>
                     <span className='text-gray-600'>{book.auth_fname} {book.auth_lname} </span> 
                     <span className=' mb-2'><i>{book.ed_name}</i></span>
-                  </>
+                  </div>
                 ))}
           </div>
         </div>

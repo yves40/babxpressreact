@@ -23,8 +23,7 @@ function Home() {
           <Navbar/>
       </header>
       <div className='page__container'>
-        <p className='my-4 mx-4 font-light text-left'>Baboule, je sais que tu attendais avec impatience
-          cette application. J'espère qu'elle te sera utile la prochaine fois que tu iras acheter un livre.
+        <p className='my-4 mx-4 font-light text-left'>Quelques infos. <br /><br />
           Les recherches se font par titre, auteur, ou éditeur. Ces critères pouvant être combinés par 2. 
           <span className=' font-bold'> Il n'y a donc pas de recherche sur 3 critères en même temps. </span>
           La saisie d'un seul mot ou même d'une partie de ce mot dans l'un des critères déclenche une 

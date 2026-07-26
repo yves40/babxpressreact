@@ -220,7 +220,7 @@ body {
   ------------------------------------------------------------------------*/
 .list__container {
   @apply mx-auto text-center w-full py-3 my-[calc(var(--menuheight))]
-         mt-2 pt-4  mb-4 text-black
+         mt-2 pt-4  mb-4 text-black bg-white
          px-3
       sm:w-160
       md:w-200
@@ -230,8 +230,11 @@ body {
   @apply pt-3 pb-4 w-full ml-4 py-3;
 }
 .list__data {
-  @apply mb-12 my-2 flex flex-col text-left w-full bg-white;
+  @apply mb-12 my-2 flex flex-col text-left w-full;
   
+}
+.list__element {
+  @apply mb-2 flex flex-col text-left w-full;
 }
 /* Form style */
 .form__label {
