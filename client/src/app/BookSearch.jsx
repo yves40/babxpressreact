@@ -96,22 +96,22 @@ export default function BookSearch() {
     axios.post(`${buildURLroot()}/api/books/searchbyauthor`, {
           headers: {
             'Content-Type': 'application/json',
-          },
+          }, 
           params: { authorId: authorId },
         })
       .then(response => {
           console.log(response.data);
-          // setSelectedbooks(response.data.selectedbooks);
-          // if(response.data.selectedbooks.length === 0) {
-          //   results.current.innerText = `Pas de livre sélectionné.`;
-          //   datalist.current.style.display = 'none';
-          // }
-          // else {
-          //   results.current.innerText = `Résultats - ${response.data.selectedbooks.length} livre(s) trouvé(s)`;
-          //   datalist.current.style.display = 'flex';
-          //   titlesearchRef.current && titlesearchRef.current.focus();
-          // }
-          // datalist.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          setSelectedbooks(response.data.selectedbooks);
+          if(response.data.selectedbooks.length === 0) {
+            results.current.innerText = `Pas de livre sélectionné.`;
+            datalist.current.style.display = 'none';
+          }
+          else {
+            results.current.innerText = `Résultats - ${response.data.selectedbooks.length} livre(s) trouvé(s)`;
+            datalist.current.style.display = 'flex';
+            titlesearchRef.current && titlesearchRef.current.focus();
+          }
+          datalist.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
       })
       .catch(error => {
         console.error("Axios error:", error);
