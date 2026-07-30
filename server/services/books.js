@@ -88,8 +88,8 @@ export async function getSelectedBooks(criteria) {
             return await searchBooksByTitleEditor(title, editor);
         case 6:
             return await searchBooksByAuthorEditor(author, editor);
-        default:
-            return (`Recherche sur 3 critères non encore implémentée`);
+        case 7:
+            throw new AppError('Recherche sur 3 critères non supportée');
     }
     // ----------------------------------------
     // 1 criteria on book title

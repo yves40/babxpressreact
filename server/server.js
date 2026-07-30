@@ -8,13 +8,12 @@ import process from 'process';
 import { getBooksCount, getSelectedBooks, getAuthorBooks } from './services/books.js';
 import helpers from './services/helpers.js';
 import sqlHelper from './services/sqlHelper.js';
-import console, { log } from 'console';
 
 const app = express();
 const port = 5000;
 const thedate = datetime.getDateTime();
 let db = null;
-const version = 'server.js:1.15, Jun 23 2026 ';
+const version = 'server.js:1.16, Jul 30 2026 ';
 
 //---------------------------------------------------------------------------------------------------------
 // Install middleware responsible for response header settings
@@ -46,10 +45,10 @@ app.get('/api/fake', (req, res) => {
 app.get('/api/books/count', async (req, res) => {
   try {
     const count = await getBooksCount();  
-    res.json({ count });
+    res.json({status: 'success', count });
   } catch (error) {
     console.error('Error fetching books count:', error);
-    res.json({ count: 0, error: 'Error fetching books count' });
+    res.json({ status: 'error', message: 'Error fetching books count', count: 0 });
   }
 }); 
 // -----------------------------------
@@ -63,10 +62,9 @@ app.post('/api/books/search', async (req, res) => {
   
   try {
     const selectedbooks = await getSelectedBooks({title, author, editor});  
-    res.json({ selectedbooks });
+    res.json({status: 'success',  selectedbooks });
   } catch (error) {
-    console.error('Error searching books:', error);
-    res.json({ count: 0, error: 'Error searching books' });
+    res.json({ status: 'error', message: error.message, selectedbooks: [] });
   }
 }); 
 // -----------------------------------
@@ -78,21 +76,21 @@ app.post('/api/books/searchbyauthor', async (req, res) => {
 
   try {
     const selectedbooks = await getAuthorBooks({authorID});  
-    res.json({ selectedbooks });
+    res.json({status: 'success',  selectedbooks });
   } catch (error) {
     console.error('Error searching books by author:', error);
-    res.json({ count: 0, error: 'Error searching books' });
+    res.json({ status: 'error', message: 'Error searching books by author', selectedbooks: [] });
   }
 }); 
 // -----------------------------------
 app.get('/api/tech/env', async (req, res) => {
   try {
     const serverenv = await helpers.findEnvFile();  
-    res.json({ serverenv });
+    res.json({status: 'success',  serverenv });
   } 
   catch (error) {
     console.error('Error fetching environment variables:', error);
-    res.status(500).json({ error: 'Internal server error' });
+    res.json({ status: 'error', message: 'Cannot locate environment file' });
   }
 }); 
 

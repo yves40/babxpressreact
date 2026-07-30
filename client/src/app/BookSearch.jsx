@@ -31,7 +31,7 @@ export default function BookSearch() {
     return `${winloc.protocol}//${winloc.hostname}:${winloc.port}`;
   }
   // -------------------------------------------------------------------------------------------------
-  const version = "BookSearch.jsx Jul 16 2026, 1.18 ";
+  const version = "BookSearch.jsx Jul 30 2026, 1.19 ";
 
   const [titlesearch, setTitlesearch] = useState('');
   const [authorsearch, setAuthorsearch] = useState('');
@@ -58,18 +58,25 @@ export default function BookSearch() {
           params: { title: titlesearch, author: authorsearch, editor: editorsearch},
         })
       .then(response => {
-          console.log(response.data);
-          setSelectedbooks(response.data.selectedbooks);
-          if(response.data.selectedbooks.length === 0) {
-            results.current.innerText = `Pas de livre sélectionné.`;
+          if(response.data.status === 'error') {
+            results.current.innerText = `Erreur : ${response.data.message}`;
+            results.current.style.color = 'red';
             datalist.current.style.display = 'none';
           }
           else {
-            results.current.innerText = `Résultats - ${response.data.selectedbooks.length} livre(s) trouvé(s)`;
-            datalist.current.style.display = 'flex';
-            titlesearchRef.current && titlesearchRef.current.focus();
+            results.current.style.color = 'black';
+            setSelectedbooks(response.data.selectedbooks);
+            if(response.data.selectedbooks.length === 0) {
+              results.current.innerText = `Pas de livre sélectionné.`;
+              datalist.current.style.display = 'none';
+            }
+            else {
+              results.current.innerText = `Résultats - ${response.data.selectedbooks.length} livre(s) trouvé(s)`;
+              datalist.current.style.display = 'flex';
+              titlesearchRef.current && titlesearchRef.current.focus();
+            }
+            datalist.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
           }
-          datalist.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
       })
       .catch(error => {
         console.error("Axios error:", error);
