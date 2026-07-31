@@ -75,8 +75,8 @@ export default function BookSearch() {
               datalist.current.style.display = 'flex';
               titlesearchRef.current && titlesearchRef.current.focus();
             }
-            datalist.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
           }
+          datalist.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
       })
       .catch(error => {
         console.error("Axios error:", error);

@@ -221,6 +221,7 @@ body {
 .list__container {
   @apply mx-auto text-center w-full py-3 my-[calc(var(--menuheight))]
          mt-2 pt-4  mb-4 text-black bg-white
+          dark:bg-gray-800 border dark:text-white
          px-3
       sm:w-160
       md:w-200
