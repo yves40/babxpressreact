@@ -137,10 +137,6 @@ export default function BookSearch() {
       </header>
       <div className='page__container ml-5 font-bold '>
         <div className=' mt-2 text-center justify-center'>
-          {/* <label className='form__label' htmlFor='testme'>Testme</label>
-          <input className='form__input' id='testme' ref={testmeRef}
-                    type="text" 
-                /> */}
           <InputText ref={titlesearchRef}  componentid='SEARCH' label="Titre" parentHandler={checkTitle} />
           <InputText ref={authsearchRef}   componentid='AUTHOR' label="Auteur" parentHandler={checkAuthor} />
           <InputText ref={editsearchRef}   componentid='EDITOR' label="Éditeur" parentHandler={checkEditor} />
