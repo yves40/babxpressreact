@@ -11,7 +11,7 @@ import { getCookie } from "../services/cookiesHelper";
 export default function Navbar() {
   
   const modulename = 'Navbar.jsx # ';
-  const version = "Navbar.jsx Jun 21 2026, 1.50 ";
+  const version = "Navbar.jsx Aug 01 2026, 1.51 ";
   const dispatch = useDispatch();
   const thenav = useRef(null);    // Manage main menu
   // Get some UI state from redux store, and set local state for menu visibility
@@ -19,11 +19,11 @@ export default function Navbar() {
   const [screenbreak, setScreenbreak] = useState(useSelector((state) => state.UIstate.screenstate));
 
   useEffect(() => {
-    console.log(`${modulename} *** MOUNTING ${version}`);
+    console.log(`${modulename} *** MOUNTING ${version} `);
   })
 
   function slideInOut() {
-    console.log(`********* ${menuvisible}/${screenbreak}`);
+    console.log(`********* ${menuvisible}/${screenbreak}/${getPreferredColorScheme()}`);
     switch(screenbreak) {
       case 'xl':
       case 'lg':
@@ -61,6 +61,17 @@ export default function Navbar() {
       }
     }
   };
+  // dark light mode
+  function getPreferredColorScheme() {
+    if (window.matchMedia) {
+      if(window.matchMedia('(prefers-color-scheme: dark)').matches){
+        return 'dark';
+      } else {
+        return 'light';
+      }
+    }
+    return 'light';
+  }
   // Handle window resize to get current size
   useLayoutEffect(() => {
     setMenuvisible(getCookie('menustate'));

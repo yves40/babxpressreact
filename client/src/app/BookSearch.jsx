@@ -148,7 +148,7 @@ export default function BookSearch() {
         {/* The results */}
         <div className='list__container'>
           <div className="list__header">
-            <p ref={results}>Résultats</p>
+            <span ref={results}>Résultats</span>
           </div>
           <div className="list__data" ref={datalist}>
               {selectedbooks.length > 0 &&

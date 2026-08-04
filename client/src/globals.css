@@ -2,6 +2,7 @@
 /* Variables */
 :root {
   --background: #ffffff;
+  --backgrounddark: #000000;
   --foreground: #171717;
   --menubackground: #1d293d;
   --menuheight: 4rem;
@@ -25,6 +26,7 @@
     --foreground: #ededed;
   }
 }
+
 /* ------------------------------------------------------------------------
   Main page structure 
 ------------------------------------------------------------------------*/
@@ -222,26 +224,23 @@ body {
   @apply mx-auto text-center w-full py-3 my-[calc(var(--menuheight))]
          mt-2 pt-4  mb-4 text-black bg-white
           dark:bg-gray-800 border dark:text-white
-         px-3
-      sm:w-160
-      md:w-200
-      lg:w-240;
+         px-3;
 }
 .list__header {
-  @apply pt-3 pb-4 w-full ml-4 py-3;
+  @apply pt-3 pb-4 w-full ml-4 py-3 dark:text-white;
 }
 .list__data {
-  @apply mb-12 my-2 flex flex-col text-left w-[60%] mx-auto
-  sm:w-[70%]
-  md:w-[80%]
-  lg:w-[90%];
+  @apply mb-12 my-2 flex-col text-left
+  sm:w-[85%]
+  md:w-[70%]
+  lg:w-[60%];
 }
 .list__element {
-  @apply mb-2 flex flex-col text-left w-full;
+  @apply mb-2 flex flex-col text-left;
 }
 /* Form style */
 .form__label {
-  @apply flex mb-2 ml-4 text-gray-700 font-semibold;
+  @apply flex mb-2 ml-4 text-white dark:text-black font-semibold;
 }
 /* ------------------------------------------------------------------------
   Register page 
