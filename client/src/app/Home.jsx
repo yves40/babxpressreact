@@ -22,7 +22,7 @@ function Home() {
       <header>
           <Navbar/>
       </header>
-      <div className='page__container'>
+      <div className='page__container '>
         <p className='text__container'>Quelques infos. <br /><br />
           Les recherches se font par titre, auteur, ou éditeur. Ces critères pouvant être combinés par 2. 
           <span className=' font-bold'> Il n'y a donc pas de recherche sur 3 critères en même temps. </span>
