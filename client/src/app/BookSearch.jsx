@@ -136,7 +136,7 @@ export default function BookSearch() {
         <Navbar />
       </header>
       <div className='page__container ml-5 font-bold '>
-        <div className=' mt-2 text-center justify-center'>
+        <div className=' mt-2 text-center justify-center flex flex-col mx-auto w-80'>
           <InputText ref={titlesearchRef}  componentid='SEARCH' label="Titre" parentHandler={checkTitle} />
           <InputText ref={authsearchRef}   componentid='AUTHOR' label="Auteur" parentHandler={checkAuthor} />
           <InputText ref={editsearchRef}   componentid='EDITOR' label="Éditeur" parentHandler={checkEditor} />

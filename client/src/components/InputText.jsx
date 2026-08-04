@@ -22,14 +22,12 @@ export default function InputText({ref,componentid, label, parentHandler, timeou
     return (
         <>
             <label className='form__label' htmlFor={componentid}>{label}</label>
-            <div className='form__div'>
-                <input className='form__input' onChange={checkInput}
-                    ref={ref} 
-                    type="text" 
-                    name={componentid} 
-                    id={componentid}
-                />
-            </div>
+            <input className='form__input' onChange={checkInput}
+                ref={ref} 
+                type="text" 
+                name={componentid} 
+                id={componentid}
+            />
         </>
     )
 }

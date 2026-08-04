@@ -5,7 +5,7 @@
 //----------------------------------------------------------------------------
 import Logger from "../classes/Logger";
 
-const Version = 'Babooks Aug 01 2026, 1.36 ';
+const Version = 'Babooks Aug 04 2026, 1.37 ';
 const modulename = 'properties.js # ';
 const logger = new Logger(modulename);
 let menustate = true;          // Menu is visible or not

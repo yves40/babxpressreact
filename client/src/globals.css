@@ -209,13 +209,18 @@ body {
   @apply text-right bg-white p-4 border-t border-t-zinc-300;
 }
 /* ------------------------------------------------------------------------
-  The page container 
+  The page and text containers
   ------------------------------------------------------------------------*/
 .page__container {
-  @apply mx-auto text-center w-[90%] py-3 my-[calc(var(--menuheight))]
+  @apply mx-auto text-center w-full h-screen py-3 my-[calc(var(--menuheight))]
+      bg-[url(/images/bibli.webp)] bg-fixed bg-no-repeat bg-center bg-cover
       sm:w-160
       md:w-200
       lg:w-240;
+}
+.text__container {
+  @apply my-4 mx-4 px-3 py-3 
+    font-light text-left bg-gray-700/60  text-white 
 }
 /* ------------------------------------------------------------------------
   Results list container 
@@ -238,22 +243,20 @@ body {
 .list__element {
   @apply mb-2 flex flex-col text-left;
 }
-/* Form style */
-.form__label {
-  @apply flex mb-2 ml-4 text-white dark:text-black font-semibold;
-}
 /* ------------------------------------------------------------------------
-  Register page 
+form page 
 ------------------------------------------------------------------------*/
+.form__label {
+  @apply flex my-4 text-white text-left dark:text-black font-semibold;
+}
 .form__div {
-  display: flex;
   justify-content: space-between;
   align-items: center;
   height: 2.5rem;
   @apply w-full mb-2 p-2;
 }
 .form__input {
-  @apply px-3 py-3 w-full h-7 border-b-2 border-gray-400 
+  @apply px-3 py-3 w-full h-7 border-b-2 border-white text-white dark:text-black 
         focus:bg-cyan-800 focus:rounded-md
           focus:outline-none 
         focus:ring-cyan-500 
