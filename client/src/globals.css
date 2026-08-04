@@ -226,16 +226,14 @@ body {
   Results list container 
   ------------------------------------------------------------------------*/
 .list__container {
-  @apply mx-auto text-center w-full py-3 my-[calc(var(--menuheight))]
-         mt-2 pt-4  mb-4 text-black bg-white
-          dark:bg-gray-800 border dark:text-white
-         px-3;
+  @apply my-4  px-3 py-3 mx-auto w-80
+    font-light text-left bg-gray-700/60  text-white;
 }
 .list__header {
-  @apply pt-3 pb-4 w-full ml-4 py-3 dark:text-white;
+  @apply mx-auto w-80 text-white text-center font-bold my-6;
 }
 .list__data {
-  @apply mb-12 my-2 flex-col text-left
+  @apply mx-auto w-80 flex-col text-left
   sm:w-[85%]
   md:w-[70%]
   lg:w-[60%];

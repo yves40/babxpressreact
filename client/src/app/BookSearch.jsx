@@ -64,7 +64,6 @@ export default function BookSearch() {
             datalist.current.style.display = 'none';
           }
           else {
-            results.current.style.color = 'black';
             setSelectedbooks(response.data.selectedbooks);
             if(response.data.selectedbooks.length === 0) {
               results.current.innerText = `Pas de livre sélectionné.`;
@@ -155,10 +154,10 @@ export default function BookSearch() {
                 selectedbooks.map( (book, index) => (
                   <div key={index} className='list__element'>
                     <span className=' font-bold'>{book.bk_title}</span>
-                    <span className='text-gray-600 flex flex-row items-center '>{book.auth_fname} {book.auth_lname} 
-                      <img className='svg-gray32 ml-auto' src="svg/arrow-forward.svg" alt="" data-authorid={book.auth_id} onClick={handleAuthorClick} /> </span> 
+                    <span className='text-white flex flex-row items-center '>{book.auth_fname} {book.auth_lname} 
+                      <img className='svg-white32 ml-auto' src="svg/arrow-forward.svg" alt="" data-authorid={book.auth_id} onClick={handleAuthorClick} /> </span> 
                     <span><i>{book.ed_name}</i></span>
-                    <span className='text-gray-600 mb-2'>{book.loc_city}</span>
+                    <span className='text-white mb-2'>{book.loc_city}</span>
                   </div>
                 ))}
           </div>
