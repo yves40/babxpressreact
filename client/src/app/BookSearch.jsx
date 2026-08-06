@@ -95,9 +95,12 @@ export default function BookSearch() {
     authsearchRef.current.value = '';
     editsearchRef.current.value = '';
   }
+  // -------------------------------------------------------------------------------------------------
   function handleAuthorClick(event) {
     const authorId = event.target.getAttribute('data-authorid');
-    console.log(`Author ID clicked: ${authorId}`);
+    console.log(`Author ID clicked: ${authorId} / ${event.target.getAttribute('data-authorname')}`);
+    RAZ();
+    authsearchRef.current.value = event.target.getAttribute('data-authorname'); 
     axios.post(`${buildURLroot()}/api/books/searchbyauthor`, {
           headers: {
             'Content-Type': 'application/json',
@@ -154,7 +157,9 @@ export default function BookSearch() {
                   <div key={index} className='list__element'>
                     <span className=' font-bold'>{book.bk_title}</span>
                     <span className='text-white flex flex-row items-center '>{book.auth_fname} {book.auth_lname} 
-                      <img className='svg-white32 ml-auto mr-4' src="svg/arrow-forward.svg" alt="" data-authorid={book.auth_id} onClick={handleAuthorClick} /> </span> 
+                      <img className='svg-white32 ml-auto mr-4' src="svg/arrow-forward.svg" alt="" data-authorid={book.auth_id}
+                                data-authorname={`${book.auth_lname}`}
+                                 onClick={handleAuthorClick} /> </span> 
                     <span><i>{book.ed_name}</i></span>
                     <span className='text-white mb-2'>{book.loc_city}</span>
                   </div>
