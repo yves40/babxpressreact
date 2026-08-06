@@ -213,7 +213,7 @@ body {
   ------------------------------------------------------------------------*/
 .page__container {
   @apply mx-auto text-center w-full h-auto min-h-screen py-3 my-[calc(var(--menuheight))]
-      bg-[url(/images/bibli.webp)] bg-fixed bg-center bg-cover
+      bg-[url(/images/2books.webp)] bg-fixed bg-center bg-cover
       sm:w-160
       md:w-200
       lg:w-240;

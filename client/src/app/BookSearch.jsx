@@ -60,7 +60,6 @@ export default function BookSearch() {
       .then(response => {
           if(response.data.status === 'error') {
             results.current.innerText = `Erreur : ${response.data.message}`;
-            results.current.style.color = 'red';
             datalist.current.style.display = 'none';
           }
           else {
