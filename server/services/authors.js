@@ -1,0 +1,58 @@
+"use server"
+
+import sqlHelper from './sqlHelper.js';
+import AppError from './customError.js';
+
+const modulename = "authors # ";
+const Version = "authors.js Aug 062026 , 1.01";
+
+// -----------------------------------------------------------------------------------------
+// Search authors count
+// -----------------------------------------------------------------------------------------
+export async function getAuthorsCount() {
+    try {
+        const sqlh = new sqlHelper();
+        let conn = await sqlh.startTransactionRO();
+        const result = await sqlh.Select('select count(*) as authorscount from babouledb.authors', 
+                                        null, 
+                                        conn);
+        sqlh.commitTransaction(conn);
+        if(result.length > 0) {
+            return result[0].authorscount;
+        }
+        else {
+            throw new AppError('Aucun auteur trouvé');
+        }   
+    }
+    catch(error) {
+        console.log(`${modulename} ${error}`);
+        throw new Error('Erreur lors de la récupération du nombre d\'auteurs');
+    }   
+}
+// -----------------------------------------------------------------------------------------
+// Top authors
+// -----------------------------------------------------------------------------------------
+export async function getTopAuthors(limit) {
+    try {
+        const sqlh = new sqlHelper();
+        let conn = await sqlh.startTransactionRO();
+        const result = await sqlh.Select('select count(b.bk_id) bookcount , a.auth_lname nom, a.auth_fname prenom\
+                    from babouledb.books b, babouledb.authors a\
+                    where b.bk_author = a.auth_id \
+                    group by a.auth_lname, a.auth_fname \
+                    order by bookcount desc , a.auth_lname asc limit ?', 
+            limit, 
+            conn);
+        sqlh.commitTransaction(conn);
+        if(result.length > 0) {
+            return result;
+        }
+        else {
+            throw new AppError('Pas de top auteurs ! Désolé');
+        }   
+    }
+    catch(error) {
+        console.log(`${modulename} ${error}`);
+        throw new Error('Erreur lors de la récupération des auteurs les plus lus');
+    }   
+}

@@ -2,11 +2,10 @@
 
 import sqlHelper from './sqlHelper.js';
 import AppError from './customError.js';
-import logger from './logger.js';
 
-const Version = "books.js Dec 19 2025, 1.03";
+const Version = "books.js Aug 06 2026, 1.04";
 // -----------------------------------------------------------------------------------------
-// Search books count
+// Get books count
 // -----------------------------------------------------------------------------------------
 export async function getBooksCount() {
     try {
@@ -28,6 +27,8 @@ export async function getBooksCount() {
         throw new Error('Erreur lors de la récupération du nombre de livres');
     }   
 }
+// -----------------------------------------------------------------------------------------
+// Search books with criteria : title, author, editor
 // -----------------------------------------------------------------------------------------
 export async function getSelectedBooks(criteria) {
 
