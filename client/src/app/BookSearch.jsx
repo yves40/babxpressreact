@@ -99,8 +99,10 @@ export default function BookSearch() {
   function handleAuthorClick(event) {
     const authorId = event.target.getAttribute('data-authorid');
     console.log(`Author ID clicked: ${authorId} / ${event.target.getAttribute('data-authorname')}`);
-    RAZ();
     authsearchRef.current.value = event.target.getAttribute('data-authorname'); 
+    titlesearchRef.current.value = '';
+    editsearchRef.current.value = '';
+
     axios.post(`${buildURLroot()}/api/books/searchbyauthor`, {
           headers: {
             'Content-Type': 'application/json',
