@@ -106,7 +106,17 @@ export default function Navbar() {
                 <li>
                   <Link to="/BooksSearch" onClick={() => dispatch(setMenuState({menuvisible: "false"}))}>Rechercher</Link>
                 </li>
-           }
+             }
+            {menuvisible &&
+                <li>
+                  <Link to="/TopAuthors" onClick={() => dispatch(setMenuState({menuvisible: "false"}))}>Top Auteurs</Link>
+                </li>
+             }
+            {menuvisible &&
+                <li>
+                  <Link to="/TopEditors" onClick={() => dispatch(setMenuState({menuvisible: "false"}))}>Top Editeurs</Link>
+                </li>
+             }
             </ul>
           </div>
         </div>

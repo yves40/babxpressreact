@@ -1,11 +1,7 @@
 /* eslint-disable no-unused-vars */
-//----------------------------------------------------------------------------
-//    Jun 04 2026   Initial
-//    Jun 23 2026   Add some VARS for local browser web params
-//----------------------------------------------------------------------------
 import Logger from "../classes/Logger";
 
-const Version = 'Babooks Aug 06 2026, 1.39 ';
+const Version = 'Babooks Aug 10 2026, 1.40 ';
 const modulename = 'properties.js # ';
 const logger = new Logger(modulename);
 let menustate = true;          // Menu is visible or not
