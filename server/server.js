@@ -6,6 +6,8 @@ import responseheader from './services/responseheader.js';
 import datetime from './services/datetime.js';
 import process from 'process';
 import { getBooksCount, getSelectedBooks, getAuthorBooks } from './services/books.js';
+import { getTopAuthors, getAuthorsCount } from './services/authors.js';
+import { getEditorsCount, getTopEditors } from './services/editors.js';
 import helpers from './services/helpers.js';
 import sqlHelper from './services/sqlHelper.js';
 
@@ -13,7 +15,7 @@ const app = express();
 const port = 5000;
 const thedate = datetime.getDateTime();
 let db = null;
-const version = 'server.js:1.16, Jul 30 2026 ';
+const version = 'server.js:1.17, Aug 062026 ';
 
 //---------------------------------------------------------------------------------------------------------
 // Install middleware responsible for response header settings
@@ -52,10 +54,55 @@ app.get('/api/books/count', async (req, res) => {
   }
 }); 
 // -----------------------------------
+app.get('/api/authors/top', async (req, res) => {
+  try {
+    const count = await getTopAuthors(20);  
+    res.json({status: 'success', count });
+  } catch (error) {
+    console.error('Error fetching top authors:', error);
+    res.json({ status: 'error', message: 'Error fetching top authors', count: 0 });
+  }
+}); 
+// -----------------------------------
+app.get('/api/authors/count', async (req, res) => {
+  try {
+    const count = await getAuthorsCount();  
+    res.json({status: 'success', count });
+  } catch (error) {
+    console.error('Error fetching authors count:', error);
+    res.json({ status: 'error', message: 'Error fetching authors count', count: 0 });
+  }
+}); 
+// -----------------------------------
+app.get('/api/editors/count', async (req, res) => {
+  try {
+    const count = await getEditorsCount();  
+    res.json({status: 'success', count });
+  } catch (error) {
+    console.error('Error fetching editors count:', error);
+    res.json({ status: 'error', message: 'Error fetching editors count', count: 0 });
+  }
+}); 
+// -----------------------------------
+app.get('/api/editors/top', async (req, res) => {
+  try {
+    const count = await getTopEditors(20);  
+    res.json({status: 'success', count });
+  } catch (error) {
+    console.error('Error fetching top editors:', error);
+    res.json({ status: 'error', message: 'Error fetching top editors', count: 0 });
+  }
+}); 
+// -----------------------------------
 app.post('/api/books/search', async (req, res) => {  
+
   console.log(`******* ${JSON.stringify(req.body.params)}`);
   
-  const p = req.body.params;
+  let p = req.body.params;
+  if(p === undefined || p === null) {
+    p = req.body; // Fallback to req.body if params is not provided as we use a rest client directly
+  }
+  console.log(`Search criteria received: ${JSON.stringify(p)}`);
   const title = p["title"];
   const author = p["author"];
   const editor = p["editor"];

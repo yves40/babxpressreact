@@ -13,12 +13,12 @@ export async function getEditorsCount() {
     try {
         const sqlh = new sqlHelper();
         let conn = await sqlh.startTransactionRO();
-        const result = await sqlh.Select('select count(*) as editorscount from babouledb.editors', 
+        const rows = await sqlh.Select('select count(*) as editorscount from babouledb.editors', 
                                         null, 
                                         conn);
         sqlh.commitTransaction(conn);
-        if(result.length > 0) {
-            return result[0].editorscount;
+        if(rows.length > 0) {
+            return rows[0].editorscount;
         }
         else {
             throw new AppError('Aucun éditeur trouvé');
@@ -36,7 +36,7 @@ export async function getTopEditors(limit) {
     try {
         const sqlh = new sqlHelper();
         let conn = await sqlh.startTransactionRO();
-        const result = await sqlh.Select('select count(b.bk_id) bookcount , e.ed_name \
+        const rows = await sqlh.Select('select count(b.bk_id) bookcount , e.ed_name \
                         from babouledb.books b, babouledb.editors e \
                         where b.bk_editor = e.ed_id  \
                         group by e.ed_name \
@@ -44,8 +44,8 @@ export async function getTopEditors(limit) {
                 limit, 
                 conn);
         sqlh.commitTransaction(conn);
-        if(result.length > 0) {
-            return result;
+        if(rows.length > 0) {
+            return rows;
         }
         else {
             throw new AppError('Pas de top éditeurs ! Désolé');

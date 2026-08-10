@@ -13,12 +13,12 @@ export async function getAuthorsCount() {
     try {
         const sqlh = new sqlHelper();
         let conn = await sqlh.startTransactionRO();
-        const result = await sqlh.Select('select count(*) as authorscount from babouledb.authors', 
+        const rows = await sqlh.Select('select count(*) as authorscount from babouledb.authors', 
                                         null, 
                                         conn);
         sqlh.commitTransaction(conn);
-        if(result.length > 0) {
-            return result[0].authorscount;
+        if(rows.length > 0) {
+            return rows[0].authorscount;
         }
         else {
             throw new AppError('Aucun auteur trouvé');
@@ -36,7 +36,7 @@ export async function getTopAuthors(limit) {
     try {
         const sqlh = new sqlHelper();
         let conn = await sqlh.startTransactionRO();
-        const result = await sqlh.Select('select count(b.bk_id) bookcount , a.auth_lname nom, a.auth_fname prenom\
+        const rows = await sqlh.Select('select count(b.bk_id) bookcount , a.auth_lname nom, a.auth_fname prenom\
                     from babouledb.books b, babouledb.authors a\
                     where b.bk_author = a.auth_id \
                     group by a.auth_lname, a.auth_fname \
@@ -44,8 +44,8 @@ export async function getTopAuthors(limit) {
             limit, 
             conn);
         sqlh.commitTransaction(conn);
-        if(result.length > 0) {
-            return result;
+        if(rows.length > 0) {
+            return rows;
         }
         else {
             throw new AppError('Pas de top auteurs ! Désolé');
