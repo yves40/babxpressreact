@@ -52,7 +52,7 @@ export default function TopAuthors() {
   function handleAuthorClick() {
     const authorName = event.target.getAttribute('data-authorname');
     console.log(`Author name clicked: ${authorName}`);
-    window.location = `/BooksSearch`;
+    window.location = `/BooksSearch?author=${encodeURIComponent(authorName)}`;
   }
 
   return (

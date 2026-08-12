@@ -1,9 +1,11 @@
 /* eslint-disable no-useless-assignment */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
-import { useEffect, useEffectEvent, useRef, useState} from 'react'
+import { useEffect, useEffectEvent, useRef, useState, } from 'react'
+import { useSearchParams } from "react-router-dom";
 import axios from "axios";
 import { Link } from 'react-router'
+import { useLocation } from 'react-router-dom';
 import { setMenuState } from '../redux/menustate.js';
 import InputText from '../components/InputText.jsx';
 import Navbar from '../components/Navbar.jsx';
@@ -31,7 +33,7 @@ export default function BookSearch() {
     return `${winloc.protocol}//${winloc.hostname}:${winloc.port}`;
   }
   // -------------------------------------------------------------------------------------------------
-  const version = "BookSearch.jsx Jul 30 2026, 1.19 ";
+  const version = "BookSearch.jsx Aug 12 2026, 1.20 ";
 
   const [titlesearch, setTitlesearch] = useState('');
   const [authorsearch, setAuthorsearch] = useState('');
@@ -47,6 +49,10 @@ export default function BookSearch() {
   const testmeRef = useRef(null);
 
   properties.setActivePage('booksearch');
+  const [searchParams] = useSearchParams();
+  if(searchParams.get('author') !== null) {
+    console.log(`BookSearch.jsx: author search param = ${searchParams.get('author')}`);
+  }
 
   // -------------------------------------------------------------------------------------------------
   async function  searchBooks() {
