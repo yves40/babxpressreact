@@ -1,9 +1,9 @@
 import axios from 'axios';
-import { useRef, useState, useEffect } from 'react';
+import { useRef, useState, useEffect, } from 'react';
+import { redirect } from "react-router";
 import properties from '../services/properties.js';
 import Navbar from '../components/Navbar.jsx';
 import Footer from '../components/Footer.jsx';
-
 
 function buildURLroot() {
   const winloc = document.location;
@@ -52,6 +52,7 @@ export default function TopAuthors() {
   function handleAuthorClick() {
     const authorName = event.target.getAttribute('data-authorname');
     console.log(`Author name clicked: ${authorName}`);
+    window.location = `/BooksSearch`;
   }
 
   return (
