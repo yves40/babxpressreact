@@ -1,16 +1,86 @@
-import 'react'
+import axios from 'axios';
+import { useRef, useState, useEffect } from 'react';
+import properties from '../services/properties.js';
 import Navbar from '../components/Navbar.jsx';
+import Footer from '../components/Footer.jsx';
+
+
+function buildURLroot() {
+  const winloc = document.location;
+  if(winloc.port === properties.reactDEVport) {    // DEV on asusp7 ???
+    return `${winloc.protocol}//${winloc.hostname}:${properties.nodeserverport}`;
+  }
+  return `${winloc.protocol}//${winloc.hostname}:${winloc.port}`;
+}
 
 export default function TopAuthors() {
+  // eslint-disable-next-line no-unused-vars
+  const [selectedAuthors, setSelectedAuthors] = useState([]);
+  const results = useRef('results');                      // Search result message
+  const datalist = useRef('datalist');                    // Show hide results
+
+  properties.setActivePage('topAuthors');
+
+
+  // -------------------------------------------------------------------------------------------------
+  async function getTopAuthors() {
+        axios.get(`${buildURLroot()}/api/authors/top`, {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        })
+      .then(response => {
+          if(response.data.status === 'error') {
+            results.current.innerText = `Erreur : ${response.data.message}`;
+            datalist.current.style.display = 'none';
+          }
+          else {
+            console.log(response.data);
+            setSelectedAuthors(response.data.topauthors);
+          }
+      })
+      .catch(error => {
+        console.error("Axios error:", error);
+      });    
+
+  }
+  // -------------------------------------------------------------------------------------------------
+  useEffect(() => {
+    getTopAuthors();
+  }, []);
+  // -------------------------------------------------------------------------------------------------
+  function handleAuthorClick() {
+    const authorName = event.target.getAttribute('data-authorname');
+    console.log(`Author name clicked: ${authorName}`);
+  }
+
   return (
     <>
     <header>
       <Navbar></Navbar>
     </header>
     <div className='page__container ml-5 text-white'>
-      <h1 className='text-2xl font-bold'>Top Authors</h1>
-      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus earum enim voluptates velit error temporibus sequi illo assumenda. Ducimus aut, optio voluptatem nam neque, sit modi iure rerum officiis quos corporis id excepturi nulla temporibus. Quia perferendis asperiores, obcaecati exercitationem ipsam, fugit, cum velit maxime qui delectus eaque minima consequuntur nemo ea repudiandae at dolores beatae saepe quaerat facilis excepturi necessitatibus illum enim eligendi. Natus, et voluptates aliquid, tenetur aut qui suscipit modi eaque voluptatum vero reprehenderit soluta. Cumque quidem excepturi numquam ullam mollitia cupiditate dicta, reprehenderit est ex quas labore animi cum quam corrupti rerum doloremque saepe tenetur ipsa sunt iure eius. Provident expedita aut voluptas nemo ducimus. Distinctio animi ea magni, saepe eum vel repellendus quia porro nostrum voluptatem optio. Quam minus facilis quibusdam accusantium, sint tenetur deserunt illo doloribus unde fugiat atque iure hic quasi dolorem, esse fugit nobis eum consequatur cumque? Ea atque dolor totam rerum nobis maxime, voluptatum ducimus aliquam vero, ratione dolore dicta debitis tempora asperiores dolorum pariatur est odio illum earum voluptatem! Aperiam ex quam aliquam dolor odit blanditiis explicabo corporis nesciunt rerum, repellat sed possimus neque ipsam earum facilis reprehenderit, deleniti excepturi rem velit veniam animi quia omnis eum? Quidem enim distinctio amet necessitatibus eos illum cumque quos beatae quae esse nihil quis, itaque laudantium soluta eius ullam aliquam dolore mollitia maiores pariatur. Nisi soluta dolorum obcaecati, perferendis autem est architecto cumque quis voluptatibus voluptas amet, illum placeat ea sunt qui deleniti adipisci officia eius excepturi ipsum fugiat sapiente sint. Ducimus quibusdam impedit ex optio voluptatibus voluptate accusantium vero dolorum error nostrum temporibus doloribus distinctio iusto eligendi laboriosam minus commodi corrupti itaque soluta, nemo saepe voluptatum quod molestias omnis. Consequatur, non voluptatibus architecto quaerat mollitia voluptates dicta labore ea nemo nulla inventore aut corporis facilis modi nihil minus quas animi distinctio deserunt?</p>
+        <div className='list__container'>
+          <div className="list__header">
+            <span ref={results}>Résultats</span>
+          </div>
+          <div className="list__data" ref={datalist}>
+              {selectedAuthors.length > 0 &&
+                selectedAuthors.map( (author, index) => (
+                  <div key={index} className='list__element'>
+                    <span className='flex flex-row items-center'>{author.prenom}  {author.nom}
+                        <img className='svg-white32 ml-auto mr-4' src="svg/arrow-forward.svg" alt="" 
+                              data-authorname={`${author.nom}`}
+                              onClick={handleAuthorClick} />                      
+
+                    </span>
+                    <span className='ml-3'>{author.bookcount} livres</span>
+                  </div>
+                ))}
+          </div>
+        </div>
     </div>
+    <Footer></Footer>
     </>
   )
 }

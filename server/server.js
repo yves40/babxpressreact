@@ -56,11 +56,11 @@ app.get('/api/books/count', async (req, res) => {
 // -----------------------------------
 app.get('/api/authors/top', async (req, res) => {
   try {
-    const count = await getTopAuthors(20);  
-    res.json({status: 'success', count });
+    const topauthors = await getTopAuthors(20);  
+    res.json({status: 'success', topauthors });
   } catch (error) {
     console.error('Error fetching top authors:', error);
-    res.json({ status: 'error', message: 'Error fetching top authors', count: 0 });
+    res.json({ status: 'error', message: 'Error fetching top authors', topauthors: [] });
   }
 }); 
 // -----------------------------------

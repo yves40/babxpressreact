@@ -23,7 +23,7 @@ export default function Navbar() {
   })
 
   function slideInOut() {
-    console.log(`********* ${menuvisible}/${screenbreak}/${getPreferredColorScheme()}`);
+    console.log(`********* ${menuvisible}/${screenbreak}/${properties.getActivePage()}`);
     switch(screenbreak) {
       case 'xl':
       case 'lg':
@@ -89,6 +89,8 @@ export default function Navbar() {
     return () => window.removeEventListener('resize', updateSize);
   });
 
+  
+
   return (
     // Look in globals.css for classes definitions
     <>
@@ -97,7 +99,7 @@ export default function Navbar() {
         <div className="topmenu">
           <div className="nav-links" onClick={() => dispatch(setMenuState({menuvisible: "false"}))}>
             <ul>
-              {menuvisible && (properties.getActivePage() === 'booksearch') &&
+              {menuvisible && (properties.getActivePage() !== 'home') &&
                 <li>
                   <Link to="/" onClick={() => dispatch(setMenuState({menuvisible: "false"}))} >Home</Link>
                 </li>
@@ -107,12 +109,12 @@ export default function Navbar() {
                   <Link to="/BooksSearch" onClick={() => dispatch(setMenuState({menuvisible: "false"}))}>Rechercher</Link>
                 </li>
              }
-            {menuvisible &&
+            {menuvisible && (properties.getActivePage() === 'home') &&
                 <li>
                   <Link to="/TopAuthors" onClick={() => dispatch(setMenuState({menuvisible: "false"}))}>Top Auteurs</Link>
                 </li>
              }
-            {menuvisible &&
+            {menuvisible && (properties.getActivePage() === 'home') &&
                 <li>
                   <Link to="/TopEditors" onClick={() => dispatch(setMenuState({menuvisible: "false"}))}>Top Editeurs</Link>
                 </li>
