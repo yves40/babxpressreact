@@ -33,7 +33,7 @@ export default function BookSearch() {
     return `${winloc.protocol}//${winloc.hostname}:${winloc.port}`;
   }
   // -------------------------------------------------------------------------------------------------
-  const version = "BookSearch.jsx Aug 12 2026, 1.20 ";
+  const version = "BookSearch.jsx Aug 13 2026, 1.21 ";
 
   const [titlesearch, setTitlesearch] = useState('');
   const [authorsearch, setAuthorsearch] = useState('');
@@ -45,14 +45,11 @@ export default function BookSearch() {
   const titlesearchRef = useRef(null);
   const authsearchRef = useRef(null);
   const editsearchRef = useRef(null);
+  const [searchParams] = useSearchParams();   // Page called by topAuthors ? 
 
   const testmeRef = useRef(null);
 
   properties.setActivePage('booksearch');
-  const [searchParams] = useSearchParams();
-  if(searchParams.get('author') !== null) {
-    console.log(`BookSearch.jsx: author search param = ${searchParams.get('author')}`);
-  }
 
   // -------------------------------------------------------------------------------------------------
   async function  searchBooks() {
@@ -91,6 +88,14 @@ export default function BookSearch() {
     console.log(`************** BOOK SEARCH CRITERIAS ${titlesearch}/${authorsearch}/${editorsearch}`);
     searchBooks();
   }, [titlesearch, authorsearch, editorsearch])
+  // -------------------------------------------------------------------------------------------------
+  useEffect(() => {
+    if(searchParams.get('author') !== null) {
+      console.log(`BookSearch.jsx: author search param = ${searchParams.get('author')}`);
+      setAuthorsearch(searchParams.get('author'));
+      authsearchRef.current.value = searchParams.get('author');
+    }
+  }, []); 
   // -------------------------------------------------------------------------------------------------
   function RAZ() {
     setTitlesearch(' ');
@@ -163,7 +168,7 @@ export default function BookSearch() {
               {selectedbooks.length > 0 &&
                 selectedbooks.map( (book, index) => (
                   <div key={index} className='list__element'>
-                    <span className=' font-bold'>{book.bk_title}</span>
+                    <span className=' font-bold text-2xl'>{book.bk_title}</span>
                     <span className='text-white flex flex-row items-center '>{book.auth_fname} {book.auth_lname} 
                       <img className='svg-white32 ml-auto mr-4' src="svg/arrow-forward.svg" alt="" data-authorid={book.auth_id}
                                 data-authorname={`${book.auth_lname}`}
