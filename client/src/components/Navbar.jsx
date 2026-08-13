@@ -109,12 +109,12 @@ export default function Navbar() {
                   <Link to="/BooksSearch" onClick={() => dispatch(setMenuState({menuvisible: "false"}))}>Rechercher</Link>
                 </li>
              }
-            {menuvisible && (properties.getActivePage() === 'home') &&
+            {menuvisible && 
                 <li>
                   <Link to="/TopAuthors" onClick={() => dispatch(setMenuState({menuvisible: "false"}))}>Top Auteurs</Link>
                 </li>
              }
-            {menuvisible && (properties.getActivePage() === 'home') &&
+            {menuvisible && 
                 <li>
                   <Link to="/TopEditors" onClick={() => dispatch(setMenuState({menuvisible: "false"}))}>Top Editeurs</Link>
                 </li>
