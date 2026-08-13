@@ -37,7 +37,7 @@ export async function getTopAuthors(limit) {
         const sqlh = new sqlHelper();
         let conn = await sqlh.startTransactionRO();
         const rows = await sqlh.Select('select count(b.bk_id) bookcount , a.auth_lname nom, a.auth_fname prenom\
-                    from babouledb.books b, babouledb.authors a\
+                    from books b, authors a\
                     where b.bk_author = a.auth_id \
                     group by a.auth_lname, a.auth_fname \
                     order by bookcount desc , a.auth_lname asc limit ?', 
