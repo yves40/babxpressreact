@@ -5,7 +5,7 @@ import properties from '../services/properties.js';
 import Navbar from '../components/Navbar.jsx';
 import Footer from '../components/Footer.jsx';
 
-  // -------------------------------------------------------------------------------------------------
+// -------------------------------------------------------------------------------------------------
 function buildServerURL() {
   const winloc = document.location;
   if(winloc.port === properties.reactDEVport) {    // DEV or PROD ???
@@ -14,6 +14,7 @@ function buildServerURL() {
   return `${winloc.protocol}//${winloc.hostname}:${winloc.port}`;
 }
   // -------------------------------------------------------------------------------------------------
+// eslint-disable-next-line no-unused-vars
 function buildClientURL() {
   const winloc = document.location;
   return `${winloc.protocol}//${winloc.hostname}:${winloc.port}`;
@@ -21,7 +22,7 @@ function buildClientURL() {
 
   // -------------------------------------------------------------------------------------------------
 export default function TopAuthors() {
-  // eslint-disable-next-line no-unused-vars
+
   const [selectedAuthors, setSelectedAuthors] = useState([]);
   const results = useRef('results');                      // Search result message
   const datalist = useRef('datalist');                    // Show hide results
@@ -49,7 +50,6 @@ export default function TopAuthors() {
       .catch(error => {
         console.error("Axios error:", error);
       });    
-
   }
   // -------------------------------------------------------------------------------------------------
   useEffect(() => {
@@ -59,7 +59,6 @@ export default function TopAuthors() {
   function handleAuthorClick() {
     const authorName = event.target.getAttribute('data-authorname');
     console.log(`Author name clicked: ${authorName}`);
-    // window.location = `${buildClientURL()}/BooksSearch?author=${encodeURIComponent(authorName)}`;
     navigate(`/BooksSearch?author=${encodeURIComponent(authorName)}`);
   }
 
