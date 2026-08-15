@@ -25,7 +25,7 @@ export default function BookSearch() {
   	return [ htmlElRef,  setFocus ] 
   }
   // -------------------------------------------------------------------------------------------------
-  function buildURLroot() {
+  function buildServerURL() {
     const winloc = document.location;
     if(winloc.port === properties.reactDEVport) {    // DEV on asusp7 ???
       return `${winloc.protocol}//${winloc.hostname}:${properties.nodeserverport}`;
@@ -54,7 +54,7 @@ export default function BookSearch() {
   // -------------------------------------------------------------------------------------------------
   async function  searchBooks() {
     results.current.innerText = `Recherche...`;
-    axios.post(`${buildURLroot()}/api/books/search`, {
+    axios.post(`${buildServerURL()}/api/books/search`, {
           headers: {
             'Content-Type': 'application/json',
           },
@@ -114,7 +114,7 @@ export default function BookSearch() {
     titlesearchRef.current.value = '';
     editsearchRef.current.value = '';
 
-    axios.post(`${buildURLroot()}/api/books/searchbyauthor`, {
+    axios.post(`${buildServerURL()}/api/books/searchbyauthor`, {
           headers: {
             'Content-Type': 'application/json',
           }, 
