@@ -60,7 +60,7 @@ app.get('/api/authors/top', async (req, res) => {
     res.json({status: 'success', topauthors });
   } catch (error) {
     console.error('Error fetching top authors:', error);
-    res.json({ status: 'error', message: 'Error fetching top authors', topauthors: [] });
+    res.json({ status: 'error', message: 'Réessayer SVP', topauthors: [] });
   }
 }); 
 // -----------------------------------
@@ -70,7 +70,7 @@ app.get('/api/authors/count', async (req, res) => {
     res.json({status: 'success', count });
   } catch (error) {
     console.error('Error fetching authors count:', error);
-    res.json({ status: 'error', message: 'Error fetching authors count', count: 0 });
+    res.json({ status: 'error', message: 'Réessayer SVP', count: 0 });
   }
 }); 
 // -----------------------------------
@@ -80,17 +80,17 @@ app.get('/api/editors/count', async (req, res) => {
     res.json({status: 'success', count });
   } catch (error) {
     console.error('Error fetching editors count:', error);
-    res.json({ status: 'error', message: 'Error fetching editors count', count: 0 });
+    res.json({ status: 'error', message: 'Réessayer SVP', count: 0 });
   }
 }); 
 // -----------------------------------
 app.get('/api/editors/top', async (req, res) => {
   try {
-    const count = await getTopEditors(20);  
-    res.json({status: 'success', count });
+    const topeditors = await getTopEditors(20);  
+    res.json({status: 'success', topeditors });
   } catch (error) {
     console.error('Error fetching top editors:', error);
-    res.json({ status: 'error', message: 'Error fetching top editors', count: 0 });
+    res.json({ status: 'error', message: 'Réessayer SVP', topeditors: [] });
   }
 }); 
 // -----------------------------------

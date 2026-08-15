@@ -1,10 +1,63 @@
+/* eslint-disable no-unused-vars */
+import axios from 'axios';
+import { useRef, useState, useEffect, } from 'react';
+import { useNavigate } from "react-router-dom";
 import properties from '../services/properties.js';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 
+// -------------------------------------------------------------------------------------------------
+function buildServerURL() {
+  const winloc = document.location;
+  if(winloc.port === properties.reactDEVport) {    // DEV or PROD ???
+    return `${winloc.protocol}//${winloc.hostname}:${properties.nodeserverport}`;
+  }
+  return `${winloc.protocol}//${winloc.hostname}:${winloc.port}`;
+}
+
+// -------------------------------------------------------------------------------------------------
 export default function TopEditors() {
 
+  const [selectedEditors, setSelectedEditors] = useState([]);
+  const results = useRef('results');                      // Search result message
+  const datalist = useRef('datalist');                    // Show hide results
+  const navigate = useNavigate();
+
+
   properties.setActivePage('topEditors');
+
+    // -------------------------------------------------------------------------------------------------
+  async function getTopEditors() {
+        axios.get(`${buildServerURL()}/api/editors/top`, {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        })
+      .then(response => {
+          if(response.data.status === 'error') {
+            results.current.innerText = `Erreur : ${response.data.message}`;
+            datalist.current.style.display = 'none';
+          }
+          else {
+            console.log(response.data);
+            setSelectedEditors(response.data.topeditors);
+          }
+      })
+      .catch(error => {
+        console.error("Axios error:", error);
+      });    
+  }
+  // -------------------------------------------------------------------------------------------------
+  useEffect(() => {
+    getTopEditors();
+  }, []);
+
+  // -------------------------------------------------------------------------------------------------
+  function handleEditorClick() {
+    const editorName = event.target.getAttribute('data-editorname');
+    console.log(`Editor name clicked: ${editorName}`);
+    navigate(`/BooksSearch?editor=${encodeURIComponent(editorName)}`);
+  }
 
 
   return (
@@ -13,8 +66,24 @@ export default function TopEditors() {
       <Navbar></Navbar>
     </header>
     <div className='page__container ml-5 text-white'>
-      <h1 className='text-2xl font-bold'>Top Editors</h1>
-      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus earum enim voluptates velit error temporibus sequi illo assumenda. Ducimus aut, optio voluptatem nam neque, sit modi iure rerum officiis quos corporis id excepturi nulla temporibus. Quia perferendis asperiores, obcaecati exercitationem ipsam, fugit, cum velit maxime qui delectus eaque minima consequuntur nemo ea repudiandae at dolores beatae saepe quaerat facilis excepturi necessitatibus illum enim eligendi. Natus, et voluptates aliquid, tenetur aut qui suscipit modi eaque voluptatum vero reprehenderit soluta. Cumque quidem excepturi numquam ullam mollitia cupiditate dicta, reprehenderit est ex quas labore animi cum quam corrupti rerum doloremque saepe tenetur ipsa sunt iure eius. Provident expedita aut voluptas nemo ducimus. Distinctio animi ea magni, saepe eum vel repellendus quia porro nostrum voluptatem optio. Quam minus facilis quibusdam accusantium, sint tenetur deserunt illo doloribus unde fugiat atque iure hic quasi dolorem, esse fugit nobis eum consequatur cumque? Ea atque dolor totam rerum nobis maxime, voluptatum ducimus aliquam vero, ratione dolore dicta debitis tempora asperiores dolorum pariatur est odio illum earum voluptatem! Aperiam ex quam aliquam dolor odit blanditiis explicabo corporis nesciunt rerum, repellat sed possimus neque ipsam earum facilis reprehenderit, deleniti excepturi rem velit veniam animi quia omnis eum? Quidem enim distinctio amet necessitatibus eos illum cumque quos beatae quae esse nihil quis, itaque laudantium soluta eius ullam aliquam dolore mollitia maiores pariatur. Nisi soluta dolorum obcaecati, perferendis autem est architecto cumque quis voluptatibus voluptas amet, illum placeat ea sunt qui deleniti adipisci officia eius excepturi ipsum fugiat sapiente sint. Ducimus quibusdam impedit ex optio voluptatibus voluptate accusantium vero dolorum error nostrum temporibus doloribus distinctio iusto eligendi laboriosam minus commodi corrupti itaque soluta, nemo saepe voluptatum quod molestias omnis. Consequatur, non voluptatibus architecto quaerat mollitia voluptates dicta labore ea nemo nulla inventore aut corporis facilis modi nihil minus quas animi distinctio deserunt?</p>
+        <div className='list__container'>
+          <div className="list__header">
+            <span ref={results}>Résultats</span>
+          </div>
+          <div className="list__data" ref={datalist}>
+              {selectedEditors.length > 0 &&
+                selectedEditors.map( (editor, index) => (
+                  <div key={index} className='list__element'>
+                    <span className='flex flex-row items-center'>{editor.ed_name}
+                        <img className='svg-white32 ml-auto mr-4' src="svg/arrow-forward.svg" alt="" 
+                              data-editorname={`${editor.ed_name}`}
+                              onClick={handleEditorClick} />                      
+                    </span>
+                    <span className='ml-3'>{editor.bookcount} livres</span>
+                  </div>
+                ))}
+          </div>
+        </div>
     </div>
     <Footer></Footer>
     </>
