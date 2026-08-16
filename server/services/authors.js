@@ -13,7 +13,7 @@ export async function getAuthorsCount() {
     try {
         const sqlh = new sqlHelper();
         let conn = await sqlh.startTransactionRO();
-        const rows = await sqlh.Select('select count(*) as authorscount from babouledb.authors', 
+        const rows = await sqlh.Select('select count(*) as authorscount from authors', 
                                         null, 
                                         conn);
         sqlh.commitTransaction(conn);
