@@ -13,7 +13,7 @@ export async function getEditorsCount() {
     try {
         const sqlh = new sqlHelper();
         let conn = await sqlh.startTransactionRO();
-        const rows = await sqlh.Select('select count(*) as editorscount from babouledb.editors', 
+        const rows = await sqlh.Select('select count(*) as editorscount from editors', 
                                         null, 
                                         conn);
         sqlh.commitTransaction(conn);
@@ -37,7 +37,7 @@ export async function getTopEditors(limit) {
         const sqlh = new sqlHelper();
         let conn = await sqlh.startTransactionRO();
         const rows = await sqlh.Select('select count(b.bk_id) bookcount , e.ed_name \
-                        from babouledb.books b, babouledb.editors e \
+                        from books b, editors e \
                         where b.bk_editor = e.ed_id  \
                         group by e.ed_name \
                         order by bookcount desc , e.ed_name asc limit ?', 
