@@ -91,9 +91,12 @@ export default function BookSearch() {
   // -------------------------------------------------------------------------------------------------
   useEffect(() => {
     if(searchParams.get('author') !== null) {
-      console.log(`BookSearch.jsx: author search param = ${searchParams.get('author')}`);
       setAuthorsearch(searchParams.get('author'));
       authsearchRef.current.value = searchParams.get('author');
+    }
+    if(searchParams.get('editor') !== null) {
+      setEditorsearch(searchParams.get('editor'));
+      editsearchRef.current.value = searchParams.get('editor');
     }
   }, []); 
   // -------------------------------------------------------------------------------------------------
