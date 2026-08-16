@@ -40,6 +40,7 @@ export default function TopEditors() {
           }
           else {
             console.log(response.data);
+            results.current.innerText = `Les ${response.data.topeditors.length} éditeurs préférés`;
             setSelectedEditors(response.data.topeditors);
           }
       })

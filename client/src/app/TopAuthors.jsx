@@ -44,6 +44,7 @@ export default function TopAuthors() {
           }
           else {
             console.log(response.data);
+            results.current.innerText = `Les ${response.data.topauthors.length} auteurs préférés`;
             setSelectedAuthors(response.data.topauthors);
           }
       })
