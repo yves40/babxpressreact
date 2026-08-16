@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
-import {useRef} from 'react'
+import axios from 'axios';
+import {useRef, useEffect, useState } from 'react'
 import { Link } from 'react-router'
 import { setMenuState } from '../redux/menustate.js';
 import Navbar from '../components/Navbar'
@@ -7,14 +8,78 @@ import Footer from '../components/Footer.jsx';
 import properties from '../services/properties.js';
 
 function Home() {
-  const version = "Home.jsx Jun 5 2026, 1.03";
+  const version = "Home.jsx Aug 16 2026, 1.04";
   const module = "Home.jsx # ";
   const thenav = useRef(null);
+  const [bookscount, setBooksCount] = useState(0);
+  const [authorscount, setAuthorsCount] = useState(0);
+  const [editorscount, setEditorsCount] = useState(0);
 
   function menufeedback(status){
     console.log(`${module} Menu status in Home.jsx is : ${status}`);
   };
 
+  // -------------------------------------------------------------------------------------------------
+  function buildServerURL() {
+    const winloc = document.location;
+    if(winloc.port === properties.reactDEVport) {    // DEV on asusp7 ???
+      return `${winloc.protocol}//${winloc.hostname}:${properties.nodeserverport}`;
+    }
+    return `${winloc.protocol}//${winloc.hostname}:${winloc.port}`;
+  }
+  //----------------------------------------------------------------
+  async function fetchBooksCounts() {
+    axios.get(`${buildServerURL()}/api/books/count`, {
+          headers: {
+            'Content-Type': 'application/json',
+          }, 
+        })
+      .then(response => {
+          if(response.data.status === 'error') { setBooksCount(0);}
+          else { setBooksCount(response.data.count);}
+      })
+      .catch(error => {
+        console.error("Axios error:", error);
+      });    
+  }
+  //----------------------------------------------------------------
+  async function fetchAuthorsCounts() {
+    axios.get(`${buildServerURL()}/api/authors/count`, {
+          headers: {
+            'Content-Type': 'application/json',
+          }, 
+        })
+      .then(response => {
+          if(response.data.status === 'error') { setAuthorsCount(0);}
+          else { setAuthorsCount(response.data.count);}
+      })
+      .catch(error => {
+        console.error("Axios error:", error);
+      });    
+  }
+  //----------------------------------------------------------------
+  async function fetchEditorsCounts() {
+    axios.get(`${buildServerURL()}/api/editors/count`, {
+          headers: {
+            'Content-Type': 'application/json',
+          }, 
+        })
+      .then(response => {
+          if(response.data.status === 'error') { setEditorsCount(0);}
+          else { setEditorsCount(response.data.count);}
+      })
+      .catch(error => {
+        console.error("Axios error:", error);
+      });    
+  }
+  //----------------------------------------------------------------
+  useEffect(() => {
+    fetchBooksCounts();
+    fetchAuthorsCounts();
+    fetchEditorsCounts();
+  }, []);
+
+  //----------------------------------------------------------------
   properties.setActivePage('home');
 
   return (
@@ -24,6 +89,9 @@ function Home() {
       </header>
       <div className='page__container '>
         <p className='text__container'>Quelques infos. <br /><br />
+          <span>Tu as lu : {bookscount} livres</span><br />
+          <span >Ecrits par : {authorscount} auteurs</span><br />
+          <span >Qui travallaient pour {editorscount} éditeurs </span><br /><br />
           Les recherches se font par titre, auteur, ou éditeur. Ces critères pouvant être combinés par 2. 
           <span className=' font-bold'> Il n'y a donc pas de recherche sur 3 critères en même temps. </span>
           La saisie d'un seul mot ou même d'une partie de ce mot dans l'un des critères déclenche une 
@@ -35,7 +103,6 @@ function Home() {
           contient la chaine saisie.
           <br /><br />
           La recherche se déclenche automatiquement lorsque l'un des critères est modifié. 
-          Attention sur un téléphone, le résultat peut être caché par le clavier.
           Evidemment, tu peux aussi utiliser l'appli sur un PC ou sur une tablette.
         </p>
       </div>
