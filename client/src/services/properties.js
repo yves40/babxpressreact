@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import Logger from "../classes/Logger";
 
-const Version = 'Babooks Aug 16 2026, 1.47 ';
+const Version = 'Babooks Aug 16 2026, 1.48 ';
 const modulename = 'properties.js # ';
 const logger = new Logger(modulename);
 let menustate = true;          // Menu is visible or not
