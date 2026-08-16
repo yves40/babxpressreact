@@ -3,6 +3,7 @@
 :root {
   --background: #ffffff;
   --backgrounddark: #000000;
+  --bodybackground: #0a0a0ad1;
   --foreground: #171717;
   --menubackground: #1d293d;
   --menuheight: 4rem;
@@ -31,7 +32,7 @@
   Main page structure 
 ------------------------------------------------------------------------*/
 body {
-  background: var(--background);
+  background: var(--menubackground);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
