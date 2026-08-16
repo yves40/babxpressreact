@@ -100,7 +100,7 @@ export async function getSelectedBooks(criteria) {
         const conn = await sqlh.startTransactionRO();
         rows = await sqlh.Select('select b.bk_title, a.auth_id, a.auth_lname, a.auth_fname, e.ed_name, l.loc_city \
                 from books b, authors a, editors e, locations l \
-                where bk_title like ? and b.bk_author = a.auth_id and b.bk_editor = e.ed_id and b.bk_location = l.loc_id' ,
+                where bk_title like ? and b.bk_author = a.auth_id and b.bk_editor = e.ed_id and b.bk_location = l.loc_id order by b.bk_title asc', 
                     [`%${title}%`],
                     conn);
         sqlh.commitTransaction(conn);
@@ -114,7 +114,7 @@ export async function getSelectedBooks(criteria) {
         const conn = await sqlh.startTransactionRO();
         rows = await sqlh.Select('select b.bk_title, a.auth_id,a.auth_lname, a.auth_fname, e.ed_name, l.loc_city \
                 from books b, authors a, editors e, locations l \
-                where a.auth_lname like ? and b.bk_author = a.auth_id and b.bk_editor = e.ed_id and b.bk_location = l.loc_id',
+                where a.auth_lname like ? and b.bk_author = a.auth_id and b.bk_editor = e.ed_id and b.bk_location = l.loc_id order by b.bk_title asc',
                     [`%${authorlastname}%`],
                     conn);
         sqlh.commitTransaction(conn);
@@ -128,7 +128,7 @@ export async function getSelectedBooks(criteria) {
         const conn = await sqlh.startTransactionRO();
         rows = await sqlh.Select('select b.bk_title, a.auth_id,  a.auth_lname, a.auth_fname, e.ed_name, l.loc_city \
                 from books b, authors a, editors e, locations l \
-                where e.ed_name like ? and b.bk_author = a.auth_id and b.bk_editor = e.ed_id and b.bk_location = l.loc_id',
+                where e.ed_name like ? and b.bk_author = a.auth_id and b.bk_editor = e.ed_id and b.bk_location = l.loc_id order by b.bk_title asc',
                     [`%${editorname}%`],
                     conn);
         sqlh.commitTransaction(conn);
