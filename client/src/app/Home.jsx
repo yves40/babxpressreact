@@ -8,12 +8,13 @@ import Footer from '../components/Footer.jsx';
 import properties from '../services/properties.js';
 
 function Home() {
-  const version = "Home.jsx Aug 16 2026, 1.04";
+  const version = "Home.jsx Aug 16 2026, 1.05";
   const module = "Home.jsx # ";
   const thenav = useRef(null);
   const [bookscount, setBooksCount] = useState(0);
   const [authorscount, setAuthorsCount] = useState(0);
   const [editorscount, setEditorsCount] = useState(0);
+  const [feedbackmessage, setFeedbackMessage] = useState('');
 
   function menufeedback(status){
     console.log(`${module} Menu status in Home.jsx is : ${status}`);
@@ -50,8 +51,14 @@ function Home() {
           }, 
         })
       .then(response => {
-          if(response.data.status === 'error') { setAuthorsCount(0);}
-          else { setAuthorsCount(response.data.count);}
+          if(response.data.status === 'error') { 
+            setAuthorsCount(0);
+            setFeedbackMessage(`Erreur : ${response.data.message}`);
+          }
+          else { 
+            setAuthorsCount(response.data.count);
+            setFeedbackMessage("Statistiques collectées");
+          }
       })
       .catch(error => {
         console.error("Axios error:", error);
@@ -89,6 +96,7 @@ function Home() {
       </header>
       <div className='page__container '>
         <p className='text__container'>Quelques infos. <br /><br />
+          <span className=' text-amber-300'>{feedbackmessage}</span><br />
           <span>Tu as lu : {bookscount} livres</span><br />
           <span >Ecrits par : {authorscount} auteurs</span><br />
           <span >Qui travallaient pour {editorscount} éditeurs </span><br /><br />
