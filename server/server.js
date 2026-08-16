@@ -15,7 +15,7 @@ const app = express();
 const port = 5000;
 const thedate = datetime.getDateTime();
 let db = null;
-const version = 'server.js:1.17, Aug 062026 ';
+const version = 'server.js:1.18, Aug 16 2026 ';
 
 //---------------------------------------------------------------------------------------------------------
 // Install middleware responsible for response header settings
@@ -37,12 +37,6 @@ app.get('/', (req, res) => {
 });
 // -----------------------------------
 // API endpoints
-// -----------------------------------
-app.get('/api/fake', (req, res) => {
-  const data = { fruits: ['apple', 'banana', 'orange', 'Pomme', 'Fraise', 'Annanas'] }    ;
-  console.log(`Data request from client served with ${data.fruits.length} fruits`);
-  res.json(data);
-});
 // -----------------------------------
 app.get('/api/books/count', async (req, res) => {
   try {
