@@ -9,6 +9,15 @@ const initialState =
         menustate: getCookie('menustate'),       // Menu is visible or not
         screenstate: getCookie('screenstate')   // mobile, sm, md, lg, xl
     }
+
+    function checkPopupMenuVisibility() {
+        // bring floating menu to view when menu is toggled
+        // Necessary in case screen has been scrolled down
+        const floatnav = document.querySelector('.nav');   
+        if(floatnav) {
+            floatnav.scrollIntoView({ behavior: 'smooth', block: 'start' });            
+        }
+    }
     
     const menuSlice = createSlice(
     {
@@ -20,6 +29,7 @@ const initialState =
                 state.menustate = action.payload.menuvisible;
                 setCookie("menustate", state.menustate);
                 properties.setMenuState(state.menustate);
+                checkPopupMenuVisibility();
             },
             toggleMenuState: (state) => {
                 if(state.menustate === 'true') {
@@ -30,6 +40,7 @@ const initialState =
                 }
                 setCookie("menustate", state.menustate);
                 properties.setMenuState(state.menustate);
+                checkPopupMenuVisibility();
             },
             setScreenstate: (state, action) => {
                 state.screenstate = action.payload.screenstate;
@@ -41,6 +52,7 @@ const initialState =
                     state.menustate = true;
                 }
                 setCookie("menustate", state.menustate);
+                checkPopupMenuVisibility();
                 properties.setScreenstate(state.screenstate);
             }
         }

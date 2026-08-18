@@ -84,6 +84,7 @@ function Home() {
     fetchBooksCounts();
     fetchAuthorsCounts();
     fetchEditorsCounts();
+    thenav.current && thenav.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }, []);
 
   //----------------------------------------------------------------
@@ -94,7 +95,7 @@ function Home() {
       <header>
           <Navbar/>
       </header>
-      <div className='page__container '>
+      <div className='page__container ' ref={thenav}>
         <p className='text__container'>Quelques infos. <br /><br />
           <span className=' text-amber-300'>{feedbackmessage}</span><br />
           <span>Tu as lu : {bookscount} livres</span><br />

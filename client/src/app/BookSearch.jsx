@@ -33,7 +33,7 @@ export default function BookSearch() {
     return `${winloc.protocol}//${winloc.hostname}:${winloc.port}`;
   }
   // -------------------------------------------------------------------------------------------------
-  const version = "BookSearch.jsx Aug 13 2026, 1.21 ";
+  const version = "BookSearch.jsx Aug 18 2026, 1.22 ";
 
   const [titlesearch, setTitlesearch] = useState('');
   const [authorsearch, setAuthorsearch] = useState('');
@@ -47,7 +47,7 @@ export default function BookSearch() {
   const editsearchRef = useRef(null);
   const [searchParams] = useSearchParams();   // Page called by topAuthors ? 
 
-  const testmeRef = useRef(null);
+  const pagecontainer = useRef(null);
 
   properties.setActivePage('booksearch');
 
@@ -76,6 +76,7 @@ export default function BookSearch() {
               datalist.current.style.display = 'flex';
               titlesearchRef.current && titlesearchRef.current.focus();
             }
+            pagecontainer.current && pagecontainer.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
           }
           datalist.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
       })
@@ -142,6 +143,13 @@ export default function BookSearch() {
       });    
 
   }
+  // not used
+  function pageToTop() {
+      const thepage = document.querySelector('.booksmain');   
+      if(thepage) {
+          thepage.scrollIntoView({ behavior: 'smooth', block: 'start' });            
+      }
+  }
   // --------------------------- CHILD HANDLERS ------------------------------------------------------
   function checkTitle(value) {setTitlesearch(value);}
   function checkAuthor(value) {setAuthorsearch(value);}
@@ -152,8 +160,8 @@ export default function BookSearch() {
       <header>
         <Navbar />
       </header>
-      <div className='page__container ml-5 font-bold '>
-        <div className=' mt-2 text-center justify-center flex flex-col mx-auto w-80'>
+      <div className='page__container ml-5 font-bold ' booksmain>
+        <div ref={pagecontainer} className=' mt-2 text-center justify-center flex flex-col mx-auto w-80'>
           <InputText ref={titlesearchRef}  componentid='SEARCH' label="Titre" parentHandler={checkTitle} />
           <InputText ref={authsearchRef}   componentid='AUTHOR' label="Auteur" parentHandler={checkAuthor} />
           <InputText ref={editsearchRef}   componentid='EDITOR' label="Éditeur" parentHandler={checkEditor} />
