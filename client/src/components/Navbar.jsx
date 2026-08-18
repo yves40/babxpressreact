@@ -36,10 +36,12 @@ export default function Navbar() {
         if(menuvisible === 'true') {
           thenav.current.classList.remove("slide-right-out");
           thenav.current.classList.add("slide-right-in");
+          document.body.style.overflow = 'hidden';
         }
         else {
           thenav.current.classList.remove("slide-right-in");
           thenav.current.classList.add("slide-right-out");
+          document.body.style.overflow = 'visible';
         }
         break;
     }
