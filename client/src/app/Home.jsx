@@ -98,9 +98,9 @@ function Home() {
       <div className='page__container ' ref={thenav}>
         <p className='text__container'>Quelques infos. <br /><br />
           <span className=' text-amber-300'>{feedbackmessage}</span><br />
-          <span>Tu as lu : {bookscount} livres</span><br />
-          <span >Ecrits par : {authorscount} auteurs</span><br />
-          <span >Qui travallaient pour {editorscount} éditeurs </span><br /><br />
+          <span>Tu as lu : { bookscount == 0 ? "Recherche en cours..." : `${bookscount} livres`}</span><br />
+          <span >Ecrits par : { authorscount == 0 ? "Recherche en cours..." : `${authorscount} auteurs`}</span><br />
+          <span >Qui travallaient pour : {editorscount == 0 ? "Recherche en cours..." : `${editorscount} éditeurs`}</span><br /><br />
           Les recherches se font par titre, auteur, ou éditeur. Ces critères pouvant être combinés par 2. 
           <span className=' font-bold'> Il n'y a donc pas de recherche sur 3 critères en même temps. </span>
           La saisie d'un seul mot ou même d'une partie de ce mot dans l'un des critères déclenche une 
