@@ -33,7 +33,19 @@ export default function BookSearch() {
     return `${winloc.protocol}//${winloc.hostname}:${winloc.port}`;
   }
   // -------------------------------------------------------------------------------------------------
-  const version = "BookSearch.jsx Aug 18 2026, 1.22 ";
+  function pageToTop() {
+      const thepage = document.querySelector('.page__container');   
+      // if(thepage) {
+      //     thepage.scrollIntoView({ behavior: 'smooth', block: 'start' });            
+      // }
+      window.scrollTo({
+        top: 0,
+        left: 0,
+        behavior: "smooth",
+      });
+  }
+  // -------------------------------------------------------------------------------------------------
+  const version = "BookSearch.jsx Sep 24 2026, 1.23 ";
 
   const [titlesearch, setTitlesearch] = useState('');
   const [authorsearch, setAuthorsearch] = useState('');
@@ -76,9 +88,9 @@ export default function BookSearch() {
               datalist.current.style.display = 'flex';
               titlesearchRef.current && titlesearchRef.current.focus();
             }
-            pagecontainer.current && pagecontainer.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
           }
-          datalist.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          console.log(`************** BOOK SEARCH RESULTS ${response.data.selectedbooks.length} livres trouvés`);
+          pageToTop();
       })
       .catch(error => {
         console.error("Axios error:", error);
@@ -136,19 +148,12 @@ export default function BookSearch() {
             datalist.current.style.display = 'flex';
             titlesearchRef.current && titlesearchRef.current.focus();
           }
-          datalist.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          pageToTop();
       })
       .catch(error => {
         console.error("Axios error:", error);
       });    
 
-  }
-  // not used
-  function pageToTop() {
-      const thepage = document.querySelector('.booksmain');   
-      if(thepage) {
-          thepage.scrollIntoView({ behavior: 'smooth', block: 'start' });            
-      }
   }
   // --------------------------- CHILD HANDLERS ------------------------------------------------------
   function checkTitle(value) {setTitlesearch(value);}
