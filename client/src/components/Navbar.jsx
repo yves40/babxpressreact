@@ -19,11 +19,10 @@ export default function Navbar() {
   const [screenbreak, setScreenbreak] = useState(useSelector((state) => state.UIstate.screenstate));
 
   useEffect(() => {
-    console.log(`${modulename} *** MOUNTING ${version} `);
   })
 
   function slideInOut() {
-    console.log(`********* ${menuvisible}/${screenbreak}/${properties.getActivePage()}`);
+    // console.log(`********* ${menuvisible}/${screenbreak}/${properties.getActivePage()}`);
     switch(screenbreak) {
       case 'xl':
       case 'lg':
