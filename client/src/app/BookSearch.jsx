@@ -12,6 +12,7 @@ import Navbar from '../components/Navbar.jsx';
 import Footer from '../components/Footer.jsx';
 import properties from '../services/properties.js';
 import techinfo from '../services/techinfo.js';
+import GoTop from '../components/GoTop.jsx';
 
 export default function BookSearch() {
 
@@ -35,9 +36,6 @@ export default function BookSearch() {
   // -------------------------------------------------------------------------------------------------
   function pageToTop() {
       const thepage = document.querySelector('.page__container');   
-      // if(thepage) {
-      //     thepage.scrollIntoView({ behavior: 'smooth', block: 'start' });            
-      // }
       window.scrollTo({
         top: 0,
         left: 0,
@@ -45,14 +43,16 @@ export default function BookSearch() {
       });
   }
   // -------------------------------------------------------------------------------------------------
-  const version = "BookSearch.jsx Sep 24 2026, 1.23 ";
+  // C O N S T A N T S
+  // -------------------------------------------------------------------------------------------------
+  const version = "BookSearch.jsx Sep 29 2026, 1.23 ";
 
   const [titlesearch, setTitlesearch] = useState('');
   const [authorsearch, setAuthorsearch] = useState('');
   const [editorsearch, setEditorsearch] = useState('');
   const [selectedbooks, setSelectedbooks] = useState([]);
-  const results = useRef('results');                      // Search result message
-  const datalist = useRef('datalist');                    // Show hide results
+  const results = useRef('results');                          // Search result message
+  const datalist = useRef('datalist');                        // Show hide results
 
   const titlesearchRef = useRef(null);
   const authsearchRef = useRef(null);
@@ -165,7 +165,7 @@ export default function BookSearch() {
       <header>
         <Navbar />
       </header>
-      <div className='page__container ml-5 font-bold ' booksmain>
+      <div className='page__container ml-5 font-bold '>
         <div ref={pagecontainer} className=' mt-2 text-center justify-center flex flex-col mx-auto w-80'>
           <InputText ref={titlesearchRef}  componentid='SEARCH' label="Titre" parentHandler={checkTitle} />
           <InputText ref={authsearchRef}   componentid='AUTHOR' label="Auteur" parentHandler={checkAuthor} />
@@ -193,6 +193,7 @@ export default function BookSearch() {
                     <span className='text-white mb-2'>{book.loc_city}</span>
                   </div>
                 ))}
+                <GoTop scrollUp={pageToTop} />
           </div>
         </div>
       </div>

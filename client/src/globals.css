@@ -278,6 +278,28 @@ form page
     animation: slideUp 1s ease-in-out;
 }
 /* ------------------------------------------------------------------------
+  go top button 
+  ------------------------------------------------------------------------*/
+.goTopHidden {
+  display: none;
+}
+.goTopVisible {
+  display: block;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 1000;
+  background-color: #1d293d;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  hover: {
+    transform: scale(1.1);
+  }
+}
+/* ------------------------------------------------------------------------
   svg section 
   ------------------------------------------------------------------------*/
 .svg-green18 { 
