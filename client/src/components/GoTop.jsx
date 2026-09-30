@@ -1,6 +1,11 @@
 
 import { useState, useEffect } from 'react';
 
+/*
+  GoTop.jsx
+  This component displays a "Go to Top" button when the user scrolls down the page.
+  When clicked, it scrolls the page back to the top smoothly, using a provided scrollUp function passed as a prop.
+*/
 function GoTop(props) {
 
   const [scrollPosition, setScrollPosition] = useState(0);    // Track scroll position for GoTop button
