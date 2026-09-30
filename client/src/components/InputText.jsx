@@ -19,15 +19,24 @@ export default function InputText({ref,componentid, label, parentHandler, timeou
         }, timeout);
     }
 
+    function resetInput() {
+        if(delayedInput.current) clearTimeout(delayedInput.current);
+        parentHandler('');
+        ref.current.value = '';
+    }
+
     return (
         <>
             <label className='form__label' htmlFor={componentid}>{label}</label>
-            <input className='form__input' onChange={checkInput}
-                ref={ref} 
-                type="text" 
-                name={componentid} 
-                id={componentid}
-            />
+            <div className=' flex relative items-center justify-center'>
+                <img className='svg-white32 ml-4' src="svg/close-outline.svg" alt="" cursor="pointer"  onClick={resetInput}/>
+                <input className='form__input' onChange={checkInput}
+                    ref={ref} 
+                    type="text" 
+                    name={componentid} 
+                    id={componentid}
+                    />
+            </div>
         </>
     )
 }
