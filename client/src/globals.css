@@ -261,10 +261,6 @@ form page
         focus:ring-cyan-500 
           focus:border-transparent;
 }
-.gridcols511 {
-  display: grid;
-  grid-template-columns:5fr 1fr 1fr;
-}
 /* ------------------------------------------------------------------------
   Animations and transformations 
 ------------------------------------------------------------------------*/
