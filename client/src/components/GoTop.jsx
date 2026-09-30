@@ -31,7 +31,7 @@ function GoTop(props) {
     <>
       <div className={showGoTop} onClick={props.scrollUp}>
         <button >
-          <img className='svg-white32' src="svg/arrow-back.svg" alt="" />
+          <img className='svg-white32' src="svg/arrow-up-left-box-outline.svg" alt="" />
         </button>
       </div>
     </>

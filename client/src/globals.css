@@ -286,18 +286,15 @@ form page
 .goTopVisible {
   display: block;
   position: fixed;
-  bottom: 20px;
-  right: 20px;
+  bottom: var(--footerheight);
+  right: 10px;
   z-index: 1000;
-  background-color: #1d293d;
+  background-color: transparent;
   color: white;
   border: none;
   padding: 10px;
   border-radius: 5px;
   cursor: pointer;
-  hover: {
-    transform: scale(1.1);
-  }
 }
 /* ------------------------------------------------------------------------
   svg section 
