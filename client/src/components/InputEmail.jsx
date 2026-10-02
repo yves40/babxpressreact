@@ -1,53 +1,37 @@
 import { useEffect, useRef } from 'react';
-import { checkEmail } from '@/libs/controls';
-import Logger from '@/classes/logger';
+import { checkEmail } from '../services/controls.js';
 
-export default function InputEmail({componentid, label, parentHandler, 
-    placeholder=true, timeout=800}) {
+export default function InputEmail({ref, componentid, label, parentHandler, timeout=800}) {
     
     const delayedInput = useRef(null);
     const module = "InputEmail";
     const controlicon = useRef('controlicon');
-    const emailinput = useRef('emailinput');
-    const feedback = useRef('feedback');
-    const logger = new Logger();
 
-    let ph = false;
-    if(placeholder === true) {
-        ph = true;
-    }
 
     useEffect( () => {
-        controlicon.current.hidden = true;
     }, [] );
 
-    function clearInput() {
-        controlicon.current.hidden = true;
-        feedback.current.textContent = '';  
-        feedback.current.hidden = true;
-        emailinput.current.value = '';
+    function resetInput() {
+        if(delayedInput.current) clearTimeout(delayedInput.current);
         parentHandler('');
+        ref.current.value = '';
     }
-    
+
     function checkInput(e) {
         if(e.target.value === '') {
-            controlicon.current.hidden = true;
             return;
         }
         if(delayedInput.current) clearTimeout(delayedInput.current);
         delayedInput.current = setTimeout(() => {
-            controlicon.current.hidden = false;
             try {
                 checkEmail(e.target.value);
-                controlicon.current.src = "/png/check-mark-32.png";
-                feedback.current.textContent = '';
-                feedback.current.hidden = true;
+                controlicon.current.src = "/svg/thumbs-up-solid.svg";
+                controlicon.current.className = 'svg-green24';
                 parentHandler(e.target.value);
             }
             catch(error){ 
-                controlicon.current.src = "/png/cross-mark-32.png";
-                feedback.current.textContent = error.message;
-                feedback.current.hidden = false;
+                controlicon.current.src = "/svg/thumbs-down-solid.svg";
+                controlicon.current.className = 'svg-red24';
                 console.log(`*** ${module} ${error.message}`);
             }
         }, timeout);
@@ -56,24 +40,17 @@ export default function InputEmail({componentid, label, parentHandler,
     return (
         <>
             <label className='form__label mt-2' htmlFor={componentid}>{label} *</label>
-            <div className='form__div'>
+            <div className='flex items-center justify-center'>
                 <input className='form__input' onChange={checkInput}
-                    ref={emailinput}
+                    ref={ref}
                     type="text" 
                     name={componentid} 
                     id={componentid} 
-                    placeholder={ph ? 'Email SVP' : ''} 
                 />
-                <a href="#" tabIndex="-1">
-                    <img className="inline w-6 h-6  mx-2 mb-1" 
-                        onClick={clearInput}
-                        ref={controlicon} 
-                        src="/png/cross-mark-32.png" 
-                        alt="info email status" 
-                    />
-                </a>
+                <span style={{ marginLeft: "-40px" }}>
+                    <img ref={controlicon} className='svg-red24' src="svg/thumbs-down-solid.svg" alt="" cursor="pointer" onClick={resetInput}/>
+                </span>
             </div>
-            <p ref={feedback} hidden className='mb-2 text-red-600'>Message</p>
         </>
     )
 }
