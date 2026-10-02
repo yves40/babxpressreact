@@ -28,14 +28,16 @@ export default function InputText({ref,componentid, label, parentHandler, timeou
     return (
         <>
             <label className='form__label' htmlFor={componentid}>{label}</label>
-            <div className=' flex relative items-center justify-center'>
-                <img className='svg-white32 ml-4' src="svg/close-outline.svg" alt="" cursor="pointer"  onClick={resetInput}/>
+            <div className='flex items-center justify-center'>
                 <input className='form__input' onChange={checkInput}
                     ref={ref} 
                     type="text" 
                     name={componentid} 
                     id={componentid}
                     />
+                <span style={{ marginLeft: "-40px" }}>
+                    <img className='svg-white32 ' src="svg/close-outline.svg" alt="" cursor="pointer"  onClick={resetInput}/>
+                </span>
             </div>
         </>
     )
