@@ -15,6 +15,8 @@ export default function InputEmail({ref, componentid, label, parentHandler, time
         if(delayedInput.current) clearTimeout(delayedInput.current);
         parentHandler('');
         ref.current.value = '';
+        controlicon.current.src = "/svg/thumbs-down-solid.svg";
+        controlicon.current.className = 'svg-red24';
     }
 
     function checkInput(e) {
