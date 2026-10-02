@@ -4,14 +4,12 @@
 import { useEffect, useEffectEvent, useRef, useState, } from 'react'
 import { useSearchParams } from "react-router-dom";
 import axios from "axios";
-import { Link } from 'react-router'
-import { useLocation } from 'react-router-dom';
-import { setMenuState } from '../redux/menustate.js';
 import InputText from '../components/InputText.jsx';
+import InputEmail from '../components/InputEmail.jsx';
+import InputPassword from '../components/InputPassword.jsx';
 import Navbar from '../components/Navbar.jsx';
 import Footer from '../components/Footer.jsx';
 import properties from '../services/properties.js';
-import techinfo from '../services/techinfo.js';
 import GoTop from '../components/GoTop.jsx';
 
 export default function BookSearch() {
@@ -57,6 +55,8 @@ export default function BookSearch() {
   const titlesearchRef = useRef(null);
   const authsearchRef = useRef(null);
   const editsearchRef = useRef(null);
+  const emailRef = useRef(null);
+  const passwordRef = useRef(null);
   const [searchParams] = useSearchParams();   // Page called by topAuthors ? 
 
   const pagecontainer = useRef(null);
@@ -159,6 +159,7 @@ export default function BookSearch() {
   function checkTitle(value) {setTitlesearch(value);}
   function checkAuthor(value) {setAuthorsearch(value);}
   function checkEditor(value) {setEditorsearch(value);}
+  function dummyCheck(value) {console.log(`value: ${value}`);}
   // -------------------------------------------------------------------------------------------------
   return (
     <>
@@ -170,6 +171,9 @@ export default function BookSearch() {
           <InputText ref={titlesearchRef}  componentid='SEARCH' label="Titre" parentHandler={checkTitle} />
           <InputText ref={authsearchRef}   componentid='AUTHOR' label="Auteur" parentHandler={checkAuthor} />
           <InputText ref={editsearchRef}   componentid='EDITOR' label="Éditeur" parentHandler={checkEditor} />
+          <InputEmail ref={emailRef} componentid='EMAIL' label="Email" parentHandler={dummyCheck} />
+          <InputPassword ref={passwordRef} componentid='PASSWORD' label="Mot de passe" parentHandler={dummyCheck} /> 
+
         </div>
         <button className=' mt-4 border-0 border-r-gray-800 rounded-2xl bg-gray-700 text-white  w-40 py-2' 
             onClick={() => RAZ()}>
