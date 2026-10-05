@@ -16,7 +16,7 @@ export default function InputPassword({ref, componentid, label, parentHandler, t
         parentHandler('');
         ref.current.value = '';
         controlicon.current.src = "/svg/close-outline.svg";
-        controlicon.current.className = 'svg-red24';
+        controlicon.current.className = 'svg-red32';
     }
 
     function checkInput(e) {
@@ -30,12 +30,12 @@ export default function InputPassword({ref, componentid, label, parentHandler, t
             try {
                 checkPassword(e.target.value);
                 controlicon.current.src = "/svg/checkmark-outline.svg";
-                controlicon.current.className = 'svg-green24';
+                controlicon.current.className = 'svg-green32';
                 parentHandler(e.target.value);
             }
             catch(error){ 
                 controlicon.current.src = "/svg/close-outline.svg";
-                controlicon.current.className = 'svg-red24';
+                controlicon.current.className = 'svg-red32';
                 console.log(`*** ${module} ${error.message}`);
             }
         }, timeout);
@@ -53,7 +53,7 @@ export default function InputPassword({ref, componentid, label, parentHandler, t
                     placeholder='Au moins 8 caractères, 1 chiffre, 1 majuscule'
                 />
                 <span style={{ marginLeft: "-40px" }}>
-                    <img ref={controlicon} className='svg-red24' src="svg/close-outline.svg" alt="" cursor="pointer" onClick={resetInput}/>
+                    <img ref={controlicon} className='svg-red32' src="svg/close-outline.svg" alt="" cursor="pointer" onClick={resetInput}/>
                 </span>
             </div>
         </>

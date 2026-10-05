@@ -305,6 +305,11 @@ form page
   height: 24px;
   filter: brightness(0) saturate(100%) invert(75%) sepia(54%) saturate(7355%) hue-rotate(85deg) brightness(124%) contrast(119%);
 }
+.svg-green32 { 
+  width: 32px;
+  height: 32px;
+  filter: brightness(0) saturate(100%) invert(75%) sepia(54%) saturate(7355%) hue-rotate(85deg) brightness(124%) contrast(119%);
+}
 .svg-red18 {
   width: 18px;
   height: 18px;
@@ -313,6 +318,11 @@ form page
 .svg-red24 {
   width: 24px;
   height: 24px;
+  filter: invert(19%) sepia(96%) saturate(6102%) hue-rotate(357deg) brightness(98%) contrast(117%); 
+}
+.svg-red32 {
+  width: 32px;
+  height: 32px;
   filter: invert(19%) sepia(96%) saturate(6102%) hue-rotate(357deg) brightness(98%) contrast(117%); 
 }
 
