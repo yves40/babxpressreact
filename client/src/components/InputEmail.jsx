@@ -15,7 +15,7 @@ export default function InputEmail({ref, componentid, label, parentHandler, time
         if(delayedInput.current) clearTimeout(delayedInput.current);
         parentHandler('');
         ref.current.value = '';
-        controlicon.current.src = "/svg/thumbs-down-solid.svg";
+        controlicon.current.src = "/svg/close-outline.svg";
         controlicon.current.className = 'svg-red24';
     }
 
@@ -27,12 +27,12 @@ export default function InputEmail({ref, componentid, label, parentHandler, time
         delayedInput.current = setTimeout(() => {
             try {
                 checkEmail(e.target.value);
-                controlicon.current.src = "/svg/thumbs-up-solid.svg";
+                controlicon.current.src = "/svg/checkmark-outline.svg";
                 controlicon.current.className = 'svg-green24';
                 parentHandler(e.target.value);
             }
             catch(error){ 
-                controlicon.current.src = "/svg/thumbs-down-solid.svg";
+                controlicon.current.src = "/svg/close-outline.svg";
                 controlicon.current.className = 'svg-red24';
                 console.log(`*** ${module} ${error.message}`);
             }
@@ -50,7 +50,7 @@ export default function InputEmail({ref, componentid, label, parentHandler, time
                     id={componentid} 
                 />
                 <span style={{ marginLeft: "-40px" }}>
-                    <img ref={controlicon} className='svg-red24' src="svg/thumbs-down-solid.svg" alt="" cursor="pointer" onClick={resetInput}/>
+                    <img ref={controlicon} className='svg-red24' src="svg/close-outline.svg" alt="" cursor="pointer" onClick={resetInput}/>
                 </span>
             </div>
         </>

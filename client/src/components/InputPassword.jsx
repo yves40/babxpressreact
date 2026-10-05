@@ -15,7 +15,7 @@ export default function InputPassword({ref, componentid, label, parentHandler, t
         if(delayedInput.current) clearTimeout(delayedInput.current);
         parentHandler('');
         ref.current.value = '';
-        controlicon.current.src = "/svg/thumbs-down-solid.svg";
+        controlicon.current.src = "/svg/close-outline.svg";
         controlicon.current.className = 'svg-red24';
     }
 
@@ -29,12 +29,12 @@ export default function InputPassword({ref, componentid, label, parentHandler, t
             controlicon.current.hidden = false;
             try {
                 checkPassword(e.target.value);
-                controlicon.current.src = "/svg/thumbs-up-solid.svg";
+                controlicon.current.src = "/svg/checkmark-outline.svg";
                 controlicon.current.className = 'svg-green24';
                 parentHandler(e.target.value);
             }
             catch(error){ 
-                controlicon.current.src = "/svg/thumbs-down-solid.svg";
+                controlicon.current.src = "/svg/close-outline.svg";
                 controlicon.current.className = 'svg-red24';
                 console.log(`*** ${module} ${error.message}`);
             }
@@ -53,7 +53,7 @@ export default function InputPassword({ref, componentid, label, parentHandler, t
                     placeholder='Au moins 8 caractères, 1 chiffre, 1 majuscule'
                 />
                 <span style={{ marginLeft: "-40px" }}>
-                    <img ref={controlicon} className='svg-red24' src="svg/thumbs-down-solid.svg" alt="" cursor="pointer" onClick={resetInput}/>
+                    <img ref={controlicon} className='svg-red24' src="svg/close-outline.svg" alt="" cursor="pointer" onClick={resetInput}/>
                 </span>
             </div>
         </>
